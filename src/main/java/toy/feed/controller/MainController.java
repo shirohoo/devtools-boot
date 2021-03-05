@@ -17,7 +17,6 @@ import toy.feed.service.CollectPostService;
 public class MainController {
     
     private final FeedBoardRepository feedBoardRepository;
-    private final CollectPostService collectPostService;
     
     @GetMapping ("/")
     public String index () throws Exception {
@@ -39,12 +38,6 @@ public class MainController {
         
         return feedBoardRepository.getPageFeedBoard(pageable, company, title)
                                   .map(feedBoard -> toDto(feedBoard));
-    }
-    
-    @ResponseBody
-    @GetMapping("/test")
-    public void test() throws Exception {
-        collectPostService.getAll();
     }
     
     private FeedBoardDto toDto (FeedBoard board) {
