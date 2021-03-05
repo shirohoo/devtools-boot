@@ -1,6 +1,8 @@
 package toy.feed.object;
 
-import javax.xml.stream.*;
+import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.XMLEvent;
 import java.io.IOException;
@@ -13,8 +15,6 @@ public class RSSFeedParser {
     private final URL url;
     
     private static final String TITLE = "title";
-    private static final String DESCRIPTION = "description";
-    private static final String CHANNEL = "channel";
     private static final String LANGUAGE = "language";
     private static final String COPYRIGHT = "copyright";
     private static final String LINK = "link";
@@ -37,7 +37,6 @@ public class RSSFeedParser {
         try {
             boolean isFeedHeader = true;
             
-            String description = "";
             String title = "";
             String link = "";
             String language = "";
@@ -58,15 +57,12 @@ public class RSSFeedParser {
                         case ITEM:
                             if (isFeedHeader) {
                                 isFeedHeader = false;
-                                feed = new RSSFeed(title, link, description, language, copyright, pubdate);
+                                feed = new RSSFeed(title, link, language, copyright, pubdate);
                             }
                             event = eventReader.nextEvent();
                             break;
                         case TITLE:
                             title = getCharacterData(event, eventReader);
-                            break;
-                        case DESCRIPTION:
-                            description = getCharacterData(event, eventReader);
                             break;
                         case LINK:
                             link = getCharacterData(event, eventReader);
@@ -93,7 +89,6 @@ public class RSSFeedParser {
                         if (!title.matches("/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/")) {
                             RSSFeedMessage message = new RSSFeedMessage();
                             message.setAuthor(author);
-                            message.setDescription(description);
                             message.setGuid(guid);
                             message.setLink(link);
                             message.setTitle(title);

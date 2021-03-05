@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" >
+<head th:fragment="head" >
+    <title >Tech Blogs</title >
+    <!-- Required meta tags -->
+    <meta charset="utf-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrinkto-fit=no" >
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" ></script >
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" ></script >
+    <!-- Custom styles for this template -->
+    <style >
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;800&display=swap');
+
+        body {
+            font-family: 'JetBrains Mono',
+            monospace;
+        }
+
+        #table {
+            cursor: default;
+        }
+
+        #totalResultCount {
+            cursor: default;
+        }
+
+        #companyBox {
+            margin-left: 2vw;
+        }
+
+        #titleBox {
+            margin-left: 2vw;
+        }
+
+        #table > thead > tr > th {
+            font-weight: bold;
+            font-size: large;
+            vertical-align: middle;
+        }
+
+        #listTbody > tr > td {
+            vertical-align: middle;
+        }
+
+        #listTbody > tr > td > a {
+            transition: all 0.3s;
+            color: black;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        #listTbody > tr > td > a:hover {
+            color: dodgerblue;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        hr {
+            margin: 3vh 0 3vh 0;
+        }
+
+        #searchBox > input:hover {
+            font-weight: bold;
+            border-color: dodgerblue;
+            border-width: 2px;
+        }
+    </style >
+</head >

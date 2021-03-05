@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import toy.feed.domain.FeedBoard;
 import toy.feed.domain.dto.FeedBoardDto;
@@ -24,9 +25,19 @@ public class MainController {
     }
     
     @ResponseBody
-    @GetMapping (value = "/collects")
-    public Page<FeedBoardDto> getBoards ( Pageable pageable ) {
-        return feedBoardRepository.getPageFeedBoard(pageable)
+    @GetMapping ("/collects")
+    public Page<FeedBoardDto> getBoards (Pageable pageable,
+                                         @RequestParam (value = "company", required = false) String company,
+                                         @RequestParam (value = "title", required = false) String title) {
+        
+        if (isNull(company)) {
+            company = "";
+        }
+        if (isNull(title)) {
+            title = "";
+        }
+        
+        return feedBoardRepository.getPageFeedBoard(pageable, company, title)
                                   .map(feedBoard -> toDto(feedBoard));
     }
     
@@ -36,13 +47,18 @@ public class MainController {
         collectPostService.getAll();
     }
     
-    private FeedBoardDto toDto ( FeedBoard board ) {
+    private FeedBoardDto toDto (FeedBoard board) {
         return FeedBoardDto.builder()
                            .id(board.getId())
-                           .company(board.getCompany())
+                           .imgPath(board.getImgPath())
                            .title(board.getTitle())
                            .link(board.getGuid())
+                           .regDate(board.getRegDate())
                            .build();
+    }
+    
+    private boolean isNull (String string) {
+        return string == null;
     }
     
 }

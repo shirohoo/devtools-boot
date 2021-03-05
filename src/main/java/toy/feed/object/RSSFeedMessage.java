@@ -7,7 +7,8 @@ import lombok.*;
 public class RSSFeedMessage {
     
     private String title;
-    private String description;
+    private String company;
+    private String imgPath;
     private String link;
     private String author;
     private String guid;
