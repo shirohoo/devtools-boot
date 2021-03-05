@@ -7,6 +7,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Component
 @RequiredArgsConstructor
@@ -18,11 +19,13 @@ public class RSSScheduler {
     
     private final CollectPostService collectPostService;
     
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    
     // 단위: ms
     @Scheduled (fixedRate = DELAY)
     public void collect () throws Exception {
         if(log.isInfoEnabled()) {
-            log.info("[LOGGING : " + LocalDateTime.now() + " ] RSSScheduler.collectPostService.getAll() execute !");
+            log.info("[LOGGING : " + timeFormatter.format(LocalDateTime.now()) + " ] RSSScheduler.collectPostService.getAll() execute !");
         }
             collectPostService.getAll();
     }

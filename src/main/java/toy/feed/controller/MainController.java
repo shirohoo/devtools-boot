@@ -42,6 +42,7 @@ public class MainController {
     private FeedBoardDto toDto (FeedBoard board) {
         return FeedBoardDto.builder()
                            .id(board.getId())
+                           .company(board.getCompany())
                            .imgPath(board.getImgPath())
                            .title(board.getTitle())
                            .link(board.getGuid())

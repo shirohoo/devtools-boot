@@ -14,6 +14,8 @@ public class FeedBoardDto {
     
     private Long id;
     
+    private String company;
+    
     private String imgPath;
     
     private String title;

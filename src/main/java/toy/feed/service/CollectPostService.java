@@ -122,7 +122,7 @@ public class CollectPostService {
         if (isNoDuplicate(message)) {
             String url = message.getLink();
             if (url.contains("woowabros")) {
-                message.setImgPath("/images/woowabros.jpg");
+                message.setImgPath("/images/woowabros.png");
                 message.setCompany("우아한형제들");
             }
             else if (url.contains("toss")) {

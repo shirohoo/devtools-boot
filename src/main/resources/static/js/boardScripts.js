@@ -6,7 +6,7 @@ let ajaxResponse;
  */
 $(function () {
 	$.ajax({
-		       url        : "/boards?page=0&size=10",
+		       url        : "/boards?page=0&size=20",
 		       type       : "GET",
 		       contentType: "application/x-www-form-urlencoded;charset=utf-8",
 		       dataType   : "json",
@@ -137,18 +137,26 @@ function listRendering() {
 			$("#listTbody").append(eleTr);
 		} else {
 			$.each(postList, function () {
+				let regDateArray = this.regDate.split('-');
+				let regDate = new Date(regDateArray[0], regDateArray[1] - 1, regDateArray[2])
+
+				let nowDate = new Date();
+				let betweenDay = Math.round((nowDate.getTime() - regDate.getTime()) / 1000 / 60 / 60 / 24);
+
 				let eleTr = $("<tr class='graph_tr1'/>")
 					.append($("<td style='text-align:center'/>").text(this.id))
-					.append($("<td style='text-align:center'/>").append($("<img src=" + this.imgPath + " height='48px' width='64px'/>")))
-					.append($("<td style='text-align:center'/>").append($("<a/>").attr("href", this.link)
+					.append($("<td style='text-align:center'/>").append($("<img src=" + this.imgPath + " height='48px' width='96px' title='" + this.company + "'/>")))
+					.append($("<td style='text-align:center'/>").append($("<span/>").attr("class", (betweenDay == 0 ? "badge badge-danger" : ""))
+					                                                                .text((betweenDay == 0 ? "Today" : "")))
+					                                                                .css("text-align", "left")
+					                                            .append($("<a/>").attr("href", this.link)
 					                                                             .attr("target", "blank")
-					                                                             .text(this.title)))
+					                                                             .text(" " + this.title)))
 					.append($("<td style='text-align:center'/>").text(this.regDate));
 
 				$("#listTbody").append(eleTr);
 			});
 		}
-
 		$("#totalResultCount").empty().append("Posts  : " + ajaxResponse.totalElements);
 		renderingPagingArea();
 	}
@@ -218,4 +226,17 @@ function renderingPagingArea() {
 		(e) {
 		alert("[ renderingPagingArea() ] :: " + e.message);
 	}
+}
+
+function dateFormatter(date) {
+	let year = date.getFullYear();
+
+	let month = (1 + date.getMonth());
+	month = month >= 10 ? month : '0' + month;
+
+	let day = date.getDate();
+	day = day >= 10 ? day : '0' + day;
+
+	return year + '-' + month + '-' + day;
+
 }
