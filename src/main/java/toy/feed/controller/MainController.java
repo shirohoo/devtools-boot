@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import toy.feed.domain.FeedBoard;
 import toy.feed.domain.dto.FeedBoardDto;
 import toy.feed.repository.FeedBoardRepository;
-import toy.feed.service.CollectPostService;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,7 +23,7 @@ public class MainController {
     }
     
     @ResponseBody
-    @GetMapping ("/collects")
+    @GetMapping ("/boards")
     public Page<FeedBoardDto> getBoards (Pageable pageable,
                                          @RequestParam (value = "company", required = false) String company,
                                          @RequestParam (value = "title", required = false) String title) {

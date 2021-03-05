@@ -6,7 +6,7 @@ let ajaxResponse;
  */
 $(function () {
 	$.ajax({
-		       url        : "/collects?page=0&size=10",
+		       url        : "/boards?page=0&size=10",
 		       type       : "GET",
 		       contentType: "application/x-www-form-urlencoded;charset=utf-8",
 		       dataType   : "json",
@@ -78,7 +78,7 @@ function pageMove(selectedPageNum, size) {
  */
 function searchResultList(selectedPageNum, size) {
 	try {
-		let url = CONTEXT_PATH + "/collects?";
+		let url = CONTEXT_PATH + "/boards?";
 		let param = $("#searchForm :input").filter(function (idx, element) {
 			return $(element).val() != '';
 		}).serialize();
@@ -99,7 +99,7 @@ function searchResultList(selectedPageNum, size) {
  */
 function searchPost() {
 	try {
-		let url = CONTEXT_PATH + "/collects?";
+		let url = CONTEXT_PATH + "/boards?";
 		let currentPageNum = $("#currentPageNum").val() == "" ? 0 : $("#currentPageNum").val();
 		let size = $("#renderingCount").val();
 		let param = $("#searchForm :input").filter(function (idx, element) {

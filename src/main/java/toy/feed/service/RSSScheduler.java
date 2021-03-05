@@ -6,11 +6,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 @RequiredArgsConstructor
 public class RSSScheduler {
     
     private static final Logger log = LoggerFactory.getLogger(RSSScheduler.class);
+    
     private final int DELAY = 1000 * 60 * 10;
     
     private final CollectPostService collectPostService;
@@ -19,7 +22,7 @@ public class RSSScheduler {
     @Scheduled (fixedRate = DELAY)
     public void collect () throws Exception {
         if(log.isInfoEnabled()) {
-            log.info("[LOG] RSSScheduler.collectPostService.getAll() execute !");
+            log.info("[LOGGING : " + LocalDateTime.now() + " ] RSSScheduler.collectPostService.getAll() execute !");
         }
             collectPostService.getAll();
     }
