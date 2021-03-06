@@ -17,17 +17,20 @@ public class RSSScheduler {
     
     private final int DELAY = 1000 * 60 * 10;
     
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    
     private final CollectPostService collectPostService;
     
-    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     
     // 단위: ms
     @Scheduled (fixedRate = DELAY)
     public void collect () throws Exception {
         if(log.isInfoEnabled()) {
-            log.info("[LOGGING : " + timeFormatter.format(LocalDateTime.now()) + " ] RSSScheduler.collectPostService.getAll() execute !");
+            log.info("[LOGGING : "
+                     + timeFormatter.format(LocalDateTime.now())
+                     + " ] RSSScheduler.collectPostService.getAll() execute !");
         }
-            collectPostService.getAll();
+            collectPostService.getAllGroupFeed();
     }
     
 }
