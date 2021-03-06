@@ -28,7 +28,7 @@ public class RSSScheduler {
         if(log.isInfoEnabled()) {
             log.info("[LOGGING : "
                      + timeFormatter.format(LocalDateTime.now())
-                     + " ] RSSScheduler.collectPostService.getAll() execute !");
+                     + "] RSSScheduler.collectPostService.getAllGroupFeed() execute !");
         }
             collectPostService.getAllGroupFeed();
     }
