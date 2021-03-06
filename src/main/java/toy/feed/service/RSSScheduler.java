@@ -21,7 +21,6 @@ public class RSSScheduler {
     
     private final CollectPostService collectPostService;
     
-    
     // 단위: ms
     @Scheduled (fixedRate = DELAY)
     public void collect () throws Exception {
