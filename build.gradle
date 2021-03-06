@@ -5,8 +5,13 @@ plugins {
     id 'java'
 }
 
+jar {
+    archivesBaseName = "SubscribeTechBlogs"
+}
+
 group = 'toy'
-version = '0.0.1-SNAPSHOT'
+//version = '0.0.1-SNAPSHOT'
+version = '1.0'
 sourceCompatibility = '11'
 
 configurations {
