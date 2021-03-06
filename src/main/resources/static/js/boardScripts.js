@@ -141,7 +141,7 @@ function listRendering() {
 				let regDate = new Date(regDateArray[0], regDateArray[1] - 1, regDateArray[2])
 
 				let nowDate = new Date();
-				let betweenDay = Math.round((nowDate.getTime() - regDate.getTime()) / 1000 / 60 / 60 / 24);
+				let betweenDay = Math.floor((nowDate.getTime() - regDate.getTime()) / 1000 / 60 / 60 / 24);
 
 				let eleTr = $("<tr class='graph_tr1'/>")
 					.append($("<td style='text-align:center'/>").text(this.id))
