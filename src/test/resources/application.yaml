@@ -3,17 +3,18 @@ spring:
     allow-bean-definition-overriding: true
 
   datasource:
-    url: jdbc:mysql://feed.cw3xzje28jdx.ap-northeast-2.rds.amazonaws.com:3306/feed
-    username: feed
-    password: 123qweASD!
+    url: jdbc:h2:tcp://localhost/~/feed
+    username: sa
+    password:
 
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
     properties:
       hibernate:
+        format_sql: true
         default_batch_fetch_size: 1000
 
 logging:
   level:
-    org.hibernate.SQL: info
+    org.hibernate.SQL: debug
