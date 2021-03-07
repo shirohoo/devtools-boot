@@ -144,11 +144,12 @@ function listRendering() {
 				let betweenDay = Math.floor((nowDate.getTime() - regDate.getTime()) / 1000 / 60 / 60 / 24);
 
 				let eleTr = $("<tr class='graph_tr1'/>")
-					.append($("<td style='text-align:center'/>").text(this.id))
 					.append($("<td style='text-align:center'/>").append($("<img src=" + this.imgPath + " height='48px' width='96px' title='" + this.company + "'/>")))
 					.append($("<td style='text-align:center'/>").append($("<span/>").attr("class", (betweenDay == 0 ? "badge badge-danger" : ""))
 					                                                                .text((betweenDay == 0 ? "Today" : "")))
 					                                                                .css("text-align", "left")
+					                                                                .css("font-weight", "bold")
+					                                                                .css("color", "skyblue")
 					                                            .append($("<a/>").attr("href", this.link)
 					                                                             .attr("target", "blank")
 					                                                             .text(" " + this.title)))
