@@ -1,9 +1,6 @@
 const CONTEXT_PATH = "";
 let ajaxResponse;
 
-/**
- * 페이지 최초 로딩 시 첫페이지, 사이즈10 렌더링
- */
 $(function () {
 	$.ajax({
 		       url        : "/boards?page=0&size=30",
@@ -25,12 +22,12 @@ function selectedCompany() {
 	$('#company').val(selected);
 }
 
-function initForm(searchFormId) {
+function resetSearchForm(searchFormId) {
 	try {
 		$("#" + searchFormId)[0].reset();
 	}
 	catch (e) {
-		alert("[ initForm(searchFormId) ] :: " + e.message);
+		alert("[ resetSearchForm() ] :: " + e.message);
 	}
 }
 
@@ -182,14 +179,12 @@ function renderingPagingArea() {
 			$("#pagingArea").append(prePagebutton);
 		}
 
-		// 페이징에 필요한 데이터 생성
 		let endPage = Math.ceil((ajaxResponse.pageable.pageNumber + 1) / 10.0) * 10 - 1;
 		let trueEndPage = Math.ceil(ajaxResponse.totalElements / ajaxResponse.size);
 		let startPage = endPage - 9;
 
 		if (trueEndPage <= endPage) endPage = trueEndPage - 1;
 
-		// 페이지 번호 버튼 생성
 		for (let i = startPage; i <= endPage; i++) {
 			let pageNumButton = $("<li/>").attr("class", "page-item");
 
@@ -208,7 +203,6 @@ function renderingPagingArea() {
 			$("#pagingArea").append(pageNumButton);
 		}
 
-		// 다음 페이지 버튼 생성
 		if (ajaxResponse.last != true) {
 
 			let nextPagebutton = $("<li/>").attr("class", "page-item")

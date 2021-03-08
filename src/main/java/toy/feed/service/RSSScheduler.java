@@ -15,21 +15,18 @@ public class RSSScheduler {
     
     private static final Logger log = LoggerFactory.getLogger(RSSScheduler.class);
     
-    private final int DELAY = 1000 * 60 * 10;
+    private final int DELAY = 1000 * 60 * 10; // 단위: ms
     
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     
     private final CollectPostService collectPostService;
     
-    // 단위: ms
     @Scheduled (fixedRate = DELAY)
     public void collect () throws Exception {
-        
-        if (log.isInfoEnabled()) {
-            log.info("[LOGGING : "
-                     + timeFormatter.format(LocalDateTime.now())
-                     + "] RSSScheduler.collectPostService.getAllGroupFeed() execute !");
-        }
+        log.info("[LOGGING : "
+                 + timeFormatter.format(LocalDateTime.now())
+                 + "] RSSScheduler.collectPostService.getAllGroupFeed() execute !");
+    
         collectPostService.getAllGroupFeed();
     }
     

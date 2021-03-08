@@ -49,14 +49,13 @@ public class CollectPostService {
             for (RSSFeedMessage message : feed.getMessages()) {
                 FeedBoard feedBoard = toFeedBoard(message);
                 if (feedBoard != null) {
-                    if(log.isInfoEnabled()) {
-                        log.info("[LOGGING : "
-                                 + timeFormatter.format(LocalDateTime.now())
-                                 + " ] <SAVE> "
-                                 + feedBoard.getCompany()
-                                 + " : "
-                                 + feedBoard.getTitle());
-                    }
+                    log.info("[LOGGING : "
+                             + timeFormatter.format(LocalDateTime.now())
+                             + " ] <SAVE> "
+                             + feedBoard.getCompany()
+                             + " : "
+                             + feedBoard.getTitle());
+                    
                     feedBoardRepository.save(feedBoard);
                 }
             }

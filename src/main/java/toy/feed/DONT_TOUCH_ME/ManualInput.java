@@ -1,4 +1,4 @@
-package toy.feed.dont_touch_me;
+package toy.feed.DONT_TOUCH_ME;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
