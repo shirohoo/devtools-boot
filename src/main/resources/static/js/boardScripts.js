@@ -6,7 +6,7 @@ let ajaxResponse;
  */
 $(function () {
 	$.ajax({
-		       url        : "/boards?page=0&size=20",
+		       url        : "/boards?page=0&size=30",
 		       type       : "GET",
 		       contentType: "application/x-www-form-urlencoded;charset=utf-8",
 		       dataType   : "json",
@@ -229,15 +229,8 @@ function renderingPagingArea() {
 	}
 }
 
-function dateFormatter(date) {
-	let year = date.getFullYear();
-
-	let month = (1 + date.getMonth());
-	month = month >= 10 ? month : '0' + month;
-
-	let day = date.getDate();
-	day = day >= 10 ? day : '0' + day;
-
-	return year + '-' + month + '-' + day;
-
+function enterKeyup() {
+	if (event.keyCode == 13) {
+		searchPost();
+	}
 }

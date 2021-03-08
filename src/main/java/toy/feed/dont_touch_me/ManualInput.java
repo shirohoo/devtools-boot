@@ -1,4 +1,4 @@
-package toy.feed.service;
+package toy.feed.dont_touch_me;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
@@ -25,7 +25,7 @@ public class ManualInput {
     public void woowa () throws Exception {
         List<FeedBoard> list = new ArrayList<>();
         
-        File file = new File("src/test/resources/woowa.xlsx");
+        File file = new File("src/test/resources/woowa_tech.xlsx");
         Workbook workbook = new XSSFWorkbook(new FileInputStream(file));
         Sheet sheet = workbook.getSheetAt(0);
         
@@ -35,6 +35,27 @@ public class ManualInput {
                               .guid(rows.getCell(1).getStringCellValue())
                               .company(rows.getCell(2).getStringCellValue())
                               .imgPath("/images/woowabros.png")
+                              .build());
+        }
+        
+        feedBoardRepository.saveAll(list);
+        
+    }
+    
+    @Transactional
+    public void toss () throws Exception {
+        List<FeedBoard> list = new ArrayList<>();
+        
+        File file = new File("src/test/resources/toss_tech.xlsx");
+        Workbook workbook = new XSSFWorkbook(new FileInputStream(file));
+        Sheet sheet = workbook.getSheetAt(0);
+        
+        for (Row rows : sheet) {
+            list.add(FeedBoard.builder()
+                              .title(rows.getCell(0).getStringCellValue())
+                              .guid(rows.getCell(1).getStringCellValue())
+                              .company(rows.getCell(2).getStringCellValue())
+                              .imgPath("/images/toss.png")
                               .build());
         }
         

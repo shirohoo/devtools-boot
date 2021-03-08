@@ -12,7 +12,7 @@
                     <span id="companyBox" >Group
                         <input type="hidden" id="company" name="company" value="" />
                         <select class="form-control" id="selectCompany" onchange="selectedCompany(this)" >
-                            <option value="" >Select to search...</option >
+                            <option value="" >Select group to search...</option >
                             <option value="우아한형제들" >우아한형제들</option >
                             <option value="데일리호텔" >데일리호텔</option >
                             <option value="카카오" >카카오</option >
@@ -22,7 +22,8 @@
                         </select >
                     </span >
                     <span id="titleBox" >Title
-                        <input class="form-control" type="text" id="title" name="title" placeholder="Enter a title to search..." />
+                        <input hidden="hidden" />
+                        <input class="form-control" type="text" id="title" name="title" placeholder="Enter title to search..." onkeyup="enterKeyup()" />
                     </span >
                     <span id="searchBox" style="margin-left: auto;" >
                         <input class="form-control" type="button" id="search" onclick="searchPost()" value="Search" />
@@ -37,7 +38,6 @@
             <span style="margin-left: auto;" >
                 <input type="hidden" id="currentPageNum" />Show posts
                 <select id="renderingCount" onchange="searchPost()" >
-                    <option value="20" >20</option >
                     <option value="30" >30</option >
                     <option value="50" >50</option >
                     <option value="100" >100</option >
@@ -52,7 +52,7 @@
                 <tr class="text-center" >
                     <th style="width:20%" >Group</th >
                     <th style="width:50%" >Title</th >
-                    <th style="width:20%" >Collect</th >
+                    <th style="width:20%" >Collect Date</th >
                 </tr >
                 </thead >
                 <tbody id="listTbody" >

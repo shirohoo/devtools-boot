@@ -29,7 +29,7 @@ public class ExcelReadTest {
         // given
         List<FeedBoard> list = new ArrayList<>();
         
-        File file = new File("src/test/resources/woowa.xlsx");
+        File file = new File("src/test/resources/woowa_tech.xlsx");
         Workbook workbook = new XSSFWorkbook(new FileInputStream(file));
         Sheet sheet = workbook.getSheetAt(0);
         

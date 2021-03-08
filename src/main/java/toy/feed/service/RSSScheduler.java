@@ -24,13 +24,13 @@ public class RSSScheduler {
     // 단위: ms
     @Scheduled (fixedRate = DELAY)
     public void collect () throws Exception {
-    
-        if(log.isInfoEnabled()) {
+        
+        if (log.isInfoEnabled()) {
             log.info("[LOGGING : "
                      + timeFormatter.format(LocalDateTime.now())
                      + "] RSSScheduler.collectPostService.getAllGroupFeed() execute !");
         }
-            collectPostService.getAllGroupFeed();
+        collectPostService.getAllGroupFeed();
     }
     
 }
