@@ -8,9 +8,11 @@
 
 ![image](https://user-images.githubusercontent.com/71188307/110321314-d8edbf80-8054-11eb-97d8-a764909eb723.png)
 
+<br />
+<br />
 
 # CI/CD
-- 업데이트가 귀찮아서 구축한 자동화
+- 기술블로그 그룹 업데이트가 귀찮아서 구축한 자동화
 - master branch push시 빌드 → 배포 자동화
 
 <br />
