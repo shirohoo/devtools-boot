@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" >
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" >
 <head th:replace="fragments/head :: head" />
 <body >
 <!-- container -->
@@ -8,27 +8,33 @@
     <div >
         <div >
             <form id="searchForm" >
-                <div class="form-inline" >
-                    <span id="companyBox" >Group
-                        <input type="hidden" id="company" name="company" value="" />
-                        <select class="form-control" id="selectCompany" onchange="selectedCompany(this)" >
-                            <option value="" >Select group to search...</option >
-                            <option value="우아한형제들" >우아한형제들</option >
-                            <option value="데일리호텔" >데일리호텔</option >
-                            <option value="카카오" >카카오</option >
-                            <option value="야놀자" >야놀자</option >
-                            <option value="토스" >토스</option >
-                            <option value="당근마켓" >당근마켓</option >
-                        </select >
-                    </span >
-                    <span id="titleBox" >Title
-                        <input hidden="hidden" />
-                        <input class="form-control" type="text" id="title" name="title" placeholder="Enter title to search..." onkeyup="enterKeyup()" />
-                    </span >
-                    <span id="searchBox" style="margin-left: auto;" >
-                        <input class="form-control" type="button" id="search" onclick="searchPost()" value="Search" />
-                        <input class="form-control" type="reset" id="initialize" onclick="resetSearchForm('searchForm')" value="Reset" />
-                    </span >
+                <div class="form-group" >
+                    <div class="row" >
+                        <div class="col-9" id="companyBox" >Group
+                            <input type="hidden" id="company" name="company" value="" />
+                            <select class="form-control" id="selectCompany" onchange="selectedCompany(this)" >
+                                <option value="" >Select group to search...</option >
+                                <option value="우아한형제들" >우아한형제들</option >
+                                <option value="데일리호텔" >데일리호텔</option >
+                                <option value="카카오" >카카오</option >
+                                <option value="야놀자" >야놀자</option >
+                                <option value="토스" >토스</option >
+                                <option value="당근마켓" >당근마켓</option >
+                            </select >
+                        </div >
+                        <div class="col-3" >
+                            <button class="btn btn-outline-info" type="button" id="initialize" onclick="resetSearchForm('searchForm')" >Reset</button >
+                        </div >
+                    </div >
+                    <div class="row" >
+                        <div class="col-9" >Title
+                            <input hidden="hidden" />
+                            <input class="form-control" type="text" id="title" name="title" placeholder="Enter title to search..." onkeyup="enterKeyup()" />
+                        </div >
+                        <div class="col-3" >
+                            <button class="btn btn-outline-info" type="button" id="search" onclick="searchPost()" >Search</button >
+                        </div >
+                    </div >
                 </div >
             </form >
         </div >
