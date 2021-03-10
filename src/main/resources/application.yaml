@@ -2,11 +2,6 @@ spring:
   main:
     allow-bean-definition-overriding: true
 
-  datasource:
-    url: jdbc:mysql://feed.cw3xzje28jdx.ap-northeast-2.rds.amazonaws.com:3306/feed
-    username: feed
-    password: 123qweASD!
-
   jpa:
     hibernate:
       ddl-auto: validate
