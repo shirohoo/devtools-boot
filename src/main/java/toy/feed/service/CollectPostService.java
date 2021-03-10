@@ -32,6 +32,7 @@ public class CollectPostService {
     
     private void loopCrawl () throws Exception{
         List<String> urls = new ArrayList<>(Arrays.asList("https://woowabros.github.io/feed.xml",
+                                                          "https://medium.com/feed/watcha",
                                                           "https://blog.toss.im/feed/",
                                                           "https://dailyhotel.io/feed",
                                                           "https://medium.com/feed/daangn",
@@ -99,6 +100,11 @@ public class CollectPostService {
                 message.setImgPath("/images/kurly.png");
                 message.setCompany("마켓컬리");
             }
+            else if (url.contains("watcha")) {
+                message.setImgPath("/images/watcha.png");
+                message.setCompany("왓챠");
+            }
+            
             return FeedBoard.builder()
                             .title(message.getTitle())
                             .company(message.getCompany())

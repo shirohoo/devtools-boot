@@ -129,14 +129,30 @@ class RSSFeedParserTest {
         RSSFeedParser parser = new RSSFeedParser(
                 "https://helloworld.kurly.com/feed.xml"
         );
+    
+        RSSFeed feed = parser.readFeed();
+    
+        for (RSSFeedMessage message : feed.getMessages()) {
+            assertThat(message.getLink().trim()).startsWith("http://");
+            assertThat(message.getGuid().trim()).startsWith("http://");
+        }
+    
+    }
+    
+    @Test
+    @DisplayName ("READ_RSS_왓챠")
+    void watcha () throws Exception {
+        RSSFeedParser parser = new RSSFeedParser(
+                "https://medium.com/feed/watcha"
+        );
         
         RSSFeed feed = parser.readFeed();
         
         for (RSSFeedMessage message : feed.getMessages()) {
-            assertThat(message.getLink().trim()).startsWith("http://");
-            assertThat(message.getGuid().trim()).startsWith("http://");
-            System.out.println("message = " + message);
+            assertThat(message.getLink().trim()).startsWith("https://");
+            assertThat(message.getGuid().trim()).startsWith("https://");
         }
         
     }
+    
 }

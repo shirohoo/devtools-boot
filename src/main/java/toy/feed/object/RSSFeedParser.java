@@ -86,7 +86,6 @@ public class RSSFeedParser {
                 }
                 else if (event.isEndElement()) {
                     if (event.asEndElement().getName().getLocalPart() == ITEM) {
-                        if (!title.matches("/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/")) {
                             RSSFeedMessage message = new RSSFeedMessage();
                             message.setAuthor(author);
                             message.setGuid(guid);
@@ -96,7 +95,6 @@ public class RSSFeedParser {
                             feed.getMessages().add(message);
                             event = eventReader.nextEvent();
                             continue;
-                        }
                     }
                 }
             }
