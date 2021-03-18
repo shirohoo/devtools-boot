@@ -20,6 +20,7 @@ $(function () {
 function selectedCompany() {
 	let selected = $('#selectCompany').val();
 	$('#company').val(selected);
+	searchPost();
 }
 
 function resetSearchForm(searchFormId) {
