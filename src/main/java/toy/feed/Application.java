@@ -20,7 +20,7 @@ public class Application {
     @Bean
     public TaskScheduler scheduler () {
         ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
-        scheduler.setPoolSize(4);
+        scheduler.setPoolSize(2);
         return scheduler;
     }
 }

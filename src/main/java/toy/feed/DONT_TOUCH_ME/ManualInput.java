@@ -14,7 +14,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * <pre>
+ * RSS 피드는 최신 글 10개만 제공해주는데,
+ * 신규 기술블로그 추가 시 추가하려는 기술 블로그의 기존 글이 너무 많을 경우
+ * 기존 게시글을 DB에 직접 입력해주기 위한 클래스
+ * </pre>
+ */
 @Component
 @RequiredArgsConstructor
 public class ManualInput {

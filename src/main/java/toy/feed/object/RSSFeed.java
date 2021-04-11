@@ -1,12 +1,13 @@
 package toy.feed.object;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@ToString
-@Getter @Setter
+@Getter
+@Setter
 public class RSSFeed {
     
     private final String title;
@@ -16,8 +17,7 @@ public class RSSFeed {
     private final String pubDate;
     private final List<RSSFeedMessage> messages = new ArrayList<>();
     
-    public RSSFeed (String title, String link,
-                    String language, String copyright, String pubDate) {
+    public RSSFeed (String title, String link, String language, String copyright, String pubDate) {
         this.title = title;
         this.link = link;
         this.language = language;
