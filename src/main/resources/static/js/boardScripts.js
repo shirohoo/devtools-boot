@@ -1,3 +1,5 @@
+"use strict";
+
 const CONTEXT_PATH = "";
 let ajaxResponse;
 
@@ -18,8 +20,7 @@ $(function () {
 });
 
 function selectedCompany() {
-	let selected = $('#selectCompany').val();
-	$('#company').val(selected);
+	$('#company').val($('#selectCompany').val());
 	searchPost();
 }
 
@@ -28,7 +29,7 @@ function resetSearchForm(searchFormId) {
 		$("#" + searchFormId)[0].reset();
 	}
 	catch (e) {
-		alert("[ resetSearchForm() ] :: " + e.message);
+		alert("[resetSearchForm] :: " + e.message);
 	}
 }
 
@@ -50,7 +51,7 @@ function requestAjax(url, param) {
 
 	}
 	catch (e) {
-		alert("[ requestAjax ] :: " + e.message);
+		alert("[requestAjax] :: " + e.message);
 	}
 }
 
@@ -65,7 +66,7 @@ function pageMove(selectedPageNum, size) {
 
 	}
 	catch (e) {
-		alert("[ pageMove(renderingCount, selectedPageNum) ] :: " + e.message);
+		alert("[pageMove] :: " + e.message);
 	}
 }
 
@@ -88,7 +89,7 @@ function searchResultList(selectedPageNum, size) {
 
 	}
 	catch (e) {
-		alert("[ searchResultList() ] :: " + e.message);
+		alert("[searchResultList] :: " + e.message);
 	}
 }
 
@@ -110,7 +111,7 @@ function searchPost() {
 		requestAjax(url, param);
 	}
 	catch (e) {
-		alert("[ searchResultList() ] " + e.message);
+		alert("[searchResultList] " + e.message);
 	}
 }
 
@@ -145,9 +146,9 @@ function listRendering() {
 					.append($("<td style='text-align:center'/>").append($("<img src=" + this.imgPath + " height='48px' width='96px' title='" + this.company + "'/>")))
 					.append($("<td style='text-align:center'/>").append($("<span/>").attr("class", (betweenDay == 0 ? "badge badge-danger" : ""))
 					                                                                .text((betweenDay == 0 ? "Today" : "")))
-					                                                                .css("text-align", "left")
-					                                                                .css("font-weight", "bold")
-					                                                                .css("color", "skyblue")
+					                                            .css("text-align", "left")
+					                                            .css("font-weight", "bold")
+					                                            .css("color", "skyblue")
 					                                            .append($("<a/>").attr("href", this.link)
 					                                                             .attr("target", "blank")
 					                                                             .text(" " + this.title)))
@@ -160,7 +161,7 @@ function listRendering() {
 		renderingPagingArea();
 	}
 	catch (e) {
-		alert("[ listRendering() ] " + e.message);
+		alert("[listRendering] " + e.message);
 	}
 }
 
@@ -220,7 +221,7 @@ function renderingPagingArea() {
 	}
 	catch
 		(e) {
-		alert("[ renderingPagingArea() ] :: " + e.message);
+		alert("[renderingPagingArea] :: " + e.message);
 	}
 }
 
