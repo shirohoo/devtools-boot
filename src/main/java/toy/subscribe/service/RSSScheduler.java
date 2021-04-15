@@ -1,4 +1,4 @@
-package toy.feed.service;
+package toy.subscribe.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,11 +18,10 @@ public class RSSScheduler {
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final CollectPostService collectPostService;
     
-    @Scheduled (fixedRate = DELAY)
+    @Scheduled(fixedRate = DELAY)
     public void collect () throws Exception {
-        log.info("[LOGGING : "
-                 + timeFormatter.format(LocalDateTime.now())
-                 + "] RSSScheduler.collectPostService.getAllGroupFeed() execute !");
+        
+        log.info("[LOGGING : {}] Scheduler collect RSS !", timeFormatter.format(LocalDateTime.now()));
         
         collectPostService.getAllGroupFeed();
     }

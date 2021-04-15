@@ -1,10 +1,10 @@
-package toy.feed.service;
+package toy.subscribe.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import toy.feed.domain.FeedBoard;
-import toy.feed.object.RSSFeedMessage;
-import toy.feed.repository.FeedBoardRepository;
+import toy.subscribe.domain.RSSFeedMessage;
+import toy.subscribe.domain.entity.FeedBoard;
+import toy.subscribe.repository.FeedBoardRepository;
 
 @Component
 @RequiredArgsConstructor
@@ -12,7 +12,7 @@ public class FeedBoardFactory {
     
     private final FeedBoardRepository feedBoardRepository;
     
-    public FeedBoard getFeedBoardFrom (RSSFeedMessage message) {
+    public FeedBoard findFeedBoardFrom(RSSFeedMessage message) {
         if(isNoDuplicate(message)) {
             
             String url = message.getLink();

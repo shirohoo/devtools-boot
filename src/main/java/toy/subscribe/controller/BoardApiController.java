@@ -1,4 +1,4 @@
-package toy.feed.controller;
+package toy.subscribe.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -6,8 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import toy.feed.domain.dto.FeedBoardDto;
-import toy.feed.repository.FeedBoardRepository;
+import toy.subscribe.domain.dto.FeedBoardDto;
+import toy.subscribe.repository.FeedBoardRepository;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,8 +26,8 @@ public class BoardApiController {
         if(isNull(title)) {
             title = "";
         }
-        
-        return feedBoardRepository.getPageFeedBoard(pageable, company, title);
+    
+        return feedBoardRepository.findPageByFeedBoard(pageable, company, title);
     }
     
     private boolean isNull (String s) {

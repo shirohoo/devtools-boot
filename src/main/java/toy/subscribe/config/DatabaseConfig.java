@@ -1,4 +1,4 @@
-package toy.feed.config;
+package toy.subscribe.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.jdbc.DataSourceBuilder;

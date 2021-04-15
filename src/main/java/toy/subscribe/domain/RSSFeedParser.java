@@ -1,4 +1,4 @@
-package toy.feed.object;
+package toy.subscribe.domain;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -86,15 +86,18 @@ public class RSSFeedParser {
                 }
                 else if (event.isEndElement()) {
                     if (event.asEndElement().getName().getLocalPart() == ITEM) {
-                            RSSFeedMessage message = new RSSFeedMessage();
-                            message.setAuthor(author);
-                            message.setGuid(guid);
-                            message.setLink(link);
-                            message.setTitle(title);
-                            message.setPubdate(pubdate);
-                            feed.getMessages().add(message);
-                            event = eventReader.nextEvent();
-                            continue;
+                        RSSFeedMessage message = RSSFeedMessage.builder()
+                                                               .author(author)
+                                                               .guid(guid)
+                                                               .link(link)
+                                                               .title(title)
+                                                               .pubdate(pubdate)
+                                                               .build();
+    
+                        feed.getMessages().add(message);
+    
+                        event = eventReader.nextEvent();
+                        continue;
                     }
                 }
             }
@@ -114,13 +117,14 @@ public class RSSFeedParser {
         }
     }
     
-    private String getCharacterData ( XMLEvent event, XMLEventReader eventReader )
-    throws XMLStreamException {
+    private String getCharacterData(XMLEvent event, XMLEventReader eventReader) throws XMLStreamException {
         String result = "";
         event = eventReader.nextEvent();
-        if (event instanceof Characters) {
+        
+        if(event instanceof Characters) {
             result = event.asCharacters().getData();
         }
+        
         return result;
     }
     

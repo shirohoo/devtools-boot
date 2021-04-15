@@ -1,19 +1,19 @@
-package toy.feed.service;
+package toy.subscribe.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import toy.feed.domain.FeedBoard;
-import toy.feed.object.RSSFeed;
-import toy.feed.object.RSSFeedMessage;
-import toy.feed.object.RSSFeedParser;
-import toy.feed.repository.FeedBoardRepository;
+import org.springframework.transaction.annotation.Transactional;
+import toy.subscribe.domain.RSSFeed;
+import toy.subscribe.domain.RSSFeedParser;
+import toy.subscribe.repository.FeedBoardRepository;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -21,9 +21,11 @@ import java.util.List;
 public class CollectPostService {
     
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    
     private final FeedBoardRepository feedBoardRepository;
     private final FeedBoardFactory feedBoardFactory;
     
+    @Transactional(readOnly = true)
     public void getAllGroupFeed () throws Exception {
         loopCrawl();
     }
@@ -40,24 +42,19 @@ public class CollectPostService {
                                                           "https://engineering.linecorp.com/ko/feed/",
                                                           "https://helloworld.kurly.com/feed.xml"
                                                          ));
-        
-        for (String url : urls) {
+    
+        for(String url : urls) {
             RSSFeedParser parser = new RSSFeedParser(url);
             RSSFeed feed = parser.readFeed();
-            
-            for (RSSFeedMessage message : feed.getMessages()) {
-                FeedBoard feedBoard = feedBoardFactory.getFeedBoardFrom(message);
-                if (feedBoard != null) {
-                    log.info("[LOGGING : "
-                             + timeFormatter.format(LocalDateTime.now())
-                             + " ] <SAVE> "
-                             + feedBoard.getCompany()
-                             + " : "
-                             + feedBoard.getTitle());
-                    
+        
+            feed.getMessages()
+                .stream()
+                .map(feedBoardFactory::findFeedBoardFrom)
+                .filter(Objects::nonNull)
+                .forEach(feedBoard->{
+                    log.info("[LOGGING : {}] <SAVE> {} : {}", timeFormatter.format(LocalDateTime.now()), feedBoard.getCompany(), feedBoard.getTitle());
                     feedBoardRepository.save(feedBoard);
-                }
-            }
+                });
         }
     }
     

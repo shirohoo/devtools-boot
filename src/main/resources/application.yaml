@@ -9,6 +9,8 @@ spring:
       hibernate:
         default_batch_fetch_size: 1000
 
+    open-in-view: false
+
 logging:
   level:
     org.hibernate.SQL: info

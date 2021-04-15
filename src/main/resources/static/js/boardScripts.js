@@ -19,20 +19,6 @@ $(function () {
 	       });
 });
 
-function selectedCompany() {
-	$('#company').val($('#selectCompany').val());
-	searchPost();
-}
-
-function resetSearchForm(searchFormId) {
-	try {
-		$("#" + searchFormId)[0].reset();
-	}
-	catch (e) {
-		alert("[resetSearchForm] :: " + e.message);
-	}
-}
-
 function requestAjax(url, param) {
 	try {
 		$.ajax({
@@ -52,6 +38,20 @@ function requestAjax(url, param) {
 	}
 	catch (e) {
 		alert("[requestAjax] :: " + e.message);
+	}
+}
+
+function selectedCompany() {
+	$('#company').val($('#selectCompany').val());
+	searchPost();
+}
+
+function resetSearchForm(searchFormId) {
+	try {
+		$("#" + searchFormId)[0].reset();
+	}
+	catch (e) {
+		alert("[resetSearchForm] :: " + e.message);
 	}
 }
 

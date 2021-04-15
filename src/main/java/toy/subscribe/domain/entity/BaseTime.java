@@ -1,4 +1,4 @@
-package toy.feed.domain;
+package toy.subscribe.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

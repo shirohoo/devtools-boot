@@ -1,4 +1,4 @@
-package toy.feed.config;
+package toy.subscribe.config;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;

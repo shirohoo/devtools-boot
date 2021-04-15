@@ -1,4 +1,4 @@
-package toy.feed.object;
+package toy.subscribe.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,14 +17,14 @@ class RSSFeedParserTest {
         RSSFeedParser parser = new RSSFeedParser(
                 "https://woowabros.github.io/feed.xml"
         );
-        
+    
         RSSFeed feed = parser.readFeed();
-        
-        for (RSSFeedMessage message : feed.getMessages()) {
+    
+        feed.getMessages().forEach(message->{
             assertThat(message.getLink().trim()).startsWith("https://");
             assertThat(message.getGuid().trim()).startsWith("https://");
-        }
-        
+        });
+    
     }
     
     @Test
@@ -33,14 +33,14 @@ class RSSFeedParserTest {
         RSSFeedParser parser = new RSSFeedParser(
                 "https://blog.toss.im/feed/"
         );
-        
+    
         RSSFeed feed = parser.readFeed();
-        
-        for (RSSFeedMessage message : feed.getMessages()) {
+    
+        feed.getMessages().forEach(message->{
             assertThat(message.getLink().trim()).startsWith("https://");
             assertThat(message.getGuid().trim()).startsWith("https://");
-        }
-        
+        });
+    
     }
     
     @Test
@@ -49,14 +49,14 @@ class RSSFeedParserTest {
         RSSFeedParser parser = new RSSFeedParser(
                 "https://dailyhotel.io/feed"
         );
-        
+    
         RSSFeed feed = parser.readFeed();
-        
-        for (RSSFeedMessage message : feed.getMessages()) {
+    
+        feed.getMessages().forEach(message->{
             assertThat(message.getLink().trim()).startsWith("https://");
             assertThat(message.getGuid().trim()).startsWith("https://");
-        }
-        
+        });
+    
     }
     
     @Test
@@ -65,14 +65,14 @@ class RSSFeedParserTest {
         RSSFeedParser parser = new RSSFeedParser(
                 "https://medium.com/feed/daangn"
         );
-        
+    
         RSSFeed feed = parser.readFeed();
-        
-        for (RSSFeedMessage message : feed.getMessages()) {
+    
+        feed.getMessages().forEach(message->{
             assertThat(message.getLink().trim()).startsWith("https://");
             assertThat(message.getGuid().trim()).startsWith("https://");
-        }
-        
+        });
+    
     }
     
     @Test
@@ -81,14 +81,14 @@ class RSSFeedParserTest {
         RSSFeedParser parser = new RSSFeedParser(
                 "https://tech.kakao.com/feed/"
         );
-        
+    
         RSSFeed feed = parser.readFeed();
-        
-        for (RSSFeedMessage message : feed.getMessages()) {
+    
+        feed.getMessages().forEach(message->{
             assertThat(message.getLink().trim()).startsWith("https://");
             assertThat(message.getGuid().trim()).startsWith("https://");
-        }
-        
+        });
+    
     }
     
     @Test
@@ -97,14 +97,14 @@ class RSSFeedParserTest {
         RSSFeedParser parser = new RSSFeedParser(
                 "https://yanolja.github.io/feed.xml"
         );
-        
+    
         RSSFeed feed = parser.readFeed();
-        
-        for (RSSFeedMessage message : feed.getMessages()) {
+    
+        feed.getMessages().forEach(message->{
             assertThat(message.getLink().trim()).startsWith("https://");
             assertThat(message.getGuid().trim()).startsWith("https://");
-        }
-        
+        });
+    
     }
     
     @Test
@@ -113,14 +113,14 @@ class RSSFeedParserTest {
         RSSFeedParser parser = new RSSFeedParser(
                 "https://engineering.linecorp.com/ko/feed/"
         );
-        
+    
         RSSFeed feed = parser.readFeed();
-        
-        for (RSSFeedMessage message : feed.getMessages()) {
+    
+        feed.getMessages().forEach(message->{
             assertThat(message.getLink().trim()).startsWith("https://");
             assertThat(message.getGuid().trim()).startsWith("https://");
-        }
-        
+        });
+    
     }
     
     @Test
@@ -132,10 +132,10 @@ class RSSFeedParserTest {
     
         RSSFeed feed = parser.readFeed();
     
-        for (RSSFeedMessage message : feed.getMessages()) {
+        feed.getMessages().forEach(message->{
             assertThat(message.getLink().trim()).startsWith("http://");
             assertThat(message.getGuid().trim()).startsWith("http://");
-        }
+        });
     
     }
     
@@ -145,14 +145,14 @@ class RSSFeedParserTest {
         RSSFeedParser parser = new RSSFeedParser(
                 "https://medium.com/feed/watcha"
         );
-        
+    
         RSSFeed feed = parser.readFeed();
-        
-        for (RSSFeedMessage message : feed.getMessages()) {
+    
+        feed.getMessages().forEach(message->{
             assertThat(message.getLink().trim()).startsWith("https://");
             assertThat(message.getGuid().trim()).startsWith("https://");
-        }
-        
+        });
+    
     }
     
 }

@@ -1,16 +1,15 @@
-package toy.feed.domain.dto;
+package toy.subscribe.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import toy.feed.domain.FeedBoard;
+import toy.subscribe.domain.entity.FeedBoard;
 
 import java.time.LocalDateTime;
 
+@Data
 @Builder
-@ToString
-@Getter @Setter
 @AllArgsConstructor
-@NoArgsConstructor (access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FeedBoardDto {
     
     private Long id;
@@ -22,7 +21,7 @@ public class FeedBoardDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime regDate;
     
-    public static FeedBoardDto ConvertToDtoFrom (FeedBoard board) {
+    public static FeedBoardDto convertToFeedBoardDtoFrom(FeedBoard board) {
         return FeedBoardDto.builder()
                            .id(board.getId())
                            .company(board.getCompany())

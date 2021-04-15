@@ -1,8 +1,8 @@
-package toy.feed.repository;
+package toy.subscribe.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
-import toy.feed.domain.FeedBoard;
+import toy.subscribe.domain.entity.FeedBoard;
 
 public interface FeedBoardRepository extends JpaRepository<FeedBoard, Long>, QuerydslPredicateExecutor<FeedBoard>, FeedBoardCustomRepository {
     
