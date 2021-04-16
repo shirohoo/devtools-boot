@@ -63,7 +63,9 @@ function resetSearchForm(searchFormId) {
 function pageMove(selectedPageNum, size) {
 	try {
 		searchResultList(selectedPageNum, size);
-
+		window.scrollTo({
+			                top: 0, left: 0, behavior: 'smooth'
+		                });
 	}
 	catch (e) {
 		alert("[pageMove] :: " + e.message);
@@ -157,7 +159,7 @@ function listRendering() {
 				$("#listTbody").append(eleTr);
 			});
 		}
-		$("#totalResultCount").empty().append("Posts  : " + ajaxResponse.totalElements);
+		$("#totalResultCount").empty().append("전체 글  : " + ajaxResponse.totalElements + "개");
 		renderingPagingArea();
 	}
 	catch (e) {
