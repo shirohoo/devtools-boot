@@ -1,4 +1,4 @@
-package toy.subscribe.config;
+package toy.subscribe.properties;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;

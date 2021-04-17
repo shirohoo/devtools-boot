@@ -24,7 +24,7 @@ public class ExcelReadTest {
     @Autowired FeedBoardRepository feedBoardRepository;
     
     @Test
-    @DisplayName ("기술블로그_엑셀읽기_우아한형제들")
+    @DisplayName("우아한형제들_엑셀_읽기")
     public void read () throws Exception {
         // given
         List<FeedBoard> list = new ArrayList<>();
