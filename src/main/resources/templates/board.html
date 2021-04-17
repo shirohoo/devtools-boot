@@ -27,9 +27,10 @@
                                 <option value="왓챠" >왓챠</option >
                             </select >
                         </div >
-                        <div class="col-3" >
+                        <div class="col-1" >
                             <button class="btn btn-outline-info" type="button" id="initialize" onclick="resetSearchForm('searchForm')" >초기화</button >
                         </div >
+                        <div class="col-2" ></div >
                     </div >
                     <br >
                     <div class="row" >
@@ -37,9 +38,10 @@
                             <input hidden="hidden" />
                             <input class="form-control" type="text" id="title" name="title" placeholder="검색할 제목을 입력하세요" onkeyup="enterKeyup()" />
                         </div >
-                        <div class="col-3" >
+                        <div class="col-1" >
                             <button class="btn btn-outline-info" type="button" id="search" onclick="searchPost()" >검색</button >
                         </div >
+                        <div class="col-2" ></div >
                     </div >
                 </div >
             </form >
@@ -75,6 +77,7 @@
         <div style="width: 50%; margin: auto" >
             <ul class="pagination justify-content-center" id="pagingArea" ></ul >
         </div >
+        <br /><br />
         <div th:replace="fragments/footer :: footer" />
         <!-- container -->
     </div >
