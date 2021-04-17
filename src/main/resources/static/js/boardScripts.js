@@ -159,7 +159,7 @@ function listRendering() {
 				$("#listTbody").append(eleTr);
 			});
 		}
-		$("#totalResultCount").empty().append("전체 글  : " + ajaxResponse.totalElements + "개");
+		$("#totalResultCount").empty().append("TOTAL  : " + ajaxResponse.totalElements);
 		renderingPagingArea();
 	}
 	catch (e) {

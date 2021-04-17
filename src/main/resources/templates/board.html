@@ -12,7 +12,9 @@
             <form id="searchForm" >
                 <div class="form-group" >
                     <div class="row" >
-                        <div class="col-9" id="companyBox" >회사
+                        <div class="col-1" ></div >
+                        <div class="col-7" id="companyBox" >
+                            <span class="badge badge-danger text-wrap" style="width: 6rem;" >회사</span >
                             <input type="hidden" id="company" name="company" value="" />
                             <select class="form-control" id="selectCompany" onchange="selectedCompany(this)" >
                                 <option value="" >- 선택하지 않음 -</option >
@@ -27,31 +29,34 @@
                                 <option value="왓챠" >왓챠</option >
                             </select >
                         </div >
-                        <div class="col-1" >
+                        <div class="col-3" >
                             <button class="btn btn-outline-info" type="button" id="initialize" onclick="resetSearchForm('searchForm')" >초기화</button >
                         </div >
-                        <div class="col-2" ></div >
+                        <div class="col-1" ></div >
                     </div >
                     <br >
                     <div class="row" >
-                        <div class="col-9" >제목
+                        <div class="col-1" ></div >
+                        <div class="col-7" >
+                            <span class="badge badge-info text-wrap" style="width: 6rem;" >제목</span >
                             <input hidden="hidden" />
                             <input class="form-control" type="text" id="title" name="title" placeholder="검색할 제목을 입력하세요" onkeyup="enterKeyup()" />
                         </div >
-                        <div class="col-1" >
+                        <div class="col-3" >
                             <button class="btn btn-outline-info" type="button" id="search" onclick="searchPost()" >검색</button >
                         </div >
-                        <div class="col-2" ></div >
+                        <div class="col-1" ></div >
                     </div >
                 </div >
             </form >
         </div >
         <hr />
         <div class="form-inline" >
-            <h4 id="totalResultCount" >전체 글 : </h4 >
+            <h4 id="totalResultCount" >TOTAL : </h4 >
             <span style="margin-left: auto;" >
-                <input type="hidden" id="currentPageNum" />표시
-                <select id="renderingCount" onchange="searchPost()" >
+                <input type="hidden" id="currentPageNum" />
+                표시
+                <select class="custom-select" id="renderingCount" onchange="searchPost()" >
                     <option value="30" >30개</option >
                     <option value="50" >50개</option >
                     <option value="100" >100개</option >
