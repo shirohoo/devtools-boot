@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" >
-<div class="footer" th:fragment="footer" >
+<div class="footer" th:fragment="footer" style="margin-bottom: 50px" >
     <div class="container" >
-        <div class="row mb-5" >
-            <div class="col-md" >
-                <div class="text-right" >
-                    <h4 style="display: inline" >
-                        <img th:src="@{/images/korea.png}" th:width="42px" th:height="32px" />
-                        Made By
-                    </h4 >
-                    <p style="display: inline" >&#x1F194;shirohoo(Khan) </p >
-                </div >
+
+        <div class="row" >
+            <div class="col text-center" >
+                <img th:src="@{/images/korea.png}" th:width="42px" th:height="32px" />
+                Made By
+                &#x1F194;shirohoo(Khan)
             </div >
-            <div class="col-md" >
+        </div >
+
+        <hr />
+
+        <div class="row text-center" >
+            <div class="col text-center" >
                 <span class="col-md" >
                     <a href="https://github.com/shirohoo" target="_blank" >
                         <img th:src="@{/images/github.jpg}" th:width="52px" th:height="32px" />
@@ -30,5 +32,6 @@
                 </span >
             </div >
         </div >
+
     </div >
 </div >
