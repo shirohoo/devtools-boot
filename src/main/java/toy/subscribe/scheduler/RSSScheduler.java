@@ -1,9 +1,10 @@
-package toy.subscribe.service;
+package toy.subscribe.scheduler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import toy.subscribe.service.CollectPostService;
 
 @Slf4j
 @Component

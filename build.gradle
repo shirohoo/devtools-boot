@@ -46,6 +46,9 @@ dependencies {
 
     //QueryDSL
     implementation 'com.querydsl:querydsl-jpa'
+
+    //JSON Simple
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 }
 
 test {

@@ -1,7 +1,8 @@
-package toy.subscribe.domain;
+package toy.subscribe.parser;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import toy.subscribe.domain.RSSFeed;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RSSFeedParserTest {
     
     @Test
-    @DisplayName ("READ_RSS_우아한형제들")
+    @DisplayName("우아한형제들_RSS_읽기")
     void woowabros () throws Exception {
         RSSFeedParser parser = new RSSFeedParser(
                 "https://woowabros.github.io/feed.xml"
@@ -28,7 +29,7 @@ class RSSFeedParserTest {
     }
     
     @Test
-    @DisplayName ("READ_RSS_토스")
+    @DisplayName("토스_RSS_읽기")
     void toss () throws Exception {
         RSSFeedParser parser = new RSSFeedParser(
                 "https://blog.toss.im/feed/"
@@ -44,7 +45,7 @@ class RSSFeedParserTest {
     }
     
     @Test
-    @DisplayName ("READ_RSS_데일리호텔")
+    @DisplayName("데일리호텔_RSS_읽기")
     void dailyHotel () throws Exception {
         RSSFeedParser parser = new RSSFeedParser(
                 "https://dailyhotel.io/feed"
@@ -60,7 +61,7 @@ class RSSFeedParserTest {
     }
     
     @Test
-    @DisplayName ("READ_RSS_당근마켓")
+    @DisplayName("당근마켓_RSS_읽기")
     void daangnMarket () throws Exception {
         RSSFeedParser parser = new RSSFeedParser(
                 "https://medium.com/feed/daangn"
@@ -76,7 +77,7 @@ class RSSFeedParserTest {
     }
     
     @Test
-    @DisplayName ("READ_RSS_카카오")
+    @DisplayName("카카오_RSS_읽기")
     void kakao () throws Exception {
         RSSFeedParser parser = new RSSFeedParser(
                 "https://tech.kakao.com/feed/"
@@ -92,7 +93,7 @@ class RSSFeedParserTest {
     }
     
     @Test
-    @DisplayName ("READ_RSS_야놀자")
+    @DisplayName("야놀자_RSS_읽기")
     void yanolja () throws Exception {
         RSSFeedParser parser = new RSSFeedParser(
                 "https://yanolja.github.io/feed.xml"
@@ -108,7 +109,7 @@ class RSSFeedParserTest {
     }
     
     @Test
-    @DisplayName ("READ_RSS_라인")
+    @DisplayName("라인_RSS_읽기")
     void line () throws Exception {
         RSSFeedParser parser = new RSSFeedParser(
                 "https://engineering.linecorp.com/ko/feed/"
@@ -124,7 +125,7 @@ class RSSFeedParserTest {
     }
     
     @Test
-    @DisplayName ("READ_RSS_마켓컬리")
+    @DisplayName("마켓컬리_RSS_읽기")
     void kurly () throws Exception {
         RSSFeedParser parser = new RSSFeedParser(
                 "https://helloworld.kurly.com/feed.xml"
@@ -140,7 +141,7 @@ class RSSFeedParserTest {
     }
     
     @Test
-    @DisplayName ("READ_RSS_왓챠")
+    @DisplayName("왓챠_RSS_읽기")
     void watcha () throws Exception {
         RSSFeedParser parser = new RSSFeedParser(
                 "https://medium.com/feed/watcha"

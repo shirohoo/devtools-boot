@@ -23,19 +23,19 @@ import java.util.List;
  */
 @Component
 @RequiredArgsConstructor
-public class ManualInput {
+public class ManualClass {
     
     private final FeedBoardRepository feedBoardRepository;
     
     @Transactional
-    public void woowa () throws Exception {
+    public void menualWoowabros() throws Exception {
         List<FeedBoard> list = new ArrayList<>();
         
         File file = new File("src/test/resources/woowa_tech.xlsx");
         Workbook workbook = new XSSFWorkbook(new FileInputStream(file));
         Sheet sheet = workbook.getSheetAt(0);
         
-        for (Row rows : sheet) {
+        for(Row rows : sheet) {
             list.add(FeedBoard.builder()
                               .title(rows.getCell(0).getStringCellValue())
                               .guid(rows.getCell(1).getStringCellValue())
@@ -49,14 +49,14 @@ public class ManualInput {
     }
     
     @Transactional
-    public void toss () throws Exception {
+    public void menualToss() throws Exception {
         List<FeedBoard> list = new ArrayList<>();
         
         File file = new File("src/test/resources/toss_tech.xlsx");
         Workbook workbook = new XSSFWorkbook(new FileInputStream(file));
         Sheet sheet = workbook.getSheetAt(0);
         
-        for (Row rows : sheet) {
+        for(Row rows : sheet) {
             list.add(FeedBoard.builder()
                               .title(rows.getCell(0).getStringCellValue())
                               .guid(rows.getCell(1).getStringCellValue())

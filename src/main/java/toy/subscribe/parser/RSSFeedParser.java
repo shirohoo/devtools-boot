@@ -1,4 +1,7 @@
-package toy.subscribe.domain;
+package toy.subscribe.parser;
+
+import toy.subscribe.domain.RSSFeed;
+import toy.subscribe.domain.RSSFeedMessage;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -32,7 +35,7 @@ public class RSSFeedParser {
         }
     }
     
-    public RSSFeed readFeed () throws XMLStreamException {
+    public RSSFeed readFeed() throws XMLStreamException {
         RSSFeed feed = null;
         try {
             boolean isFeedHeader = true;

@@ -1,4 +1,4 @@
-package toy.subscribe.service;
+package toy.subscribe.factory;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
