@@ -17,7 +17,7 @@
                             <span class="badge badge-danger text-wrap" style="width: 6rem;" >회사</span >
                             <input type="hidden" id="company" name="company" value="" />
                             <select class="form-control" id="selectCompany" onchange="selectedCompany(this)" >
-                                <option value="" >- 선택하지 않음 -</option >
+                                <option value="" >- 전체 -</option >
                                 <option value="우아한형제들" >우아한형제들</option >
                                 <option value="데일리호텔" >데일리호텔</option >
                                 <option value="카카오" >카카오</option >
@@ -55,7 +55,6 @@
             <h4 id="totalResultCount" >TOTAL : </h4 >
             <span style="margin-left: auto;" >
                 <input type="hidden" id="currentPageNum" />
-                표시
                 <select class="custom-select" id="renderingCount" onchange="searchPost()" >
                     <option value="30" >30개</option >
                     <option value="50" >50개</option >
