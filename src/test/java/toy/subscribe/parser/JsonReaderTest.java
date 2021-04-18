@@ -41,13 +41,15 @@ public class JsonReaderTest {
         File file = ResourceUtils.getFile("classpath:properties/propertiesFactory.json");
         FileReader reader = new FileReader(file);
         JSONParser parser = new JSONParser();
-        
+    
         //when
         JSONObject jsonObj = (JSONObject) parser.parse(reader);
+        List<String> urls = (ArrayList<String>) jsonObj.get("urls");
         List<Company> companies = (ArrayList<Company>) jsonObj.get("companies");
-        
+    
         //then
-        assertThat(companies.size()).isEqualTo(9);
+        //RSS피드 주소의 개수와 RSS피드를 검증하는 Company객체의 개수는 같아야만 한다.
+        assertThat(companies.size()).isEqualTo(urls.size());
     }
     
 }
