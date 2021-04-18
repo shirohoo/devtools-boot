@@ -5,6 +5,7 @@ import org.json.simple.parser.JSONParser;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.ResourceUtils;
+import toy.subscribe.factory.appendices.Company;
 
 import java.io.File;
 import java.io.FileReader;
@@ -13,13 +14,13 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class UrlReaderTest {
+public class JsonReaderTest {
     
     @Test
-    @DisplayName("JSON_읽기")
-    public void readJson() throws Exception {
+    @DisplayName("JSON_List<String>_읽기")
+    public void readStringList() throws Exception {
         //given
-        File file = ResourceUtils.getFile("classpath:properties/url.json");
+        File file = ResourceUtils.getFile("classpath:properties/propertiesFactory.json");
         FileReader reader = new FileReader(file);
         JSONParser parser = new JSONParser();
         
@@ -31,6 +32,22 @@ public class UrlReaderTest {
         urls.forEach(it->assertThat(it).isNotBlank()
                                        .contains("feed")
                                        .startsWith("http"));
+    }
+    
+    @Test
+    @DisplayName("JSON_List<Object>_읽기")
+    public void readObjectList() throws Exception {
+        //given
+        File file = ResourceUtils.getFile("classpath:properties/propertiesFactory.json");
+        FileReader reader = new FileReader(file);
+        JSONParser parser = new JSONParser();
+        
+        //when
+        JSONObject jsonObj = (JSONObject) parser.parse(reader);
+        List<Company> companies = (ArrayList<Company>) jsonObj.get("companies");
+        
+        //then
+        assertThat(companies.size()).isEqualTo(9);
     }
     
 }

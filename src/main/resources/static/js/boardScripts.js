@@ -46,15 +46,6 @@ function selectedCompany() {
 	searchPost();
 }
 
-function resetSearchForm(searchFormId) {
-	try {
-		$("#" + searchFormId)[0].reset();
-	}
-	catch (e) {
-		alert("[resetSearchForm] :: " + e.message);
-	}
-}
-
 /**
  * 각 페이지 버튼에 페이지 이동기능 추가
  * @param selectedPageNum 이동하려는 페이지 번호

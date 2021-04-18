@@ -1,0 +1,60 @@
+{
+  "urls": [
+    "https://woowabros.github.io/feed.xml",
+    "https://medium.com/feed/watcha",
+    "https://blog.toss.im/feed/",
+    "https://dailyhotel.io/feed",
+    "https://medium.com/feed/daangn",
+    "https://tech.kakao.com/feed/",
+    "https://yanolja.github.io/feed.xml",
+    "https://engineering.linecorp.com/ko/feed/",
+    "https://helloworld.kurly.com/feed.xml"
+  ],
+  "companies": [
+    {
+      "key": "woowabros",
+      "name": "우아한형제들",
+      "imgPath": "/images/woowabros.png"
+    },
+    {
+      "key": "toss",
+      "name": "토스",
+      "imgPath": "/images/toss.png"
+    },
+    {
+      "key": "dailyhotel",
+      "name": "데일리호텔",
+      "imgPath": "/images/dailyhotel.png"
+    },
+    {
+      "key": "daangn",
+      "name": "당근마켓",
+      "imgPath": "/images/daangn.png"
+    },
+    {
+      "key": "kakao",
+      "name": "카카오",
+      "imgPath": "/images/kakao.png"
+    },
+    {
+      "key": "yanolja",
+      "name": "야놀자",
+      "imgPath": "/images/yanolja.png"
+    },
+    {
+      "key": "line",
+      "name": "라인",
+      "imgPath": "/images/line.png"
+    },
+    {
+      "key": "thefarmersfront",
+      "name": "마켓컬리",
+      "imgPath": "/images/kurly.png"
+    },
+    {
+      "key": "watcha",
+      "name": "왓챠",
+      "imgPath": "/images/watcha.png"
+    }
+  ]
+}
