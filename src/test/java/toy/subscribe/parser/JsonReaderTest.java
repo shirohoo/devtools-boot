@@ -1,11 +1,11 @@
 package toy.subscribe.parser;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.ResourceUtils;
-import toy.subscribe.factory.appendices.Company;
 
 import java.io.File;
 import java.io.FileReader;
@@ -45,11 +45,22 @@ public class JsonReaderTest {
         //when
         JSONObject jsonObj = (JSONObject) parser.parse(reader);
         List<String> urls = (ArrayList<String>) jsonObj.get("urls");
-        List<Company> companies = (ArrayList<Company>) jsonObj.get("companies");
+        JSONArray jsonCompanies = (JSONArray) jsonObj.get("companies");
     
         //then
         //RSS피드 주소의 개수와 RSS피드를 검증하는 Company객체의 개수는 같아야만 한다.
-        assertThat(companies.size()).isEqualTo(urls.size());
+        assertThat(jsonCompanies.size()).isEqualTo(urls.size());
+    
+        for(int i = 0; i < jsonCompanies.size(); i++) {
+            JSONObject o = (JSONObject) jsonCompanies.get(i);
+            String key = (String) o.get("key");
+            String name = (String) o.get("name");
+            String imgPath = (String) o.get("imgPath");
+        
+            assertThat(key).isNotEmpty();
+            assertThat(name).isNotEmpty();
+            assertThat(imgPath).isNotEmpty();
+        }
     }
     
 }

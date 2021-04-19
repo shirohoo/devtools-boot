@@ -20,16 +20,15 @@ import static toy.subscribe.parser.JsonReader.readUrls;
 @RequiredArgsConstructor
 public class CollectPostServiceImpl implements CollectPostService {
     
-    private final FeedBoardRepository feedBoardRepository;
     private final FeedBoardFactory feedBoardFactory;
+    private final FeedBoardRepository feedBoardRepository;
     
-    @Transactional(readOnly = true)
+    @Transactional
     public void getAllGroupFeed() throws Exception {
         loopCrawl();
     }
     
     private void loopCrawl() throws Exception {
-        
         List<String> urls = readUrls();
         
         for(String url : urls) {

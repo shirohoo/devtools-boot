@@ -6,10 +6,11 @@ import org.springframework.stereotype.Component;
 import toy.subscribe.domain.RSSFeedMessage;
 import toy.subscribe.domain.entity.FeedBoard;
 import toy.subscribe.factory.appendices.Company;
-import toy.subscribe.parser.JsonReader;
 import toy.subscribe.repository.FeedBoardRepository;
 
 import java.util.List;
+
+import static toy.subscribe.parser.JsonReader.readCompanies;
 
 @Slf4j
 @Component
@@ -22,11 +23,11 @@ public class FeedBoardFactory {
         if(isNoDuplicate(message)) {
             String url = message.getLink();
             try {
-                List<Company> companies = JsonReader.readCompanies();
-                for(Company company : companies) {
-                    if(url.contains(company.getKey())) {
-                        message.setCompany(company.getName());
-                        message.setImgPath(company.getImgPath());
+                List<Company> companies = readCompanies();
+                for(int i = 0; i < companies.size(); i++) {
+                    if(url.contains(companies.get(i).getKey())) {
+                        message.setCompany(companies.get(i).getName());
+                        message.setImgPath(companies.get(i).getImgPath());
                         break;
                     }
                 }
