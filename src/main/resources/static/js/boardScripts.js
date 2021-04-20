@@ -3,6 +3,10 @@
 const CONTEXT_PATH = "";
 let ajaxResponse;
 
+/**
+ * @author shirohoo
+ * 페이지 초기화
+ */
 $(function () {
 	$.ajax({
 		       url        : "/boards?page=0&size=30",
@@ -41,6 +45,9 @@ function requestAjax(url, param) {
 	}
 }
 
+/**
+ * 셀렉트 박스 회사 선택시 검색
+ */
 function selectedCompany() {
 	$('#company').val($('#selectCompany').val());
 	searchPost();
