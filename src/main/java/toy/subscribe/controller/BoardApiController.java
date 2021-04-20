@@ -1,6 +1,7 @@
 package toy.subscribe.controller;
 
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import toy.subscribe.domain.dto.FeedBoardDto;
 import toy.subscribe.repository.FeedBoardRepository;
 import toy.subscribe.repository.RequestLogRepository;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class BoardApiController {
@@ -23,20 +25,19 @@ public class BoardApiController {
     public ResponseEntity<?> getBoards(Pageable pageable,
                                        @RequestParam(value = "company", required = false) String company,
                                        @RequestParam(value = "title", required = false) String title) {
-    
+        
         if(pageable.getPageSize() > 200) {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body("<h1>400_BAD_REQUEST</h1>\n<h2>요청 사이즈가 너무 큽니다</h2>");
+            log.error("Request page size is too large !");
+            return new ResponseEntity<>("Request page size is too large !", HttpStatus.BAD_REQUEST);
         }
-    
+        
         if(isNull(company)) {
             company = "";
         }
         if(isNull(title)) {
             title = "";
         }
-    
+        
         return new ResponseEntity<>(new Result(feedBoardRepository.findPageByFeedBoard(pageable, company, title),
                                                requestLogRepository.getDau()), HttpStatus.OK);
     }
