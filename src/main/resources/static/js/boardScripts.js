@@ -2,6 +2,7 @@
 
 const CONTEXT_PATH = "";
 let ajaxResponse;
+let dau;
 
 /**
  * @author shirohoo
@@ -14,7 +15,8 @@ $(function () {
 		       contentType: "application/x-www-form-urlencoded;charset=utf-8",
 		       dataType   : "json",
 		       success    : function (data) {
-			       ajaxResponse = data;
+			       ajaxResponse = data.pages;
+			       dau = data.dau;
 			       listRendering()
 		       },
 		       error      : function () {
@@ -31,7 +33,8 @@ function requestAjax(url, param) {
 			       contentType: "application/x-www-form-urlencoded;charset=utf-8",
 			       dataType   : "json",
 			       success    : function (data) {
-				       ajaxResponse = data;
+				       ajaxResponse = data.pages;
+				       dau = data.dau;
 				       listRendering()
 			       },
 			       error      : function () {
@@ -78,7 +81,7 @@ function pageMove(selectedPageNum, size) {
 function searchResultList(selectedPageNum, size) {
 	try {
 		let url = CONTEXT_PATH + "/boards?";
-		let param = $("#searchForm :input").filter(function (idx, element) {
+		let param = $('#searchForm :input').filter(function (idx, element) {
 			return $(element).val() != '';
 		}).serialize();
 
@@ -99,9 +102,9 @@ function searchResultList(selectedPageNum, size) {
 function searchPost() {
 	try {
 		let url = CONTEXT_PATH + "/boards?";
-		let currentPageNum = $("#currentPageNum").val() == "" ? 0 : $("#currentPageNum").val();
-		let size = $("#renderingCount").val();
-		let param = $("#searchForm :input").filter(function (idx, element) {
+		let currentPageNum = $('#currentPageNum').val() == "" ? 0 : $('#currentPageNum').val();
+		let size = $('#renderingCount').val();
+		let param = $('#searchForm :input').filter(function (idx, element) {
 			return $(element).val() != '';
 		}).serialize();
 
@@ -120,7 +123,9 @@ function searchPost() {
  */
 function listRendering() {
 	try {
-		$("#listTbody").empty();
+		$('#listTbody').empty();
+		$('.SHOW-DAU').empty();
+		$('.SHOW-DAU').text(dau + '명');
 
 		let postList = ajaxResponse.content;
 
@@ -133,7 +138,7 @@ function listRendering() {
 
 			$(eleTr).append(eleTd);
 
-			$("#listTbody").append(eleTr);
+			$('#listTbody').append(eleTr);
 		} else {
 			$.each(postList, function () {
 				let regDateArray = this.regDate.split('-');
@@ -154,10 +159,10 @@ function listRendering() {
 					                                                             .text(" " + this.title)))
 					.append($("<td style='text-align:center'/>").text(this.regDate));
 
-				$("#listTbody").append(eleTr);
+				$('#listTbody').append(eleTr);
 			});
 		}
-		$("#totalResultCount").empty().append("TOTAL  : " + ajaxResponse.totalElements);
+		$('#totalResultCount').empty().append("TOTAL  : " + ajaxResponse.totalElements);
 		renderingPagingArea();
 	}
 	catch (e) {
@@ -167,7 +172,7 @@ function listRendering() {
 
 function renderingPagingArea() {
 	try {
-		$("#pagingArea").empty();
+		$('#pagingArea').empty();
 
 		if (ajaxResponse.first != true) {
 			let prePagebutton = $("<li/>").attr("class", "page-item")
@@ -178,7 +183,7 @@ function renderingPagingArea() {
 				                                                     + "', " + ajaxResponse.size + ");")
 				                                       .text("<")
 			                              );
-			$("#pagingArea").append(prePagebutton);
+			$('#pagingArea').append(prePagebutton);
 		}
 
 		let endPage = Math.ceil((ajaxResponse.pageable.pageNumber + 1) / 10.0) * 10 - 1;
@@ -202,7 +207,7 @@ function renderingPagingArea() {
 				         .text(i + 1)
 			);
 
-			$("#pagingArea").append(pageNumButton);
+			$('#pagingArea').append(pageNumButton);
 		}
 
 		if (ajaxResponse.last != true) {
@@ -216,12 +221,21 @@ function renderingPagingArea() {
 				                                        .text(">")
 			                               );
 
-			$("#pagingArea").append(nextPagebutton);
+			$('#pagingArea').append(nextPagebutton);
 		}
 	}
 	catch
 		(e) {
 		alert("[renderingPagingArea] :: " + e.message);
+	}
+}
+
+function resetSearchForm(searchFormId) {
+	try {
+		$("#" + searchFormId)[0].reset();
+	}
+	catch (e) {
+		alert("[ resetSearchForm() ] :: " + e.message);
 	}
 }
 
