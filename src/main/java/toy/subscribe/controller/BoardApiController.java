@@ -23,14 +23,20 @@ public class BoardApiController {
     public ResponseEntity<?> getBoards(Pageable pageable,
                                        @RequestParam(value = "company", required = false) String company,
                                        @RequestParam(value = "title", required = false) String title) {
-        
+    
+        if(pageable.getPageSize() > 200) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("<h1>400_BAD_REQUEST</h1>\n<h2>요청 사이즈가 너무 큽니다</h2>");
+        }
+    
         if(isNull(company)) {
             company = "";
         }
         if(isNull(title)) {
             title = "";
         }
-        
+    
         return new ResponseEntity<>(new Result(feedBoardRepository.findPageByFeedBoard(pageable, company, title),
                                                requestLogRepository.getDau()), HttpStatus.OK);
     }
