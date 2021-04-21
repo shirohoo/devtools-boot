@@ -6,8 +6,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.TestConstructor;
 import toy.subscribe.domain.entity.FeedBoard;
 import toy.subscribe.repository.FeedBoardRepository;
 
@@ -19,13 +19,18 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class ExcelReadTest {
     
-    @Autowired FeedBoardRepository feedBoardRepository;
+    private final FeedBoardRepository feedBoardRepository;
+    
+    public ExcelReadTest(FeedBoardRepository feedBoardRepository) {
+        this.feedBoardRepository = feedBoardRepository;
+    }
     
     @Test
     @DisplayName("우아한형제들_엑셀_읽기")
-    public void read () throws Exception {
+    public void read() throws Exception {
         // given
         List<FeedBoard> list = new ArrayList<>();
         
