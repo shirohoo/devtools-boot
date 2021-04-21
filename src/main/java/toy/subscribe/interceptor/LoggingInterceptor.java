@@ -38,6 +38,7 @@ public class LoggingInterceptor implements HandlerInterceptor {
                                           .httpMethod(httpMethod)
                                           .requestUri(requestUri)
                                           .build();
+    
         requestLogRepository.save(requestLog);
     }
     

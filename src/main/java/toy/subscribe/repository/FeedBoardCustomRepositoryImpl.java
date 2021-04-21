@@ -13,7 +13,6 @@ import toy.subscribe.domain.entity.FeedBoard;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static toy.subscribe.domain.dto.FeedBoardDto.convertToFeedBoardDtoFrom;
 import static toy.subscribe.domain.entity.QFeedBoard.feedBoard;
 
 public class FeedBoardCustomRepositoryImpl extends QuerydslRepositorySupport implements FeedBoardCustomRepository {
@@ -38,7 +37,7 @@ public class FeedBoardCustomRepositoryImpl extends QuerydslRepositorySupport imp
                 .fetchResults();
         
         List<FeedBoardDto> content = results.getResults().stream()
-                                            .map(feedBoard->convertToFeedBoardDtoFrom(feedBoard))
+                                            .map(FeedBoardDto::convertToFeedBoardDtoFrom)
                                             .collect(Collectors.toList());
         
         return new PageImpl<>(content, pageable, results.getTotal());
