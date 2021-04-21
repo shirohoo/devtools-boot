@@ -30,16 +30,19 @@ public class BoardApiController {
             log.error("Request page size is too large !");
             return new ResponseEntity<>("Request page size is too large !", HttpStatus.BAD_REQUEST);
         }
-        
+    
         if(isNull(company)) {
             company = "";
         }
         if(isNull(title)) {
             title = "";
         }
-        
-        return new ResponseEntity<>(new Result(feedBoardRepository.findPageByFeedBoard(pageable, company, title),
-                                               requestLogRepository.getDau()), HttpStatus.OK);
+    
+        return new ResponseEntity<>(new Result(
+                feedBoardRepository.findPageByFeedBoard(pageable, company, title),
+                requestLogRepository.getDau(),
+                requestLogRepository.allVisitors()
+        ), HttpStatus.OK);
     }
     
     private boolean isNull(String s) {
@@ -53,6 +56,7 @@ public class BoardApiController {
         
         private Page<FeedBoardDto> pages;
         private Long dau;
+        private Long allVisitors;
         
     }
     

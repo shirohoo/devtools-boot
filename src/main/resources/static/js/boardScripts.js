@@ -2,6 +2,7 @@
 
 const CONTEXT_PATH = "";
 let ajaxResponse;
+let allVisitors;
 let dau;
 
 /**
@@ -16,6 +17,7 @@ $(function () {
 		       dataType   : "json",
 		       success    : function (data) {
 			       ajaxResponse = data.pages;
+			       allVisitors = data.allVisitors;
 			       dau = data.dau;
 			       listRendering()
 		       },
@@ -34,6 +36,7 @@ function requestAjax(url, param) {
 			       dataType   : "json",
 			       success    : function (data) {
 				       ajaxResponse = data.pages;
+				       allVisitors = data.allVisitors;
 				       dau = data.dau;
 				       listRendering()
 			       },
@@ -124,8 +127,12 @@ function searchPost() {
 function listRendering() {
 	try {
 		$('#listTbody').empty();
+
+		$('.SHOW-allVisitors').empty();
+		$('.SHOW-allVisitors').text(numberFormat(allVisitors) + ' 명');
+
 		$('.SHOW-DAU').empty();
-		$('.SHOW-DAU').text(dau + '명');
+		$('.SHOW-DAU').text(numberFormat(dau) + ' 명');
 
 		let postList = ajaxResponse.content;
 
@@ -244,3 +251,9 @@ function enterKeyup() {
 		searchPost();
 	}
 }
+
+function numberFormat(num) {
+	let regexp = /\B(?=(\d{3})+(?!\d))/g;
+	return num.toString().replace(regexp, ',');
+}
+

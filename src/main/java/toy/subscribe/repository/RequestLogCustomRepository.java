@@ -4,4 +4,6 @@ public interface RequestLogCustomRepository {
     
     Long getDau();
     
+    Long allVisitors();
+    
 }
