@@ -1,0 +1,147 @@
+.DAU {
+    font-weight: bold;
+    text-align: right;
+}
+
+.allVisitors {
+    font-weight: bold;
+    text-align: right;
+}
+
+.footer-pop {
+    font-size: 0;
+    text-decoration: none;
+}
+
+body {
+    animation: fadein 2000ms ease-out;
+    -moz-animation: fadein 2000ms ease-out; /* Firefox */
+    -webkit-animation: fadein 2000ms ease-out; /* Safari and  Chrome */
+    -o-animation: fadein 2000ms ease-out; /* Opera */
+}
+
+.header-decorate > div {
+    text-align: center;
+    text-decoration: none;
+    color: black;
+}
+
+.header-decorate > a:hover title {
+    text-align: center;
+    text-decoration: none;
+    color: blue;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 35px;
+    transition: all 2s;
+}
+
+.title:hover {
+    font-weight: bold;
+    font-size: 50px;
+    transition: all 2s;
+}
+
+.title > a {
+    text-decoration: none;
+}
+
+.subtitle {
+    font-size: 20px;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadein { /* Firefox */
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadein { /* Safari and Chrome */
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-o-keyframes fadein { /* Opera */
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;800&display=swap');
+
+body {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+#table {
+    cursor: default;
+}
+
+#totalResultCount {
+    cursor: default;
+}
+
+#search {
+    width: 100px;
+    display: block;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+#initialize {
+    width: 100px;
+    display: block;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+#table > thead > tr > th {
+    font-weight: bold;
+    font-size: large;
+    vertical-align: middle;
+}
+
+#listTbody > tr > td {
+    vertical-align: middle;
+}
+
+#listTbody > tr > td > a {
+    transition: all 0.3s;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+}
+
+#listTbody > tr > td > a:hover {
+    color: darkorchid;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+}
+
+hr {
+    margin: 3vh 0 3vh 0;
+}
