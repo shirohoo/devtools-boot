@@ -10,7 +10,7 @@ let dau;
  */
 $(function () {
 	$.ajax({
-		       url        : "/boards?page=0&size=30",
+		       url        : "/boards?page=0&size=10",
 		       type       : "GET",
 		       contentType: "application/x-www-form-urlencoded;charset=utf-8",
 		       dataType   : "json",
