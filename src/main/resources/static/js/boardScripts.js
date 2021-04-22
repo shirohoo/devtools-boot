@@ -188,7 +188,7 @@ function renderingPagingArea() {
 				                                       .attr("href", "javascript:pageMove('"
 				                                                     + (ajaxResponse.pageable.pageNumber - 1)
 				                                                     + "', " + ajaxResponse.size + ");")
-				                                       .text("<")
+				                                       .text("←")
 			                              );
 			$('#pagingArea').append(prePagebutton);
 		}
@@ -225,7 +225,7 @@ function renderingPagingArea() {
 				                                        .attr("href", "javascript:pageMove('"
 				                                                      + (ajaxResponse.pageable.pageNumber + 1)
 				                                                      + "', " + ajaxResponse.size + ");")
-				                                        .text(">")
+				                                        .text("→")
 			                               );
 
 			$('#pagingArea').append(nextPagebutton);

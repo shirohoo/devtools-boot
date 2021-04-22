@@ -29,7 +29,6 @@ body {
 .header-decorate > a:hover title {
     text-align: center;
     text-decoration: none;
-    color: blue;
 }
 
 .title {
@@ -46,6 +45,7 @@ body {
 
 .title > a {
     text-decoration: none;
+    color: #5A4181;
 }
 
 .subtitle {
@@ -144,4 +144,37 @@ body {
 
 hr {
     margin: 3vh 0 3vh 0;
+}
+
+.pagination > li {
+    border-radius: 10% !Important;
+}
+
+.pagination > li > a {
+    background-color: white;
+    color: #5A4181;
+    border: none 0px #5A4181 !Important;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover {
+    color: #5a5a5a;
+    background-color: #eee;
+    border-color: #ddd;
+    border-radius: 10%;
+}
+
+.pagination > .active > a {
+    color: white;
+    background-color: #5A4181 !Important;
+    border: solid 0px #5A4181 !Important;
+    border-radius: 10%;
+}
+
+.pagination > .active > a:hover {
+    background-color: #5A4181 !Important;
+    border: solid 1px #5A4181;
+    border-radius: 10%;
 }
