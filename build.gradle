@@ -49,6 +49,10 @@ dependencies {
 
     //JSON Simple
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+    //Apache Commons IO
+    implementation group: 'commons-io', name: 'commons-io', version: '2.8.0'
+
 }
 
 test {

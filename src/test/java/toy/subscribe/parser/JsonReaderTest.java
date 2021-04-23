@@ -1,5 +1,7 @@
 package toy.subscribe.parser;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -7,7 +9,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 
+import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +24,7 @@ public class JsonReaderTest {
     @DisplayName("JSON_List<String>_읽기")
     public void readStringList() throws Exception {
         //given
-        FileReader reader = new FileReader(new ClassPathResource("static/properties/propertiesFactory.json").getFile());
+        FileReader reader = new FileReader(createInputStreamToFile());
         JSONParser parser = new JSONParser();
         
         //when
@@ -36,7 +41,8 @@ public class JsonReaderTest {
     @DisplayName("JSON_List<Object>_읽기")
     public void readObjectList() throws Exception {
         //given
-        FileReader reader = new FileReader(new ClassPathResource("static/properties/propertiesFactory.json").getFile());
+    
+        FileReader reader = new FileReader(createInputStreamToFile());
         JSONParser parser = new JSONParser();
     
         //when
@@ -53,11 +59,23 @@ public class JsonReaderTest {
             String key = (String) o.get("key");
             String name = (String) o.get("name");
             String imgPath = (String) o.get("imgPath");
-        
+    
             assertThat(key).isNotEmpty();
             assertThat(name).isNotEmpty();
             assertThat(imgPath).isNotEmpty();
         }
+    }
+    
+    private File createInputStreamToFile() throws IOException {
+        InputStream inputStream = new ClassPathResource("static/properties/propertiesFactory.json").getInputStream();
+        File file = File.createTempFile("propertiesFactory", ".json");
+        try {
+            FileUtils.copyInputStreamToFile(inputStream, file);
+        }
+        finally {
+            IOUtils.closeQuietly(inputStream);
+        }
+        return file;
     }
     
 }

@@ -1,19 +1,24 @@
 package toy.subscribe.parser;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.core.io.ClassPathResource;
 import toy.subscribe.factory.appendices.Company;
 
+import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class JsonReader {
     
     public static List<String> readUrls() throws Exception {
-        FileReader reader = new FileReader(new ClassPathResource("static/properties/propertiesFactory.json").getFile());
+        FileReader reader = new FileReader(createInputStreamToFile());
         JSONParser parser = new JSONParser();
         JSONObject jsonObj = (JSONObject) parser.parse(reader);
         
@@ -21,7 +26,7 @@ public class JsonReader {
     }
     
     public static List<Company> readCompanies() throws Exception {
-        FileReader reader = new FileReader(new ClassPathResource("static/properties/propertiesFactory.json").getFile());
+        FileReader reader = new FileReader(createInputStreamToFile());
         JSONParser parser = new JSONParser();
     
         List<Company> companies = new ArrayList<>();
@@ -38,6 +43,18 @@ public class JsonReader {
         }
     
         return companies;
+    }
+    
+    private static File createInputStreamToFile() throws IOException {
+        InputStream inputStream = new ClassPathResource("static/properties/propertiesFactory.json").getInputStream();
+        File file = File.createTempFile("propertiesFactory", ".json");
+        try {
+            FileUtils.copyInputStreamToFile(inputStream, file);
+        }
+        finally {
+            IOUtils.closeQuietly(inputStream);
+        }
+        return file;
     }
     
 }
