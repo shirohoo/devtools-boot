@@ -3,10 +3,9 @@ package toy.subscribe.parser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.springframework.util.ResourceUtils;
+import org.springframework.core.io.ClassPathResource;
 import toy.subscribe.factory.appendices.Company;
 
-import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +13,7 @@ import java.util.List;
 public class JsonReader {
     
     public static List<String> readUrls() throws Exception {
-        File file = ResourceUtils.getFile("classpath:properties/propertiesFactory.json");
-        FileReader reader = new FileReader(file);
+        FileReader reader = new FileReader(new ClassPathResource("static/properties/propertiesFactory.json").getFile());
         JSONParser parser = new JSONParser();
         JSONObject jsonObj = (JSONObject) parser.parse(reader);
         
@@ -23,8 +21,7 @@ public class JsonReader {
     }
     
     public static List<Company> readCompanies() throws Exception {
-        File file = ResourceUtils.getFile("classpath:properties/propertiesFactory.json");
-        FileReader reader = new FileReader(file);
+        FileReader reader = new FileReader(new ClassPathResource("static/properties/propertiesFactory.json").getFile());
         JSONParser parser = new JSONParser();
     
         List<Company> companies = new ArrayList<>();
