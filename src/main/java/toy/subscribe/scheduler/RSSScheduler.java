@@ -13,7 +13,7 @@ public class RSSScheduler {
     
     private final CollectPostService collectPostService;
     
-    private final int DELAY = 1000 * 60 * 10; // 단위: ms
+    private final int DELAY = 1000 * 60 * 1; // 단위: ms
     
     @Scheduled(fixedRate = DELAY)
     public void collect() throws Exception {
