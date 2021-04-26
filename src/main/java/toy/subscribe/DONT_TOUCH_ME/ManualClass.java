@@ -1,5 +1,9 @@
 package toy.subscribe.DONT_TOUCH_ME;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -10,14 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 import toy.subscribe.domain.entity.FeedBoard;
 import toy.subscribe.repository.FeedBoardRepository;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.List;
 /**
  * <pre>
  * RSS 피드는 최신 글 10개만 제공해주는데,
  * 신규 기술블로그 추가 시 추가하려는 기술 블로그의 기존 글이 너무 많을 경우
+ * 10개 이상의 글을 읽을 수 없는 문제가 발생하기 때문에
  * 기존 게시글을 DB에 직접 입력해주기 위한 클래스
  * </pre>
  */
@@ -43,9 +44,7 @@ public class ManualClass {
                               .imgPath("/images/woowabros.png")
                               .build());
         }
-        
         feedBoardRepository.saveAll(list);
-        
     }
     
     @Transactional
@@ -64,9 +63,7 @@ public class ManualClass {
                               .imgPath("/images/toss.png")
                               .build());
         }
-        
         feedBoardRepository.saveAll(list);
-        
     }
     
 }
