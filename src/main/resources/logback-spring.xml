@@ -53,10 +53,10 @@
 	<logger name = "toy.subscribe.console" level = "DEBUG" >
 		<appender-ref ref = "CONSOLE" />
 	</logger >
-	<logger name = "ctoy.subscribe.console" level = "INFO" >
+	<logger name = "toy.subscribe.file" level = "INFO" >
 		<appender-ref ref = "FILE" />
 	</logger >
-	<logger name = "toy.subscribe.console" level = "ERROR" >
+	<logger name = "toy.subscribe.error" level = "ERROR" >
 		<appender-ref ref = "ERROR" />
 	</logger >
 	<root level = "${LOG_LEVEL}" >

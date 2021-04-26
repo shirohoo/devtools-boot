@@ -1,57 +1,58 @@
 package toy.subscribe.repository;
 
+import static com.querydsl.core.types.dsl.Expressions.stringTemplate;
+import static toy.subscribe.domain.entity.QRequestLog.requestLog;
+
 import com.querydsl.core.types.dsl.DateTimePath;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.transaction.annotation.Transactional;
 import toy.subscribe.domain.entity.RequestLog;
-
-import java.time.LocalDateTime;
-
-import static com.querydsl.core.types.dsl.Expressions.stringTemplate;
-import static toy.subscribe.domain.entity.QRequestLog.requestLog;
 
 public class RequestLogCustomRepositoryImpl extends QuerydslRepositorySupport implements RequestLogCustomRepository {
     
     public RequestLogCustomRepositoryImpl() {
         super(RequestLog.class);
     }
-    
+
     @Override
     @Transactional(readOnly = true)
-    public Long getDau() {
+    public Long findDau() {
         JPAQueryFactory queryFactory = new JPAQueryFactory(getEntityManager());
         return queryFactory
                 .select(requestLog.clientIp.countDistinct())
                 .from(requestLog)
-                .where(requestLog.regDate.gt(getOnTime()))
+                .where(requestLog.regDate.gt(onTime()))
                 .fetchOne();
-    
+
     }
-    
+
     @Override
     @Transactional(readOnly = true)
-    public Long allVisitors() {
+    public Long findAllVisitors() {
         JPAQueryFactory queryFactory = new JPAQueryFactory(getEntityManager());
         return queryFactory
                 .select(requestLog.clientIp.countDistinct())
                 .from(requestLog)
-                .groupBy(functionDate(requestLog.regDate))
+                .groupBy(date(requestLog.regDate))
                 .fetch()
                 .stream()
                 .reduce(0L, Long::sum);
     }
-    
-    private StringTemplate functionDate(DateTimePath regDate) {
+
+    private StringTemplate date(DateTimePath regDate) {
         return stringTemplate("date({0})", regDate);
     }
-    
-    private LocalDateTime getOnTime() {
+
+    private LocalDateTime onTime() {
         return LocalDateTime.of(LocalDateTime.now().getYear(),
-                                LocalDateTime.now().getMonth(),
-                                LocalDateTime.now().getDayOfMonth(),
-                                0, 0, 0);
+                LocalDateTime.now().getMonth(),
+                LocalDateTime.now().getDayOfMonth(),
+                0, 0, 0);
     }
-    
+
 }

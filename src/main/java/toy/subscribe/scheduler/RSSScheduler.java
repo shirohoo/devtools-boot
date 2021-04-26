@@ -10,15 +10,15 @@ import toy.subscribe.service.CollectPostService;
 @Component
 @RequiredArgsConstructor
 public class RSSScheduler {
-    
+
     private final CollectPostService collectPostService;
-    
-    private final int DELAY = 1000 * 60 * 1; // 단위: ms
-    
-    @Scheduled(fixedRate = DELAY)
-    public void collect() throws Exception {
-        log.info("[LOGGING] Scheduler collect RSS !");
+
+    private final int COLLECT_DELAY = 1000 * 60 * 1; // 단위: ms
+
+    @Scheduled(fixedRate = COLLECT_DELAY)
+    public void collect() {
+        log.info("Collect RSS from all group !");
         collectPostService.getAllGroupFeed();
     }
-    
+
 }

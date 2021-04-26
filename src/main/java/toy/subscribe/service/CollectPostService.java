@@ -2,6 +2,6 @@ package toy.subscribe.service;
 
 public interface CollectPostService {
     
-    public void getAllGroupFeed() throws Exception;
+    public void getAllGroupFeed();
     
 }
