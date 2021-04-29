@@ -1,4 +1,4 @@
-package toy.subscribe.service;
+package toy.subscribe.mvc.service;
 
 public interface CollectPostService {
     

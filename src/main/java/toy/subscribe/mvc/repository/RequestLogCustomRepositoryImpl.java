@@ -1,4 +1,4 @@
-package toy.subscribe.repository;
+package toy.subscribe.mvc.repository;
 
 import static com.querydsl.core.types.dsl.Expressions.stringTemplate;
 import static toy.subscribe.domain.entity.QRequestLog.requestLog;
@@ -7,8 +7,6 @@ import com.querydsl.core.types.dsl.DateTimePath;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.transaction.annotation.Transactional;
 import toy.subscribe.domain.entity.RequestLog;

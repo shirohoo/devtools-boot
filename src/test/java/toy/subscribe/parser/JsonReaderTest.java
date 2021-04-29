@@ -21,8 +21,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class JsonReaderTest {
     
     @Test
-    @DisplayName("JSON_List<String>_읽기")
-    public void readStringList() throws Exception {
+    @DisplayName("JsonList<String>_읽기")
+    public void readUrls() throws Exception {
         //given
         FileReader reader = new FileReader(createInputStreamToFile());
         JSONParser parser = new JSONParser();
@@ -38,10 +38,9 @@ public class JsonReaderTest {
     }
     
     @Test
-    @DisplayName("JSON_List<Object>_읽기")
-    public void readObjectList() throws Exception {
+    @DisplayName("JsonList<Object>_읽기")
+    public void readCompanies() throws Exception {
         //given
-    
         FileReader reader = new FileReader(createInputStreamToFile());
         JSONParser parser = new JSONParser();
     

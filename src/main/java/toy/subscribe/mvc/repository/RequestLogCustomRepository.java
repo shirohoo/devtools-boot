@@ -1,4 +1,4 @@
-package toy.subscribe.repository;
+package toy.subscribe.mvc.repository;
 
 public interface RequestLogCustomRepository {
     
