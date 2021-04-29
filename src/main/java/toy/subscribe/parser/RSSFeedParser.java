@@ -1,17 +1,16 @@
 package toy.subscribe.parser;
 
-import toy.subscribe.domain.RSSFeed;
-import toy.subscribe.domain.RSSFeedMessage;
-
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.XMLEvent;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
+import toy.subscribe.domain.RSSFeed;
+import toy.subscribe.domain.RSSFeedMessage;
 
 public class RSSFeedParser {
     
@@ -25,12 +24,11 @@ public class RSSFeedParser {
     private static final String ITEM = "item";
     private static final String GUID = "guid";
     private static final String PUBDATE = "pubdate";
-    
-    public RSSFeedParser ( String feedUrl ) throws MalformedURLException {
+
+    public RSSFeedParser(String feedUrl) throws MalformedURLException {
         try {
             this.url = new URL(feedUrl);
-        }
-        catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             throw new MalformedURLException(e.getMessage());
         }
     }
@@ -111,7 +109,7 @@ public class RSSFeedParser {
         return feed;
     }
     
-    private InputStream openInputStream () throws IOException {
+    private InputStream openInputStream() throws IOException {
         try {
             return url.openStream();
         }

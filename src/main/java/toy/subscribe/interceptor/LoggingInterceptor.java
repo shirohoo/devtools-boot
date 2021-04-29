@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import toy.subscribe.domain.entity.RequestLog;
-import toy.subscribe.repository.RequestLogRepository;
+import toy.subscribe.mvc.repository.RequestLogRepository;
 
 @Slf4j
 @Component

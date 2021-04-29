@@ -1,4 +1,4 @@
-package toy.subscribe.controller;
+package toy.subscribe.mvc.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

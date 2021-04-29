@@ -1,4 +1,4 @@
-package toy.subscribe.service.impl;
+package toy.subscribe.mvc.service.implement;
 
 import java.net.MalformedURLException;
 import java.util.List;
@@ -12,8 +12,8 @@ import toy.subscribe.domain.RSSFeed;
 import toy.subscribe.factory.FeedBoardFactory;
 import toy.subscribe.parser.JsonReader;
 import toy.subscribe.parser.RSSFeedParser;
-import toy.subscribe.repository.FeedBoardRepository;
-import toy.subscribe.service.CollectPostService;
+import toy.subscribe.mvc.repository.FeedBoardRepository;
+import toy.subscribe.mvc.service.CollectPostService;
 
 
 @Slf4j

@@ -1,4 +1,4 @@
-package toy.subscribe.repository;
+package toy.subscribe.mvc.repository;
 
 import static toy.subscribe.domain.entity.QFeedBoard.feedBoard;
 

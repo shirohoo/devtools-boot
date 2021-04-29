@@ -1,158 +1,45 @@
 package toy.subscribe.parser;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import toy.subscribe.domain.RSSFeed;
-
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.stream.Stream;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import toy.subscribe.domain.RSSFeed;
 
 /**
  * 테스트가 실패하는 경우는 사이트의 RSS 피드 주소가 변하는 경우로 예상 됨
  */
 class RSSFeedParserTest {
-    
-    @Test
-    @DisplayName("우아한형제들_RSS_읽기")
-    void woowabros () throws Exception {
-        RSSFeedParser parser = new RSSFeedParser(
-                "https://woowabros.github.io/feed.xml"
-        );
-    
+
+    @ParameterizedTest
+    @DisplayName("RSS_읽기")
+    @MethodSource("provideFeedUrlAndKeyword")
+    public void readAllGroup(String url, String keyword) throws Exception {
+        RSSFeedParser parser = new RSSFeedParser(url);
         RSSFeed feed = parser.readFeed();
-    
-        feed.getMessages().forEach(message->{
-            assertThat(message.getLink().trim()).startsWith("https://");
-            assertThat(message.getGuid().trim()).startsWith("https://");
+
+        feed.getMessages().forEach(message -> {
+            assertThat(message.getLink().trim()).contains(keyword);
+            assertThat(message.getLink().trim()).startsWith("http");
+            assertThat(message.getGuid().trim()).startsWith("http");
         });
-    
     }
-    
-    @Test
-    @DisplayName("토스_RSS_읽기")
-    void toss () throws Exception {
-        RSSFeedParser parser = new RSSFeedParser(
-                "https://blog.toss.im/feed/"
+
+    private static Stream<Arguments> provideFeedUrlAndKeyword() {
+        return Stream.of(
+                Arguments.of("https://woowabros.github.io/feed.xml", "woowabros"),
+                Arguments.of("https://medium.com/feed/watcha", "watcha"),
+                Arguments.of("https://blog.toss.im/feed/", "toss"),
+                Arguments.of("https://dailyhotel.io/feed", "dailyhotel"),
+                Arguments.of("https://medium.com/feed/daangn", "daangn"),
+                Arguments.of("https://tech.kakao.com/feed/", "kakao"),
+                Arguments.of("https://yanolja.github.io/feed.xml", "yanolja"),
+                Arguments.of("https://engineering.linecorp.com/ko/feed/", "line"),
+                Arguments.of("https://helloworld.kurly.com/feed.xml", "thefarmersfront")
         );
-    
-        RSSFeed feed = parser.readFeed();
-    
-        feed.getMessages().forEach(message->{
-            assertThat(message.getLink().trim()).startsWith("https://");
-            assertThat(message.getGuid().trim()).startsWith("https://");
-        });
-    
     }
-    
-    @Test
-    @DisplayName("데일리호텔_RSS_읽기")
-    void dailyHotel () throws Exception {
-        RSSFeedParser parser = new RSSFeedParser(
-                "https://dailyhotel.io/feed"
-        );
-    
-        RSSFeed feed = parser.readFeed();
-    
-        feed.getMessages().forEach(message->{
-            assertThat(message.getLink().trim()).startsWith("https://");
-            assertThat(message.getGuid().trim()).startsWith("https://");
-        });
-    
-    }
-    
-    @Test
-    @DisplayName("당근마켓_RSS_읽기")
-    void daangnMarket () throws Exception {
-        RSSFeedParser parser = new RSSFeedParser(
-                "https://medium.com/feed/daangn"
-        );
-    
-        RSSFeed feed = parser.readFeed();
-    
-        feed.getMessages().forEach(message->{
-            assertThat(message.getLink().trim()).startsWith("https://");
-            assertThat(message.getGuid().trim()).startsWith("https://");
-        });
-    
-    }
-    
-    @Test
-    @DisplayName("카카오_RSS_읽기")
-    void kakao () throws Exception {
-        RSSFeedParser parser = new RSSFeedParser(
-                "https://tech.kakao.com/feed/"
-        );
-    
-        RSSFeed feed = parser.readFeed();
-    
-        feed.getMessages().forEach(message->{
-            assertThat(message.getLink().trim()).startsWith("https://");
-            assertThat(message.getGuid().trim()).startsWith("https://");
-        });
-    
-    }
-    
-    @Test
-    @DisplayName("야놀자_RSS_읽기")
-    void yanolja () throws Exception {
-        RSSFeedParser parser = new RSSFeedParser(
-                "https://yanolja.github.io/feed.xml"
-        );
-    
-        RSSFeed feed = parser.readFeed();
-    
-        feed.getMessages().forEach(message->{
-            assertThat(message.getLink().trim()).startsWith("https://");
-            assertThat(message.getGuid().trim()).startsWith("https://");
-        });
-    
-    }
-    
-    @Test
-    @DisplayName("라인_RSS_읽기")
-    void line () throws Exception {
-        RSSFeedParser parser = new RSSFeedParser(
-                "https://engineering.linecorp.com/ko/feed/"
-        );
-    
-        RSSFeed feed = parser.readFeed();
-    
-        feed.getMessages().forEach(message->{
-            assertThat(message.getLink().trim()).startsWith("https://");
-            assertThat(message.getGuid().trim()).startsWith("https://");
-        });
-    
-    }
-    
-    @Test
-    @DisplayName("마켓컬리_RSS_읽기")
-    void kurly () throws Exception {
-        RSSFeedParser parser = new RSSFeedParser(
-                "https://helloworld.kurly.com/feed.xml"
-        );
-    
-        RSSFeed feed = parser.readFeed();
-    
-        feed.getMessages().forEach(message->{
-            assertThat(message.getLink().trim()).startsWith("http://");
-            assertThat(message.getGuid().trim()).startsWith("http://");
-        });
-    
-    }
-    
-    @Test
-    @DisplayName("왓챠_RSS_읽기")
-    void watcha () throws Exception {
-        RSSFeedParser parser = new RSSFeedParser(
-                "https://medium.com/feed/watcha"
-        );
-    
-        RSSFeed feed = parser.readFeed();
-    
-        feed.getMessages().forEach(message->{
-            assertThat(message.getLink().trim()).startsWith("https://");
-            assertThat(message.getGuid().trim()).startsWith("https://");
-        });
-    
-    }
-    
+
 }

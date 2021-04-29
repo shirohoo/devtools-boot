@@ -1,4 +1,4 @@
-package toy.subscribe.repository;
+package toy.subscribe.mvc.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;

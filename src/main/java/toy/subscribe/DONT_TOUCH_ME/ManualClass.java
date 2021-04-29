@@ -12,7 +12,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import toy.subscribe.domain.entity.FeedBoard;
-import toy.subscribe.repository.FeedBoardRepository;
+import toy.subscribe.mvc.repository.FeedBoardRepository;
 
 /**
  * <pre>

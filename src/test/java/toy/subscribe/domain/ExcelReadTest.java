@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestConstructor;
 import toy.subscribe.domain.entity.FeedBoard;
-import toy.subscribe.repository.FeedBoardRepository;
+import toy.subscribe.mvc.repository.FeedBoardRepository;
 
 import java.io.File;
 import java.io.FileInputStream;

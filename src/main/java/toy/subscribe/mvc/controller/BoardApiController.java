@@ -1,4 +1,4 @@
-package toy.subscribe.controller;
+package toy.subscribe.mvc.controller;
 
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import toy.subscribe.domain.dto.FeedBoardDto;
-import toy.subscribe.repository.FeedBoardRepository;
-import toy.subscribe.repository.RequestLogRepository;
+import toy.subscribe.mvc.repository.FeedBoardRepository;
+import toy.subscribe.mvc.repository.RequestLogRepository;
 
 @Slf4j
 @RestController

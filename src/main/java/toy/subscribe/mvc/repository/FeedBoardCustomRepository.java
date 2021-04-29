@@ -1,4 +1,4 @@
-package toy.subscribe.repository;
+package toy.subscribe.mvc.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

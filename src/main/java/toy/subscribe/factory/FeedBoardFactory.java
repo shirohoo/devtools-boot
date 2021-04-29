@@ -8,7 +8,7 @@ import toy.subscribe.domain.RSSFeedMessage;
 import toy.subscribe.domain.entity.FeedBoard;
 import toy.subscribe.factory.appendices.Company;
 import toy.subscribe.parser.JsonReader;
-import toy.subscribe.repository.FeedBoardRepository;
+import toy.subscribe.mvc.repository.FeedBoardRepository;
 
 
 @Slf4j
