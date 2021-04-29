@@ -1,9 +1,5 @@
-package toy.subscribe.DONT_TOUCH_ME;
+package toy.subscribe.menual;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -13,6 +9,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import toy.subscribe.domain.entity.FeedBoard;
 import toy.subscribe.mvc.repository.FeedBoardRepository;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <pre>

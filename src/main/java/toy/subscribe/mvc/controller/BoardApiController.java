@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import toy.subscribe.domain.dto.FeedBoardDto;
+import toy.subscribe.domain.response.FeedBoardResponseDto;
 import toy.subscribe.mvc.repository.FeedBoardRepository;
 import toy.subscribe.mvc.repository.RequestLogRepository;
 
@@ -53,8 +53,8 @@ public class BoardApiController {
     @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     private class Result<T> {
-        
-        private Page<FeedBoardDto> pages;
+    
+        private Page<FeedBoardResponseDto> pages;
         private Long dau;
         private Long allVisitors;
         

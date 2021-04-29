@@ -1,24 +1,33 @@
-# 링크: http://15.165.178.142/
+# Link : http://15.165.178.142/
 
-# 기술 블로그 구독 
-- 네카라쿠배토당야 등 IT기업들의 기술 블로그 구독
-- 모바일 환경 특화
-- 각 기술블로그에 새로운 글이 게시되면 수집
-- 기술블로그 그룹 계속해서 추가 예정
+# Toy - SubscribeTechBlogs
 
-<br />
-<br />
-
-![image](https://user-images.githubusercontent.com/71188307/110321314-d8edbf80-8054-11eb-97d8-a764909eb723.png)
+- 유명 IT기업들의 기술 블로그 뉴스 수집
+- 출퇴근길 사용 목적 → 모바일 특화
 
 <br />
 <br />
 
 # CI/CD
-- Github webhook to jenkins when push commit on master
-- 빌드 → 배포 자동화
 
-<br />
+- github webhook to jenkins when push commit on master
+- run test and deploy if successful
+
 <br />
 
 ![image](https://user-images.githubusercontent.com/71188307/110320998-70064780-8054-11eb-99ea-46a75f9628e6.png)
+
+<br />
+
+# 모바일
+
+![image](https://user-images.githubusercontent.com/71188307/116537159-d440db80-a920-11eb-839e-79ece576553f.png)
+
+<br />
+
+# PC
+
+![image](https://user-images.githubusercontent.com/71188307/116537217-e7ec4200-a920-11eb-951f-db2db7063411.png)
+
+
+

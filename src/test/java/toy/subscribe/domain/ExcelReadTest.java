@@ -6,10 +6,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.TestConstructor;
 import toy.subscribe.domain.entity.FeedBoard;
-import toy.subscribe.mvc.repository.FeedBoardRepository;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,15 +15,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class ExcelReadTest {
-    
-    private final FeedBoardRepository feedBoardRepository;
-    
-    public ExcelReadTest(FeedBoardRepository feedBoardRepository) {
-        this.feedBoardRepository = feedBoardRepository;
-    }
     
     @Test
     @DisplayName("우아한형제들_엑셀_읽기")
@@ -38,6 +27,7 @@ public class ExcelReadTest {
         Workbook workbook = new XSSFWorkbook(new FileInputStream(file));
         Sheet sheet = workbook.getSheetAt(0);
         
+        // when
         for (Row rows : sheet) {
             list.add(FeedBoard.builder()
                               .title(rows.getCell(0).getStringCellValue())
@@ -47,11 +37,8 @@ public class ExcelReadTest {
                               .build());
         }
         
-        // when
-        List<FeedBoard> feedBoards = feedBoardRepository.saveAll(list);
-        
         // then
-        assertThat(feedBoards.size()).isEqualTo(224);
+        assertThat(list.size()).isEqualTo(224);
     }
     
 }
