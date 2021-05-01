@@ -10,7 +10,7 @@ import toy.subscribe.domain.logging.RequestLog;
 import java.time.LocalDateTime;
 
 import static com.querydsl.core.types.dsl.Expressions.stringTemplate;
-import static toy.subscribe.common.entity.QRequestLog.requestLog;
+import static toy.subscribe.domain.logging.QRequestLog.requestLog;
 
 public class RequestLogCustomRepositoryImpl extends QuerydslRepositorySupport implements RequestLogCustomRepository {
     

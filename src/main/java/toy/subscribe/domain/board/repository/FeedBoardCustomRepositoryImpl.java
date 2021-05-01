@@ -13,7 +13,7 @@ import toy.subscribe.domain.board.dto.FeedBoardResponseDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static toy.subscribe.common.entity.QFeedBoard.feedBoard;
+import static toy.subscribe.domain.board.QFeedBoard.feedBoard;
 
 public class FeedBoardCustomRepositoryImpl extends QuerydslRepositorySupport implements FeedBoardCustomRepository {
     
