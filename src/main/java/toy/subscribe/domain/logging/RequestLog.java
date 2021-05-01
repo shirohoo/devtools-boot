@@ -5,6 +5,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import toy.subscribe.common.BaseTime;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Getter
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners({AuditingEntityListener.class})
-public class RequestLog extends BaseTime {
+public class RequestLog extends BaseTime implements Serializable {
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "REQUEST_LOG_ID")
