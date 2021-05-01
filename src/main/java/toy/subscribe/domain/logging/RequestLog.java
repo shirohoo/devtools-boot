@@ -15,17 +15,14 @@ import java.io.Serializable;
 @EntityListeners({AuditingEntityListener.class})
 public class RequestLog extends BaseTime implements Serializable {
     
+    @Column(name = "request_log_id")
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "REQUEST_LOG_ID")
     private Long id;
     
-    @Column(name = "CLIENT_IP")
     private String clientIp;
     
-    @Column(name = "HTTP_METHOD")
     private String httpMethod;
     
-    @Column(name = "REQUEST_URI")
     private String requestUri;
     
 }

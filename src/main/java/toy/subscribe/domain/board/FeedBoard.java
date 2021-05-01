@@ -13,8 +13,8 @@ import java.io.Serializable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FeedBoard extends BaseTime implements Serializable {
     
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "feed_board_id")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     private String company;
