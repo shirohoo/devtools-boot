@@ -6,7 +6,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import toy.subscribe.domain.entity.FeedBoard;
+import toy.subscribe.domain.board.FeedBoard;
 
 import java.io.File;
 import java.io.FileInputStream;
