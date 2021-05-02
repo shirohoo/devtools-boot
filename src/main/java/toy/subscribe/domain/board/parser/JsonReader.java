@@ -15,11 +15,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 public class JsonReader {
     
-    public static ArrayList<String> readUrls() {
+    public static List<String> readUrls() {
         JSONObject jsonObj = null;
         try {
             FileReader reader = new FileReader(createInputStreamToFile());
@@ -32,15 +33,16 @@ public class JsonReader {
         catch(ParseException e) {
             log.error("Json parsing error !");
         }
-        if (jsonObj != null) {
+        if(jsonObj != null) {
             return (ArrayList<String>) jsonObj.get("urls");
-        } else {
+        }
+        else {
             return null;
         }
     }
     
-    public static ArrayList<Company> readCompanies() {
-        ArrayList<Company> companies = null;
+    public static List<Company> readCompanies() {
+        List<Company> companies = null;
         JSONArray jsonCompanies = null;
         
         try {
@@ -50,10 +52,12 @@ public class JsonReader {
             companies = new ArrayList<>();
             JSONObject jsonObj = (JSONObject) parser.parse(reader);
             jsonCompanies = (JSONArray) jsonObj.get("companies");
-        } catch (IOException e) {
+        }
+        catch(IOException e) {
             log.error("Read not json !");
             return null;
-        } catch (ParseException e) {
+        }
+        catch(ParseException e) {
             log.error("Json parsing error !");
             return null;
         }

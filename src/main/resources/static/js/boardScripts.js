@@ -240,6 +240,8 @@ function renderingPagingArea() {
 function resetSearchForm(searchFormId) {
 	try {
 		$("#" + searchFormId)[0].reset();
+		$('#company').val("");
+		searchPost();
 	}
 	catch (e) {
 		alert("[ resetSearchForm() ] :: " + e.message);

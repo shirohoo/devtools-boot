@@ -19,13 +19,12 @@ public class DatabaseConfig {
     
     @Bean
     @Primary
-    public DataSource customDataSource () {
-        return DataSourceBuilder
-                .create()
-                .url(databaseProperties.getUrl())
-                .username(databaseProperties.getUsername())
-                .password(databaseProperties.getPassword())
-                .build();
+    public DataSource createDataSourceByProperties() {
+        return DataSourceBuilder.create()
+                                .url(databaseProperties.getUrl())
+                                .username(databaseProperties.getUsername())
+                                .password(databaseProperties.getPassword())
+                                .build();
     }
     
 }

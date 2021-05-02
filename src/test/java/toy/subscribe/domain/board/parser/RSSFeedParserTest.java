@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RSSFeedParserTest {
 
     @ParameterizedTest
-    @DisplayName("RSS_읽기")
+    @DisplayName("전사_RSS_파싱_테스트")
     @MethodSource("provideFeedUrlAndKeyword")
     public void readAllGroup(String url, String keyword) throws Exception {
         RSSFeedParser parser = new RSSFeedParser(url);
