@@ -22,46 +22,39 @@ public class CollectPostServiceImpl implements CollectPostService {
 
     private final FeedBoardFactory feedBoardFactory;
     private final FeedBoardRepository feedBoardRepository;
-
-    private List<String> urls;
-
+    
     @Transactional
     public void getAllGroupFeed() {
-        readUrlsFromJsonProperties();
-        collectRSS();
-    }
-
-    private void readUrlsFromJsonProperties() {
-        this.urls = JsonReader.readUrls();
-    }
-
-    private void collectRSS() {
         RSSFeed feed = null;
-
-        if (urls != null) {
-            for (String url : urls) {
+        List<String> urls = JsonReader.readUrls();
+        
+        if(urls != null) {
+            for(String url : urls) {
                 try {
                     RSSFeedParser parser = new RSSFeedParser(url);
                     feed = parser.readFeed();
-                } catch (XMLStreamException e) {
+                }
+                catch(XMLStreamException e) {
                     log.error("XML parsing error.");
-                } catch (MalformedURLException e) {
+                }
+                catch(MalformedURLException e) {
                     log.error("Syntax not found : 'http' or 'https'.");
                 }
-
-                if (feed != null) {
+                
+                if(feed != null) {
                     feed.getMessages()
-                            .stream()
-                            .map(feedBoardFactory::findFeedBoardFrom)
-                            .filter(Objects::nonNull)
-                            .forEach(feedBoard -> {
-                                log.info("[NEW RSS] {} : {}", feedBoard.getCompany(), feedBoard.getTitle());
-                                feedBoardRepository.save(feedBoard);
-                            });
+                        .stream()
+                        .map(feedBoardFactory::getFeedBoard)
+                        .filter(Objects::nonNull)
+                        .forEach(feedBoard->{
+                            log.info("[NEW RSS] {} : {}", feedBoard.getCompany(), feedBoard.getTitle());
+                            feedBoardRepository.save(feedBoard);
+                        });
                 }
             }
-        } else {
-            log.error("urls is null. please check JsonReader !");
+        }
+        else {
+            log.error("Urls is null. please check JsonReader !");
         }
     }
 

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.thymeleaf.util.StringUtils;
 import toy.subscribe.domain.board.dto.FeedBoardResponseDto;
 import toy.subscribe.domain.board.repository.FeedBoardRepository;
 import toy.subscribe.domain.logging.repository.RequestLogRepository;
@@ -22,38 +23,33 @@ public class BoardApiController {
     private final RequestLogRepository requestLogRepository;
     
     @GetMapping("/boards")
-    public ResponseEntity<?> getBoards(Pageable pageable,
-                                       @RequestParam(value = "company", required = false) String company,
-                                       @RequestParam(value = "title", required = false) String title) {
-        
+    public ResponseEntity<?> requestFeedBoards(Pageable pageable,
+                                               @RequestParam(value = "company", required = false) String company,
+                                               @RequestParam(value = "title", required = false) String title) {
         if(pageable.getPageSize() > 200) {
             log.error("Request page size is too large !");
-            return new ResponseEntity<>("Request page size is too large !", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Request page size is too large !",
+                                        HttpStatus.BAD_REQUEST);
         }
-
-        if(isNull(company)) {
-            company = "";
+        else {
+            if(StringUtils.isEmptyOrWhitespace(company)) {
+                company = "";
+            }
+            if(StringUtils.isEmptyOrWhitespace(title)) {
+                title = "";
+            }
+            return new ResponseEntity<>(new FeedBoardResponseWrapper(feedBoardRepository.findPageByFeedBoard(pageable, company, title),
+                                                                     requestLogRepository.findDau(),
+                                                                     requestLogRepository.findAllVisitors()),
+                                        HttpStatus.OK);
         }
-        if(isNull(title)) {
-            title = "";
-        }
-    
-        return new ResponseEntity<>(new Result(
-                feedBoardRepository.findPageByFeedBoard(pageable, company, title),
-                requestLogRepository.findDau(),
-                requestLogRepository.findAllVisitors()
-        ), HttpStatus.OK);
-    }
-    
-    private boolean isNull(String s) {
-        return s == null;
     }
     
     @Data
     @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    private class Result<T> {
-    
+    private class FeedBoardResponseWrapper<T> {
+        
         private Page<FeedBoardResponseDto> pages;
         private Long dau;
         private Long allVisitors;

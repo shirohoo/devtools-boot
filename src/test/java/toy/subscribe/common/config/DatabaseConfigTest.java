@@ -35,9 +35,7 @@ class DatabaseConfigTest {
         
         // then
         assertThat(dataSource).isNotNull();
-        
         assertThat(dataSource.getConnection()).isNotNull();
-        
     }
     
 }

@@ -2,6 +2,7 @@ package toy.subscribe.domain.board;
 
 import lombok.*;
 import toy.subscribe.common.BaseTime;
+import toy.subscribe.domain.board.dto.FeedBoardResponseDto;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,5 +25,16 @@ public class FeedBoard extends BaseTime implements Serializable {
     private String title;
     
     private String guid;
+    
+    public FeedBoardResponseDto convertToFeedBoardDto() {
+        return FeedBoardResponseDto.builder()
+                                   .id(this.getId())
+                                   .company(this.getCompany())
+                                   .imgPath(this.getImgPath())
+                                   .title(this.getTitle())
+                                   .link(this.getGuid())
+                                   .regDate(this.getRegDate())
+                                   .build();
+    }
     
 }

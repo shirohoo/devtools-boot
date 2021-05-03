@@ -18,24 +18,24 @@ public class FeedBoardFactory {
     
     private final FeedBoardRepository feedBoardRepository;
     
-    public FeedBoard findFeedBoardFrom(RSSFeedMessage message) {
-        if(isNoDuplicate(message)) {
+    public FeedBoard getFeedBoard(RSSFeedMessage message) {
+        if(isNonDuplicate(message)) {
             String url = message.getLink();
             List<Company> companies = JsonReader.readCompanies();
-
-            if (companies != null) {
-                for (int i = 0; i < companies.size(); i++) {
-                    if (url.contains(companies.get(i).getKey())) {
+            
+            if(companies != null) {
+                for(int i = 0; i < companies.size(); i++) {
+                    if(url.contains(companies.get(i).getKey())) {
                         message.setCompany(companies.get(i).getName());
                         message.setImgPath(companies.get(i).getImgPath());
                         break;
                     }
                 }
-
+                
                 return FeedBoard.builder()
-                        .title(message.getTitle())
-                        .company(message.getCompany())
-                        .imgPath(message.getImgPath())
+                                .title(message.getTitle())
+                                .company(message.getCompany())
+                                .imgPath(message.getImgPath())
                         .guid(message.getGuid())
                         .build();
             }
@@ -43,7 +43,7 @@ public class FeedBoardFactory {
         return null;
     }
     
-    private boolean isNoDuplicate(RSSFeedMessage message) {
+    private boolean isNonDuplicate(RSSFeedMessage message) {
         return feedBoardRepository.countByGuid(message.getGuid().trim()) == 0L;
     }
     
