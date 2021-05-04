@@ -7,13 +7,13 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.transaction.annotation.Transactional;
-import toy.subscribe.domain.board.FeedBoard;
-import toy.subscribe.domain.board.dto.FeedBoardResponseDto;
+import toy.subscribe.domain.board.dto.FeedBoardResponse;
+import toy.subscribe.domain.board.model.FeedBoard;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static toy.subscribe.domain.board.QFeedBoard.feedBoard;
+import static toy.subscribe.domain.board.model.QFeedBoard.feedBoard;
 
 public class FeedBoardCustomRepositoryImpl extends QuerydslRepositorySupport implements FeedBoardCustomRepository {
     
@@ -23,7 +23,7 @@ public class FeedBoardCustomRepositoryImpl extends QuerydslRepositorySupport imp
     
     @Override
     @Transactional(readOnly = true)
-    public Page<FeedBoardResponseDto> findPageByFeedBoard(Pageable pageable, String company, String title) {
+    public Page<FeedBoardResponse> getPageByFeedBoard(Pageable pageable, String company, String title) {
         
         JPAQueryFactory queryFactory = new JPAQueryFactory(getEntityManager());
         QueryResults<FeedBoard> results = queryFactory
@@ -36,10 +36,10 @@ public class FeedBoardCustomRepositoryImpl extends QuerydslRepositorySupport imp
                 .orderBy(feedBoard.id.desc())
                 .fetchResults();
         
-        List<FeedBoardResponseDto> content = results.getResults()
-                                                    .stream()
-                                                    .map(FeedBoard::convertToFeedBoardDto)
-                                                    .collect(Collectors.toList());
+        List<FeedBoardResponse> content = results.getResults()
+                                                 .stream()
+                                                 .map(FeedBoard::convertToFeedBoardDto)
+                                                 .collect(Collectors.toList());
         
         return new PageImpl<>(content, pageable, results.getTotal());
     }

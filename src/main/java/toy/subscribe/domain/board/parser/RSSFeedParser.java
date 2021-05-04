@@ -1,7 +1,7 @@
 package toy.subscribe.domain.board.parser;
 
-import toy.subscribe.domain.board.dto.RSSFeed;
-import toy.subscribe.domain.board.dto.RSSFeedMessage;
+import toy.subscribe.domain.board.model.RSSFeed;
+import toy.subscribe.domain.board.model.RSSFeedMessage;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -49,7 +49,7 @@ public class RSSFeedParser {
     
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
     
-            try(InputStream inputStream = openInputStream();) {
+            try(InputStream inputStream = openInputStream()) {
         
                 XMLEventReader eventReader = inputFactory.createXMLEventReader(inputStream);
         
@@ -106,7 +106,7 @@ public class RSSFeedParser {
                                                                    .guid(guid)
                                                                    .link(link)
                                                                    .title(title)
-                                                                   .pubdate(pubdate)
+                                                                   .pubDate(pubdate)
                                                                    .build();
                     
                             feed.getMessages().add(message);

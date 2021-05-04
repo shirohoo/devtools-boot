@@ -2,8 +2,8 @@ package toy.subscribe.domain.logging.repository;
 
 public interface RequestLogCustomRepository {
     
-    Long findDau();
+    Long getDAU();
     
-    Long findAllVisitors();
+    Long getCumulativeVisitors();
     
 }

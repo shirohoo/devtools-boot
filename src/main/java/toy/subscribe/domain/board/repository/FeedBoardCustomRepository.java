@@ -2,10 +2,10 @@ package toy.subscribe.domain.board.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import toy.subscribe.domain.board.dto.FeedBoardResponseDto;
+import toy.subscribe.domain.board.dto.FeedBoardResponse;
 
 public interface FeedBoardCustomRepository {
     
-    Page<FeedBoardResponseDto> findPageByFeedBoard(Pageable pageable, String company, String title);
+    Page<FeedBoardResponse> getPageByFeedBoard(Pageable pageable, String company, String title);
     
 }

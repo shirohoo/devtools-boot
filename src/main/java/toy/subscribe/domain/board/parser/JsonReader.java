@@ -7,7 +7,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.core.io.ClassPathResource;
-import toy.subscribe.domain.board.dto.Company;
+import toy.subscribe.domain.board.model.Company;
 
 import java.io.File;
 import java.io.FileReader;
@@ -82,7 +82,7 @@ public class JsonReader {
     
     private static File readFileFromPropertiesUseInputStream() throws IOException {
         File file;
-        try(InputStream inputStream = new ClassPathResource("static/properties/propertiesFactory.json").getInputStream();) {
+        try(InputStream inputStream = new ClassPathResource("static/properties/propertiesFactory.json").getInputStream()) {
             file = File.createTempFile("propertiesFactory", ".json");
             FileUtils.copyInputStreamToFile(inputStream, file);
         }

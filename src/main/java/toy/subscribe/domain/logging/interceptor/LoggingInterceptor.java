@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-import toy.subscribe.domain.logging.RequestLog;
+import toy.subscribe.domain.logging.model.RequestLog;
 import toy.subscribe.domain.logging.repository.RequestLogRepository;
 
 import javax.servlet.http.HttpServletRequest;

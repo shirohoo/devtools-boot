@@ -1,4 +1,4 @@
-package toy.subscribe.domain.board.dto;
+package toy.subscribe.domain.board.model;
 
 import lombok.*;
 

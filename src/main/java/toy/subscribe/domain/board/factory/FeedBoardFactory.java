@@ -3,9 +3,9 @@ package toy.subscribe.domain.board.factory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import toy.subscribe.domain.board.FeedBoard;
-import toy.subscribe.domain.board.dto.Company;
-import toy.subscribe.domain.board.dto.RSSFeedMessage;
+import toy.subscribe.domain.board.model.Company;
+import toy.subscribe.domain.board.model.FeedBoard;
+import toy.subscribe.domain.board.model.RSSFeedMessage;
 import toy.subscribe.domain.board.parser.JsonReader;
 import toy.subscribe.domain.board.repository.FeedBoardRepository;
 

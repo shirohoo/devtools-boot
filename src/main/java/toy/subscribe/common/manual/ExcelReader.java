@@ -4,7 +4,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import toy.subscribe.domain.board.FeedBoard;
+import toy.subscribe.domain.board.model.FeedBoard;
 
 import java.io.File;
 import java.io.FileInputStream;

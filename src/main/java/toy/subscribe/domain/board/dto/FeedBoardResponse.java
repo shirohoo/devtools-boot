@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FeedBoardResponseDto {
+public class FeedBoardResponse {
     
     private Long id;
     private String company;

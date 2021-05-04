@@ -2,7 +2,7 @@ package toy.subscribe.domain.board.parser;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import toy.subscribe.domain.board.dto.Company;
+import toy.subscribe.domain.board.model.Company;
 
 import java.util.List;
 
