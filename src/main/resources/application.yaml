@@ -14,3 +14,9 @@ spring:
 logging:
   level:
     org.hibernate.SQL: info
+
+decorator:
+  datasource:
+    p6spy:
+      ## Query Interceptor 개발=true / 운영=false 권장
+      enable-logging: false
