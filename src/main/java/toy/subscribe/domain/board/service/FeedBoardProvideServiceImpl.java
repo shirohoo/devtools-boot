@@ -19,8 +19,8 @@ public class FeedBoardProvideServiceImpl implements FeedBoardProvideService {
     @Transactional(readOnly = true)
     public FeedBoardResponseWrapper provideFeedBoardWrapper(Pageable pageable, String company, String title) {
         return new FeedBoardResponseWrapper(feedBoardRepository.getPageByFeedBoard(pageable, company, title),
-                                            requestLogRepository.getDAU(),
-                                            requestLogRepository.getCumulativeVisitors());
+                                            requestLogRepository.getCumulativeVisitors(),
+                                            requestLogRepository.getDAU());
     }
     
 }

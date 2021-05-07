@@ -12,7 +12,7 @@ import org.springframework.data.domain.Page;
 public class FeedBoardResponseWrapper<T> {
     
     private Page<FeedBoardResponse> pages;
-    private Long dau;
-    private Long allVisitors;
+    private Long visitorsOfReduce;
+    private Long visitorsOfDay;
     
 }
