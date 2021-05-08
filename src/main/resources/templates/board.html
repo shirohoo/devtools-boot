@@ -3,7 +3,7 @@
 <head th:replace="fragments/head :: head" />
 <body >
 <!-- container -->
-<div class="container" >
+<div id="app" class="container" >
     <div th:replace="fragments/header :: header" />
     <div >
         <div >
@@ -14,7 +14,7 @@
                         <div class="col-7" id="companyBox" >
                             <span class="badge badge-danger text-wrap" style="width: 6rem;" >회사</span >
                             <input type="hidden" id="company" name="company" value="" />
-                            <select class="form-control" id="selectCompany" onchange="selectedCompany(this);" style="cursor: pointer" >
+                            <select class="form-control" id="selectCompany" @change="selectedCompany(this);" style="cursor: pointer" >
                                 <option value="" >- 전체 -</option >
                                 <option value="우아한형제들" >우아한형제들</option >
                                 <option value="데일리호텔" >데일리호텔</option >
@@ -28,7 +28,7 @@
                             </select >
                         </div >
                         <div class="col-3" >
-                            <button class="btn btn-outline-info" type="button" id="initialize" onclick="resetSearchForm();" >초기화</button >
+                            <button class="btn btn-outline-info" type="button" id="initialize" @click="resetSearchForm();" >초기화</button >
                         </div >
                         <div class="col-1" ></div >
                     </div >
@@ -38,10 +38,10 @@
                         <div class="col-7" >
                             <span class="badge badge-info text-wrap" style="width: 6rem;" >제목</span >
                             <input hidden="hidden" />
-                            <input class="form-control" type="text" id="title" name="title" placeholder="검색할 제목을 입력하세요" onkeyup="enterKeyUp();" />
+                            <input class="form-control" type="text" id="title" name="title" placeholder="검색할 제목을 입력하세요" @keyup="enterKeyUp();" />
                         </div >
                         <div class="col-3" >
-                            <button class="btn btn-outline-info" type="button" id="search" onclick="search();" >검색</button >
+                            <button class="btn btn-outline-info" type="button" id="search" @click="search();" >검색</button >
                         </div >
                         <div class="col-1" ></div >
                     </div >
@@ -50,10 +50,10 @@
         </div >
         <hr />
         <div class="form-inline" >
-            <h4 id="totalResultCount" >TOTAL : </h4 >
+            <h4 id="totalResultCount" >전체 글 : {{pager.total}}개</h4 >
             <span style="margin-left: auto;" >
                 <input type="hidden" id="currentPageNum" />
-                <select class="custom-select" id="renderingCount" onchange="search();" >
+                <select class="custom-select" id="renderingCount" @change="search();" >
                     <option value="10" >10개</option >
                     <option value="30" >30개</option >
                     <option value="50" >50개</option >
@@ -63,6 +63,8 @@
             </span >
         </div >
         <br />
+
+        <!-- board -->
         <div >
             <table class="table" id="table" >
                 <thead >
@@ -72,19 +74,50 @@
                     <th style="width:20%" >수집일</th >
                 </tr >
                 </thead >
-                <tbody id="boards" >
+                <tbody id="posts" >
+                <tr v-for="content in response.pages.content" >
+                    <td style="text-align:center" >
+                        <img :src="content.imgPath" height="48px" width="96px" :title="content.company" />
+                    </td >
+                    <td style="text-align:center; text-align: left; font-weight: bold; color: skyblue;" >
+                        <span :class="{'badge badge-danger' : isBetweenDay(content.regDate)}"
+                              v-show="isBetweenDay(content.regDate)" >
+                            Today
+                        </span >
+                        <a :href="content.link" target="blank" >
+                            {{content.title}}
+                        </a >
+                    </td >
+                    <td style="text-align:center" >
+                        {{content.regDate}}
+                    </td >
+                </tr >
                 </tbody >
             </table >
         </div >
         <br />
+
+        <!-- pagination -->
         <div >
-            <ul class="pagination pagination-sm justify-content-center" id="pagingArea" ></ul >
+            <ul class="pagination pagination-sm justify-content-center" id="pagingArea" >
+                <li v-show="response.pages.first !== true" class="page-item" style="cursor: pointer" >
+                    <a class="page-link" @click="pageMove(pager.currentPage - 1, pager.size);" >&lt;</a >
+                </li >
+                <li v-for="index in pager.index" class="page-item" :class="{'active' : response.pages.pageable.pageNumber === index}" style="cursor: pointer" >
+                    <a class="page-link" @click="pageMove(index, pager.size);" >{{index+1}}</a >
+                </li >
+                <li v-show="response.pages.last !== true" class="page-item" style="cursor: pointer" >
+                    <a class="page-link" @click="pageMove(pager.currentPage + 1, pager.size);" >&gt;</a >
+                </li >
+            </ul >
         </div >
-        <br /><br />
+
+        <br />
+        <br />
         <div th:replace="fragments/footer :: footer" />
-        <!-- container -->
     </div >
 </div >
 </body >
-<script th:src="@{/js/boardScripts.js}" crossorigin="anonymous" ></script >
+<!-- Vue.js -->
+<script th:src="@{/js/board.js}" crossorigin="anonymous" ></script >
 </html >

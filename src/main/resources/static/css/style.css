@@ -124,18 +124,18 @@ body {
     vertical-align: middle;
 }
 
-#boards > tr > td {
+#posts > tr > td {
     vertical-align: middle;
 }
 
-#boards > tr > td > a {
+#posts > tr > td > a {
     transition: all 0.3s;
     color: black;
     text-align: center;
     text-decoration: none;
 }
 
-#boards > tr > td > a:hover {
+#posts > tr > td > a:hover {
     color: darkorchid;
     font-weight: bold;
     text-align: center;
