@@ -24,8 +24,7 @@ public class BoardApiController {
                                                       @RequestParam(value = "title", required = false) String title) {
         if(pageable.getPageSize() > 200) {
             log.error("Request page size is too large !");
-            return new ResponseEntity<>("Request page size is too large !",
-                                        HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Request page size is too large !", HttpStatus.BAD_REQUEST);
         }
         else {
             if(StringUtils.isEmptyOrWhitespace(company)) {

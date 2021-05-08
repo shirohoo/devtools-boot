@@ -5,7 +5,9 @@
  * 페이지 초기화
  */
 (function init(){
-	requestGetAjax('/boards?page=0&size=10', '');
+	let url = '/boards?';
+	let param = 'page=0&size=10';
+	apiFetch(url, param, callbackDataBinding);
 })();
 
 const CONTEXT_PATH = '';
@@ -16,43 +18,33 @@ let response = {
 	visitorsOfDay   : ''
 };
 
-function requestGetAjax(url, param){
-	try{
-		$.ajax({
-			       url        : url + param,
-			       type       : 'get',
-			       contentType: 'application/x-www-form-urlencoded;charset=utf-8',
-			       dataType   : 'json',
-			       success    : (data) => {
-				       response.pages = data.pages;
-				       response.visitorsOfReduce = data.visitorsOfReduce;
-				       response.visitorsOfDay = data.visitorsOfDay;
-				       listRendering()
-			       },
-			       error      : () => {
-				       alert('Error. 관리자에게 문의하십시오.');
-			       },
-		       });
+function apiFetch(url, param, callback){
+	fetch(url + param)
+		.then(res => {if(res.status === 200) return res.json()})
+		.then(data => callback(data))
+		.catch(() => alert('400, Bad Request'));
+}
 
-	}
-	catch(e){
-		alert(`[requestAjax] :: ${e.message}`);
-	}
+function callbackDataBinding(data){
+	response.pages = data.pages;
+	response.visitorsOfReduce = data.visitorsOfReduce;
+	response.visitorsOfDay = data.visitorsOfDay;
+	renderingBoardArea()
 }
 
 /**
  * 검색 시 엔터키 감지
  */
-function enterKeyup(){
+function enterKeyUp(){
 	if(event.keyCode == 13){
-		searchPost();
+		search();
 	}
 }
 
 /**
  * 숫자 3자리마다 ,추가
  */
-function numberFormat(num){
+function formatNumber(num){
 	let regexp = /\B(?=(\d{3})+(?!\d))/g;
 	return num.toString()
 	          .replace(regexp, ',');
@@ -61,14 +53,46 @@ function numberFormat(num){
 /**
  * 초기화 버튼
  */
-function resetSearchForm(searchFormId){
+function resetSearchForm(){
 	try{
-		$(`#${searchFormId}`)[0].reset();
-		$('#company').val('');
-		searchPost();
+		document.querySelector('#searchForm').reset();
+		document.querySelector('#company').value = '';
+		search();
 	}
 	catch(e){
 		alert(`[resetSearchForm] :: ${e.message}`);
+	}
+}
+
+/**
+ * 검색 버튼 클릭시 호출될 함수
+ */
+function search(){
+	try{
+		let url = `${CONTEXT_PATH}/boards?`;
+		let param = new URLSearchParams();
+		let searchConditions = Array.from(
+			document.querySelector('#searchForm')
+			        .getElementsByTagName('input')
+		).filter((element) => {
+			return element.id != '';
+		});
+
+		for(const conditions of searchConditions){
+			param.append(conditions.name, conditions.value);
+		}
+
+		let currentPage = document.querySelector('#currentPageNum').value == ''
+		                  ? 0 : document.querySelector('#currentPageNum').value;
+		let size = document.querySelector('#renderingCount').value;
+
+		param += param == '' ? '' : '&';
+		param += `page=${currentPage}&size=${size}`;
+
+		apiFetch(url, param, callbackDataBinding);
+	}
+	catch(e){
+		alert(`[search] :: ${e.message}`);
 	}
 }
 
@@ -79,7 +103,7 @@ function selectedCompany(){
 	let company = document.querySelector('#company');
 	let selectCompany = document.querySelector('#selectCompany');
 	company.value = selectCompany.value;
-	searchPost();
+	search();
 }
 
 /**
@@ -109,56 +133,57 @@ function pageMove(targetPage, size){
 function getPage(selectedPage, size){
 	try{
 		let url = `${CONTEXT_PATH}/boards?`;
-		let param = $('#searchForm :input')
-			.filter((idx, element) => {
-				return $(element).val() != '';
-			}).serialize();
+		let param = new URLSearchParams();
+
+		let searchConditions = Array.from(
+			document.querySelector('#searchForm')
+			        .getElementsByTagName('input')
+		).filter((element) => {
+			return element.id != '';
+		});
+
+		for(const ele of searchConditions){
+			param.append(ele.name, ele.value);
+		}
+
 		param += param == '' ? '' : '&';
 		param += `page=${selectedPage}&size=${size}`;
-		requestGetAjax(url, param);
-	}
-	catch(e){
-		alert(`[searchResultList] :: ${e.message}`);
-	}
-}
 
-/**
- * 검색 버튼 클릭시 호출될 함수
- */
-function searchPost(){
-	try{
-		let url = `${CONTEXT_PATH}/boards?`;
-		let currentPage = $('#currentPageNum').val() == '' ? 0 : $('#currentPageNum').val();
-		let size = $('#renderingCount').val();
-		let param = $('#searchForm :input')
-			.filter((idx, element) => {
-				return $(element).val() != '';
-			}).serialize();
-		param += param == '' ? '' : '&';
-		param += `page=${currentPage}&size=${size}`;
-		requestGetAjax(url, param);
+		apiFetch(url, param, callbackDataBinding);
 	}
 	catch(e){
-		alert(`[searchResultList] :: ${e.message}`);
+		alert(`[getPage] :: ${e.message}`);
 	}
 }
 
 /**
  * 게시글 목록 렌더링
  */
-function listRendering(){
+function renderingBoardArea(){
 	try{
-		$('#listTbody').empty();
+		// 게시판 초기화
+		let listTbody = document.querySelector('#boards');
+		while(listTbody.firstChild){
+			listTbody.removeChild(listTbody.firstChild);
+		}
 
-		$('.SHOW-allVisitors').empty();
-		$('.SHOW-allVisitors').text(`${numberFormat(response.visitorsOfReduce)} 명`);
+		// 누적 방문자 초기화
+		let allVisitors = document.querySelector('.SHOW-allVisitors');
+		while(allVisitors.firstChild){
+			allVisitors.removeChild(allVisitors.firstChild);
+		}
+		allVisitors.textContent = `${formatNumber(response.visitorsOfReduce)} 명`;
 
-		$('.SHOW-DAU').empty();
-		$('.SHOW-DAU').text(`${numberFormat(response.visitorsOfDay)} 명`);
+		// 오늘 방문자 초기화
+		let dau = document.querySelector('.SHOW-DAU');
+		while(dau.firstChild){
+			dau.removeChild(dau.firstChild);
+		}
+		dau.textContent = `${formatNumber(response.visitorsOfDay)} 명`;
 
-		let postList = response.pages.content;
-
-		if(postList.length <= 0){
+		// 렌더링
+		let posts = response.pages.content;
+		if(posts.length <= 0){
 			let eleTr = $('<tr />');
 			let eleTd = $('<td />')
 				.css('text-align', 'center')
@@ -166,10 +191,10 @@ function listRendering(){
 				.text('No matching search results found');
 
 			$(eleTr).append(eleTd);
-			$('#listTbody').append(eleTr);
+			$('#boards').append(eleTr);
 		}
 		else{
-			$.each(postList, function(){
+			$.each(posts, function(){
 				let regDateArray = this.regDate.split('-');
 				let regDate = new Date(regDateArray[0], regDateArray[1] - 1, regDateArray[2])
 
@@ -194,7 +219,7 @@ function listRendering(){
 				                                        .append($(`<td style="text-align:center"/>`)
 					                                                .text(this.regDate));
 
-				$('#listTbody').append(eleTr);
+				$('#boards').append(eleTr);
 			});
 		}
 		$('#totalResultCount').empty().append(`TOTAL : ${response.pages.totalElements}`);

@@ -124,18 +124,18 @@ body {
     vertical-align: middle;
 }
 
-#listTbody > tr > td {
+#boards > tr > td {
     vertical-align: middle;
 }
 
-#listTbody > tr > td > a {
+#boards > tr > td > a {
     transition: all 0.3s;
     color: black;
     text-align: center;
     text-decoration: none;
 }
 
-#listTbody > tr > td > a:hover {
+#boards > tr > td > a:hover {
     color: darkorchid;
     font-weight: bold;
     text-align: center;
@@ -177,4 +177,8 @@ hr {
     background-color: #5A4181 !Important;
     border: solid 1px #5A4181;
     border-radius: 10%;
+}
+
+.custom-select {
+    cursor: pointer
 }
