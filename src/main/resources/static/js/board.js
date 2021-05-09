@@ -29,15 +29,17 @@ const app = new Vue({
 			                    this.response.pages = data.pages;
 			                    this.response.visitorsOfReduce = data.visitorsOfReduce;
 			                    this.response.visitorsOfDay = data.visitorsOfDay;
-			                    this.pager = this.setPage(data.pages.pageable.pageNumber, data.pages.size, data.pages.totalElements);
+			                    this.pager = this.setPage(data.pages.pageable.pageNumber,
+			                                              data.pages.size,
+			                                              data.pages.totalElements,
+			                                              data.pages.totalPages);
 		                    },
-		                    setPage(currentPage, size, total){
+		                    setPage(currentPage, size, totalElements, totalPages){
 			                    let endPage = Math.ceil((currentPage + 1) / 10.0) * 10 - 1;
-			                    let trueEndPage = Math.ceil(total / size);
 			                    let startPage = endPage - 9;
 
-			                    if(trueEndPage <= endPage){
-				                    endPage = trueEndPage - 1;
+			                    if(totalPages <= endPage){
+				                    endPage = totalPages - 1;
 			                    }
 
 			                    let index = [];
@@ -46,13 +48,11 @@ const app = new Vue({
 			                    }
 
 			                    return {
-				                    index      : index,
-				                    currentPage: currentPage,
-				                    startPage  : startPage,
-				                    endPage    : endPage,
-				                    trueEndPage: trueEndPage,
-				                    size       : size,
-				                    total      : total
+				                    index        : index,
+				                    size         : size,
+				                    currentPage  : currentPage,
+				                    totalPages   : totalPages,
+				                    totalElements: totalElements
 			                    };
 		                    },
 		                    enterKeyUp(){
