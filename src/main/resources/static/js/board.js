@@ -21,21 +21,20 @@ const app = new Vue({
 	                    methods: {
 		                    findContents(page){
 			                    if(page !== undefined) this.search.page = page;
-			                    let query = Object.keys(this.search)
-			                                      .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(this.search[k]))
-			                                      .join('&');
-			                    let url = '/boards?' + query;
-			                    fetch(url)
-				                    .then(res => {if(res.status === 200) return res.json()})
-				                    .then(data => {
-					                    this.contents = data.pages.content;
-					                    this.visitorsOfReduce = data.visitorsOfReduce;
-					                    this.visitorsOfDay = data.visitorsOfDay;
-					                    this.pager = this.setPage(data.pages);
-				                    })
-				                    .catch(() => alert('400, Bad Request'));
+			                    let queryString = Object.keys(this.search)
+			                                            .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(this.search[k]))
+			                                            .join('&');
+			                    let uri = '/boards?' + queryString;
+			                    fetch(uri).then(res => {if(res.status === 200) return res.json()})
+			                              .then(data => {
+				                              this.contents = data.pages.content;
+				                              this.visitorsOfReduce = data.visitorsOfReduce;
+				                              this.visitorsOfDay = data.visitorsOfDay;
+				                              this.pager = this.setPager(data.pages);
+			                              })
+			                              .catch(() => alert('400, Bad Request'));
 		                    },
-		                    setPage(pages){
+		                    setPager(pages){
 			                    let endPage = Math.ceil((pages.pageable.pageNumber + 1) / 10.0) * 10 - 1;
 			                    let startPage = endPage - 9;
 			                    if(pages.totalPages <= endPage){
@@ -57,7 +56,7 @@ const app = new Vue({
 				                    totalElements: pages.totalElements
 			                    };
 		                    },
-		                    formatNumber(num){
+		                    numberFormatter(num){
 			                    let regexp = /\B(?=(\d{3})+(?!\d))/g;
 			                    return num.toString().replace(regexp, ',');
 		                    },
@@ -67,6 +66,8 @@ const app = new Vue({
 			                    }
 		                    },
 		                    resetSearchForm(){
+			                    this.search.page = 0;
+			                    this.search.size = 10;
 			                    this.search.company = '';
 			                    this.search.title = '';
 			                    this.findContents();
