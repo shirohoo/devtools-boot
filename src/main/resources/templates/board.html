@@ -14,7 +14,7 @@
                         <div class="col-7" id="companyBox" >
                             <span class="badge badge-danger text-wrap" style="width: 6rem;" >회사</span >
                             <input type="hidden" id="company" name="company" value="" />
-                            <select class="form-control" id="selectCompany" @change="selectedCompany(this);" style="cursor: pointer" >
+                            <select class="form-control" id="selectCompany" v-model="search.company" @change="findContents();" style="cursor: pointer" >
                                 <option value="" >- 전체 -</option >
                                 <option value="우아한형제들" >우아한형제들</option >
                                 <option value="데일리호텔" >데일리호텔</option >
@@ -38,10 +38,10 @@
                         <div class="col-7" >
                             <span class="badge badge-info text-wrap" style="width: 6rem;" >제목</span >
                             <input hidden="hidden" />
-                            <input class="form-control" type="text" id="title" name="title" placeholder="검색할 제목을 입력하세요" @keyup="enterKeyUp();" />
+                            <input class="form-control" type="text" id="title" v-model="search.title" name="title" placeholder="검색할 제목을 입력하세요" @keyup="enterKeyUp();" />
                         </div >
                         <div class="col-3" >
-                            <button class="btn btn-outline-info" type="button" id="search" @click="search();" >검색</button >
+                            <button class="btn btn-outline-info" type="button" id="search" @click="findContents();" >검색</button >
                         </div >
                         <div class="col-1" ></div >
                     </div >
@@ -53,7 +53,7 @@
             <h4 id="totalResultCount" >전체 글 : {{pager.totalElements}}개</h4 >
             <span style="margin-left: auto;" >
                 <input type="hidden" id="currentPageNum" />
-                <select class="custom-select" id="renderingCount" @change="search();" >
+                <select v-model="search.size" class="custom-select" id="renderingCount" @change="findContents();" >asd
                     <option value="10" >10개</option >
                     <option value="30" >30개</option >
                     <option value="50" >50개</option >
@@ -75,7 +75,7 @@
                 </tr >
                 </thead >
                 <tbody id="posts" >
-                <tr v-for="content in response.pages.content" >
+                <tr v-for="content in contents" >
                     <td style="text-align:center" >
                         <img :src="content.imgPath" height="48px" width="96px" :title="content.company" />
                     </td >
@@ -100,21 +100,21 @@
         <!-- pagination -->
         <div >
             <ul class="pagination pagination-sm justify-content-center" id="pagingArea" >
-                <li v-show="response.pages.first !== true" class="page-item" style="cursor: pointer" >
-                    <a class="page-link" @click="pageMove(pager.currentPage - 1, pager.size);" >&lt;</a >
+                <li v-show="pager.first !== true" class="page-item" style="cursor: pointer" >
+                    <a class="page-link" @click="findContents(pager.currentPage - 1);" >&lt;</a >
                 </li >
-                <li v-for="index in pager.index" class="page-item" :class="{'active' : response.pages.pageable.pageNumber === index}" style="cursor: pointer" >
-                    <a class="page-link" @click="pageMove(index, pager.size);" >{{index+1}}</a >
+                <li v-for="i in pager.index" class="page-item" :class="{'active' : pager.currentPage === i}" style="cursor: pointer" >
+                    <a class="page-link" @click="findContents(i);" >{{i+1}}</a >
                 </li >
-                <li v-show="response.pages.last !== true" class="page-item" style="cursor: pointer" >
-                    <a class="page-link" @click="pageMove(pager.currentPage + 1, pager.size);" >&gt;</a >
+                <li v-show="pager.last !== true" class="page-item" style="cursor: pointer" >
+                    <a class="page-link" @click="findContents(pager.currentPage + 1);" >&gt;</a >
                 </li >
             </ul >
         </div >
 
-        <br />
-        <br />
+        <br /><br />
         <div th:replace="fragments/footer :: footer" />
+
     </div >
 </div >
 </body >
