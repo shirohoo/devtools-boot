@@ -48,7 +48,7 @@
                     <div class="col-7" >
                         <span class="badge badge-info text-wrap" style="width: 6rem;" >제목</span >
                         <input hidden="hidden" />
-                        <input class="form-control" type="text" id="title" v-model="search.title" name="title" placeholder="검색할 제목을 입력하세요" @keyup="enterKeyUp();" />
+                        <input class="form-control" type="text" id="title" v-model="search.title" name="title" placeholder="검색할 제목을 입력하세요" @keyup.enter="findContents();" />
                     </div >
                     <div class="col-3" >
                         <button class="btn btn-outline-info" type="button" id="search" @click="findContents();" >검색</button >
@@ -111,17 +111,7 @@
 
     <!-- pagination area -->
     <div >
-        <ul class="pagination pagination-sm justify-content-center" id="pagingArea" >
-            <li v-show="pager.first !== true" class="page-item" style="cursor: pointer" >
-                <a class="page-link" @click="findContents(pager.currentPage - 1);" >&lt;</a >
-            </li >
-            <li v-for="i in pager.index" class="page-item" :class="{'active' : pager.currentPage === i}" style="cursor: pointer" >
-                <a class="page-link" @click="findContents(i);" >{{i+1}}</a >
-            </li >
-            <li v-show="pager.last !== true" class="page-item" style="cursor: pointer" >
-                <a class="page-link" @click="findContents(pager.currentPage + 1);" >&gt;</a >
-            </li >
-        </ul >
+        <paging-component :pager="pager" :find-function="findContents" ></paging-component >
     </div >
     <!-- /pagination area -->
 
@@ -137,7 +127,76 @@
 </body >
 <!-- /body -->
 
-<!-- Vue.js -->
-<script th:src="@{/js/board.js}" ></script >
+<!-- Vue.js paging component-->
+<script th:src="@{/js/paging.js}" ></script >
+<!-- /Vue.js paging component-->
 
+<!-- Vue.js -->
+<script >
+    'use strict';
+    const app = new Vue({
+                            el        : '#app',
+                            data      : {
+                                search          : {
+                                    page   : 0,
+                                    size   : 10,
+                                    company: '',
+                                    title  : ''
+                                },
+                                contents        : {},
+                                pager           : {},
+                                visitorsOfReduce: 0,
+                                visitorsOfDay   : 0
+                            },
+                            components: {
+                                'paging-component': pagingComponent,
+                            },
+                            mounted   : function(){
+                                this.$nextTick(function(){
+                                    this.findContents();
+                                });
+                            },
+                            computed  : {
+                                numberFormat(){
+                                    return (num) => {
+                                        let regexp = /\B(?=(\d{3})+(?!\d))/g;
+                                        return num.toString().replace(regexp, ',');
+                                    };
+                                },
+                            },
+                            methods   : {
+                                findContents: function(page){
+                                    if(page !== undefined) this.search.page = page;
+                                    let queryString = Object.keys(this.search)
+                                                            .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(this.search[k]))
+                                                            .join('&');
+                                    let uri = '/boards?' + queryString;
+                                    fetch(uri).then(res => {if(res.status === 200) return res.json()})
+                                              .then(data => {
+                                                  this.contents = data.pages.content;
+                                                  this.visitorsOfReduce = data.visitorsOfReduce;
+                                                  this.visitorsOfDay = data.visitorsOfDay;
+                                                  this.pager = setPager(data.pages);
+                                              })
+                                              .catch(() => alert('400, Bad Request'));
+                                },
+                                resetSearchForm(){
+                                    this.search.page = 0;
+                                    this.search.size = 10;
+                                    this.search.company = '';
+                                    this.search.title = '';
+                                    this.findContents();
+                                },
+                                isBetweenDay(regDate){
+                                    let regDateArray = String(regDate).split('-');
+                                    let date = new Date(regDateArray[0], regDateArray[1] - 1, regDateArray[2])
+
+                                    let nowDate = new Date();
+                                    let betweenDay = Math.floor((nowDate.getTime() - date.getTime()) / 1000 / 60 / 60 / 24);
+                                    return betweenDay === 0;
+                                },
+                            },
+                        });
+</script >
+<!-- /Vue.js -->
 </html >
