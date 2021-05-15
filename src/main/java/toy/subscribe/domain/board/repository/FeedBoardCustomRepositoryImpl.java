@@ -29,8 +29,10 @@ public class FeedBoardCustomRepositoryImpl extends QuerydslRepositorySupport imp
         QueryResults<FeedBoard> results = queryFactory
                 .select(feedBoard)
                 .from(feedBoard)
-                .where(feedBoard.company.contains(company))
-                .where(feedBoard.title.contains(title))
+                .where(
+                        feedBoard.company.contains(company)
+                                         .and(feedBoard.title.contains(title))
+                      )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(feedBoard.id.desc())
