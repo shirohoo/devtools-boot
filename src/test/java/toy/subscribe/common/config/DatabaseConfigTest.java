@@ -2,8 +2,8 @@ package toy.subscribe.common.config;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestConstructor;
 import toy.subscribe.common.config.properties.DatabaseProperties;
 
 import javax.sql.DataSource;
@@ -11,19 +11,15 @@ import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("운영서버_테스트이슈_DB설정")
 @SpringBootTest(classes = {DatabaseProperties.class, DatabaseConfig.class})
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class DatabaseConfigTest {
     
-    private final DatabaseProperties databaseProperties;
-    private final DatabaseConfig databaseConfig;
+    @Autowired
+    DatabaseProperties databaseProperties;
     
-    // given
-    DatabaseConfigTest(DatabaseProperties databaseProperties,
-                       DatabaseConfig databaseConfig) {
-        this.databaseProperties = databaseProperties;
-        this.databaseConfig = databaseConfig;
-    }
+    @Autowired
+    DatabaseConfig databaseConfig;
     
     @Test
     @DisplayName("프로퍼티를_읽어_데이터소스를_생성한다")
