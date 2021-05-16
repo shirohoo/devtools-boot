@@ -8,15 +8,9 @@ import org.springframework.context.annotation.PropertySource;
 @Getter
 @Configuration
 @PropertySource(value = "file:${user.home}/env/subscribe.properties")
-public class DatabaseProperties {
+public class ApiProperties {
     
-    @Value ("${spring.datasource.url}")
-    private String url;
-    
-    @Value ("${spring.datasource.username}")
-    private String username;
-    
-    @Value ("${spring.datasource.password}")
-    private String password;
+    @Value("${api.key.kakao}")
+    private String kakaoKey;
     
 }
