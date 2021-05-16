@@ -1,4 +1,4 @@
-package toy.subscribe.domain.board.parser;
+package toy.subscribe.domain.dictionary.parser;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -23,8 +23,6 @@ public class DocumentParserTest {
         
         // then
         assertThat(set).isNotNull();
-        System.out.println("size = " + set.size());
-        System.out.println(set);
     }
     
     // given

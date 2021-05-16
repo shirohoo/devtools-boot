@@ -1,4 +1,6 @@
-package toy.subscribe.domain.board.parser;
+package toy.subscribe.domain.dictionary.parser;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.util.HashSet;
@@ -6,9 +8,10 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Slf4j
 public class DocumentParser {
     
-    public String read(String path) throws IOException {
+    public String read(String path) {
         StringBuilder sb = new StringBuilder();
         File file = new File(path);
         try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
@@ -17,10 +20,13 @@ public class DocumentParser {
                 sb.append(read).append("\n");
             }
         }
+        catch(IOException e) {
+            log.error(e.getMessage());
+        }
         return sb.toString();
     }
     
-    public Set<String> parsing(String html) throws IOException {
+    public Set<String> parsing(String html) {
         StringBuilder sb = new StringBuilder();
         Pattern pattern = Pattern.compile("<p>.*</p>");
         Matcher matcher = pattern.matcher(html);
