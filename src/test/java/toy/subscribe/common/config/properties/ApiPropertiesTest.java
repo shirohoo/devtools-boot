@@ -2,14 +2,12 @@ package toy.subscribe.common.config.properties;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(SpringExtension.class)
+@DisplayName("운영서버_테스트이슈_API프로퍼티")
 @SpringBootTest(classes = ApiProperties.class)
 class ApiPropertiesTest {
     
