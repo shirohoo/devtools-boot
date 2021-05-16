@@ -20,7 +20,7 @@ public class DocumentParserTest {
         DocumentParser parser = new DocumentParser();
         String html = parser.read(path);
         Set<String> set = parser.parsing(html);
-        
+    
         // then
         assertThat(set).isNotNull();
     }
@@ -28,8 +28,8 @@ public class DocumentParserTest {
     // given
     private static Stream<Arguments> whereDocuments() {
         return Stream.of(
-                Arguments.of("src/test/resources/springboot_document.html"),
-                Arguments.of("src/test/resources/springsecurity_document.html")
+                Arguments.of("/models/springboot_document.html"),
+                Arguments.of("/models/springsecurity_document.html")
                         );
     }
     
