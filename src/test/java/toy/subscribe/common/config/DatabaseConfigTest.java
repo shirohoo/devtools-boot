@@ -1,5 +1,6 @@
 package toy.subscribe.common.config;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("운영서버_테스트이슈_DB설정")
+@Disabled(value = "운영서버_테스트이슈_DB설정")
 @SpringBootTest(classes = {DatabaseProperties.class, DatabaseConfig.class})
 class DatabaseConfigTest {
     
