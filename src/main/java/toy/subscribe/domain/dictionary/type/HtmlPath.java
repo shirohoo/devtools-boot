@@ -4,8 +4,8 @@ import lombok.Getter;
 
 @Getter
 public enum HtmlPath {
-    SPRING_BOOT("src/test/resources/springboot_document.html"),
-    SPRING_SECURITY("src/test/resources/springsecurity_document.html");
+    SPRING_BOOT("/models/springboot_document.html"),
+    SPRING_SECURITY("/models/springsecurity_document.html");
     
     public final String path;
     

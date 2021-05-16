@@ -19,9 +19,9 @@ import java.util.List;
  * 기존 게시글을 DB에 직접 입력해주기 위한 클래스
  * </pre>
  */
-public class ExcelReader {
+public class ManualExcelReader {
     
-    public List<FeedBoard> readFeedBoardsFromXLSX(FilePath company) throws Exception {
+    public List<FeedBoard> readFeedBoardsFromXLSX(ManualFilePath company) throws Exception {
         List<FeedBoard> feedBoards = new ArrayList<>();
         
         File file = new File(company.XLSX);

@@ -1,8 +1,13 @@
 package toy.subscribe.domain.dictionary.parser;
 
 import lombok.extern.slf4j.Slf4j;
+import opennlp.tools.tokenize.TokenizerME;
+import opennlp.tools.tokenize.TokenizerModel;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -13,8 +18,7 @@ public class DocumentParser {
     
     public String read(String path) {
         StringBuilder sb = new StringBuilder();
-        File file = new File(path);
-        try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+        try(BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(path)))) {
             String read;
             while((read = br.readLine()) != null) {
                 sb.append(read).append("\n");
@@ -26,7 +30,7 @@ public class DocumentParser {
         return sb.toString();
     }
     
-    public Set<String> parsing(String html) {
+    public Set<String> parsing(String html) throws IOException {
         StringBuilder sb = new StringBuilder();
         Pattern pattern = Pattern.compile("<p>.*</p>");
         Matcher matcher = pattern.matcher(html);
@@ -60,18 +64,23 @@ public class DocumentParser {
                 sb.append(s);
             }
         }
-        String[] strings = sb.toString().toLowerCase()
-                             .trim().replaceAll("[^a-zA-Z\\s\\.]", " ")
-                             .trim().replaceAll(" +", " ")
-                             .split(" ");
+        
+        String s = sb.toString().trim().toLowerCase()
+                     .replaceAll("[^a-zA-Z\\s\\.]", " ")
+                     .replaceAll(" +", " ");
+        
+        InputStream inputStream = getClass()
+                .getResourceAsStream("/models/en-token.bin");
+        TokenizerModel model = new TokenizerModel(inputStream);
+        TokenizerME tokenizer = new TokenizerME(model);
+        String[] tokens = tokenizer.tokenize(s);
         
         Set<String> set = new HashSet<>();
-        for(String s : strings) {
-            if(s.length() > 2) {
-                set.add(s);
+        for(String s1 : tokens) {
+            if(s1.length() > 2) {
+                set.add(s1);
             }
         }
-        
         return set;
     }
     

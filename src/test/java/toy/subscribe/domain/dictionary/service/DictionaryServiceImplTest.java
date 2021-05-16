@@ -9,6 +9,8 @@ import toy.subscribe.common.config.properties.ApiProperties;
 import toy.subscribe.domain.dictionary.parser.DocumentParser;
 import toy.subscribe.domain.dictionary.parser.Translator;
 
+import java.io.IOException;
+
 @Disabled(value = "API_호출_횟수제한")
 @SpringBootTest(classes = {ApiProperties.class, DocumentParser.class, Translator.class, DictionaryServiceImpl.class})
 class DictionaryServiceImplTest {
@@ -18,7 +20,7 @@ class DictionaryServiceImplTest {
     
     @Test
     @DisplayName("단어장생성")
-    void create() {
+    void create() throws IOException {
         dictionaryService.create();
     }
     

@@ -8,17 +8,17 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ExcelReaderTest {
+class ManualExcelReaderTest {
     
     @Test
     @DisplayName("크롤링_엑셀데이터를_역직렬화한다")
     public void menualWoowabros() throws Exception {
         // given
-        ExcelReader excelReader = new ExcelReader();
+        ManualExcelReader manualExcelReader = new ManualExcelReader();
         
         // then
-        for(FilePath company : FilePath.values()) {
-            List<FeedBoard> feedBoards = excelReader.readFeedBoardsFromXLSX(company);
+        for(ManualFilePath company : ManualFilePath.values()) {
+            List<FeedBoard> feedBoards = manualExcelReader.readFeedBoardsFromXLSX(company);
             
             switch(company) {
                 case WOOWABROS:
