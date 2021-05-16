@@ -12,7 +12,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("운영서버_테스트이슈_한영단어찾기")
+@Disabled(value = "API_호출_횟수제한")
 @SpringBootTest(classes = ApiProperties.class)
 class TranslatorTest {
     
@@ -20,7 +20,7 @@ class TranslatorTest {
     ApiProperties apiProperties;
     
     @Test
-    @Disabled(value = "API_호출_횟수제한")
+    @DisplayName("운영서버_테스트이슈_한영단어찾기")
     void translate() {
         // given
         Translator translator = new Translator(apiProperties);
