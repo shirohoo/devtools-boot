@@ -26,29 +26,36 @@ public class Translator {
         String uri = "v2/translation/translate";
         String srcLang = "en";
         String targetLang = "kr";
-        
-        Mono<String> stringMono = WebClient.builder()
-                                           .baseUrl(baseURl)
-                                           .build()
-                                           .get()
-                                           .uri(uriBuilder->uriBuilder.path(uri)
-                                                                      .queryParam("src_lang", srcLang)
-                                                                      .queryParam("target_lang", targetLang)
-                                                                      .queryParam("query", enWord)
-                                                                      .build())
-                                           .header("Authorization", apiProperties.getKakaoKey())
-                                           .retrieve()
-                                           .bodyToMono(String.class);
-        
+    
+        WebClient.RequestHeadersSpec<?> header = WebClient.builder()
+                                                          .baseUrl(baseURl)
+                                                          .build()
+                                                          .get()
+                                                          .uri(uriBuilder->uriBuilder.path(uri)
+                                                                                     .queryParam("src_lang", srcLang)
+                                                                                     .queryParam("target_lang", targetLang)
+                                                                                     .queryParam("query", enWord)
+                                                                                     .build())
+    
+                                                          .header("Authorization", apiProperties.getKakaoKey());
+    
         ReadObject readObject = null;
-        ObjectMapper mapper = new ObjectMapper();
+    
         try {
+            Mono<String> stringMono = (Mono<String>) header
+                    .retrieve()
+                    .bodyToMono(String.class);
+        
+            ObjectMapper mapper = new ObjectMapper();
             readObject = mapper.readValue(stringMono.block(), ReadObject.class);
         }
         catch(JsonProcessingException e) {
             log.error(e.getMessage());
         }
-        
+        catch(Exception e) {
+            log.error("KaKao API Error!");
+        }
+    
         String result = null;
         if(readObject != null) {
             result = String.valueOf(readObject.getTranslated_text()

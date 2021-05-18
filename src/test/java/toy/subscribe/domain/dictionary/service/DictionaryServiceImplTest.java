@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import toy.subscribe.domain.dictionary.type.HtmlPath;
+import toy.subscribe.domain.dictionary.model.HtmlPath;
 
 @SpringBootTest
-@Disabled(value = "단어장생성기_테스트용도아님_실행&활성화_신중하게")
+@Disabled("단어장생성_카카오사전_API_일일호출제한_약2,000회")
 class DictionaryServiceImplTest {
     
     @Autowired
@@ -19,9 +19,9 @@ class DictionaryServiceImplTest {
     @Test
     @Transactional
     @Rollback(value = false)
-    @DisplayName("단어장생성_카카오사전_API_일일호출제한_약2,000회")
+    @DisplayName(value = "단어장생성기_실행")
     void create() {
-        String htmlPath = HtmlPath.SPRING_SECURITY.getPath();
+        String htmlPath = HtmlPath.SPRING_BOOT.getPath();
         
         dictionaryService.create(htmlPath);
     }

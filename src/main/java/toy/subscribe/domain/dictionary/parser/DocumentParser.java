@@ -4,10 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -18,7 +15,7 @@ public class DocumentParser {
     
     public String read(String path) {
         StringBuilder sb = new StringBuilder();
-        try(BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(path)))) {
+        try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path)))) {
             String read;
             while((read = br.readLine()) != null) {
                 sb.append(read).append("\n");
@@ -78,7 +75,7 @@ public class DocumentParser {
         
             set = new HashSet<>();
             for(String s1 : tokens) {
-                if(s1.length() > 2) {
+                if(s1.length() > 4) {
                     set.add(s1);
                 }
             }

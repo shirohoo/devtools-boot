@@ -9,10 +9,7 @@ import toy.subscribe.domain.dictionary.parser.DocumentParser;
 import toy.subscribe.domain.dictionary.parser.Translator;
 import toy.subscribe.domain.dictionary.repository.DictionaryRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -24,6 +21,10 @@ public class DictionaryServiceImpl implements DictionaryService {
     
     private DocumentParser parser = new DocumentParser();
     
+    private final String[] conlangFilter = {"taglib", "springframework", "namespace", "jackson", "springboot", "spring", "login",
+                                            "username", "logback", "autoscaler", "hibernate", "kubernetes", "docker", "homebrew",
+                                            "livereload", "jersey", "kotlin", "framework", "oauth", "testinstance"};
+    
     @Override
     @Transactional
     public void create(String htmlPath) {
@@ -31,25 +32,26 @@ public class DictionaryServiceImpl implements DictionaryService {
         Set<String> enWords = parser.parsing(html);
         
         if(enWords == null) {
-            log.warn("Could not make a dictionary! enWords is null. ");
+            log.warn("Could not make a dictionary! enWords is null.");
             return;
         }
         
         List<Dictionary> dictionaries = new ArrayList<>();
         
         for(String enWord : enWords) {
+    
+            if(Arrays.stream(conlangFilter).anyMatch(enWord::equals)) {
+                log.info("Filtered word : {}!", enWord);
+                continue;
+            }
+    
             String krWord = translator.translate(enWord)
                                       .orElseThrow(()->new NoSuchElementException("단어를 찾지 못했습니다"));
-            
-            String imgUri = String.format("https://www.google.com/search?q=%s&" +
-                                          "newwindow=1&source=lnms&tbm=isch&sa=X" +
-                                          "&ved=2ahUKEwjwgc7Lj83wAhXHFogKHYUABiYQ_" +
-                                          "AUoAXoECAEQAw&biw=1920&bih=937", enWord);
-            
+    
             Dictionary dictionary = Dictionary.builder().enWord(enWord)
                                               .krWord(krWord)
                                               .build();
-            
+    
             dictionaries.add(dictionary);
         }
         dictionaryRepository.saveAll(dictionaries);

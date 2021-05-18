@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SQLInsert(sql = "INSERT IGNORE INTO dictionary(mod_date, reg_date, en_word, image_uri, kr_word) VALUES (?, ?, ?, ?, ?)")
+@SQLInsert(sql = "INSERT IGNORE INTO dictionary(mod_date, reg_date, en_word, kr_word) VALUES (?, ?, ?, ?)")
 public class Dictionary extends BaseTime implements Serializable {
     
     @Column(name = "dictionary_id")
