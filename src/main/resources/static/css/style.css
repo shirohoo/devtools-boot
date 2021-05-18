@@ -8,6 +8,11 @@
     text-align: right;
 }
 
+.menus {
+    font-weight: bold;
+    text-align: center;
+}
+
 .footer-pop {
     font-size: 0;
     text-decoration: none;
@@ -95,6 +100,7 @@ body {
 }
 
 #table {
+    font-size: 2vh;
     cursor: default;
 }
 

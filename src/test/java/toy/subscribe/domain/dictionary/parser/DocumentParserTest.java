@@ -21,6 +21,13 @@ public class DocumentParserTest {
         String html = parser.read(path);
         Set<String> set = parser.parsing(html);
     
+        System.out.println(set.size());
+        StringBuilder sb = new StringBuilder();
+        for(String s : set) {
+            sb.append(s + " ");
+        }
+        System.out.println(sb);
+    
         // then
         assertThat(set).isNotNull();
     }

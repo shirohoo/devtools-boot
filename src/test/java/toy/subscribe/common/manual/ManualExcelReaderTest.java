@@ -18,7 +18,7 @@ class ManualExcelReaderTest {
         
         // then
         for(ManualFilePath company : ManualFilePath.values()) {
-            List<FeedBoard> feedBoards = manualExcelReader.readFeedBoardsFromXLSX(company);
+            List<FeedBoard> feedBoards = manualExcelReader.read(company);
             
             switch(company) {
                 case WOOWABROS:

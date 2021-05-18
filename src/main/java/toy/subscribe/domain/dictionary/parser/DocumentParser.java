@@ -30,11 +30,11 @@ public class DocumentParser {
         return sb.toString();
     }
     
-    public Set<String> parsing(String html) throws IOException {
+    public Set<String> parsing(String html) {
         StringBuilder sb = new StringBuilder();
         Pattern pattern = Pattern.compile("<p>.*</p>");
         Matcher matcher = pattern.matcher(html);
-        
+    
         while(matcher.find()) {
             String s = " " + html.substring(matcher.start(), matcher.end())
                                  .replaceAll("<b>", "").replaceAll("</b>", "")
@@ -64,22 +64,27 @@ public class DocumentParser {
                 sb.append(s);
             }
         }
-        
+    
         String s = sb.toString().trim().toLowerCase()
                      .replaceAll("[^a-zA-Z\\s\\.]", " ")
                      .replaceAll(" +", " ");
+    
+        Set<String> set = null;
+        try(InputStream inputStream = getClass()
+                .getResourceAsStream("/models/en-token.bin")) {
+            TokenizerModel model = new TokenizerModel(inputStream);
+            TokenizerME tokenizer = new TokenizerME(model);
+            String[] tokens = tokenizer.tokenize(s);
         
-        InputStream inputStream = getClass()
-                .getResourceAsStream("/models/en-token.bin");
-        TokenizerModel model = new TokenizerModel(inputStream);
-        TokenizerME tokenizer = new TokenizerME(model);
-        String[] tokens = tokenizer.tokenize(s);
-        
-        Set<String> set = new HashSet<>();
-        for(String s1 : tokens) {
-            if(s1.length() > 2) {
-                set.add(s1);
+            set = new HashSet<>();
+            for(String s1 : tokens) {
+                if(s1.length() > 2) {
+                    set.add(s1);
+                }
             }
+        }
+        catch(IOException e) {
+            log.error(e.getMessage());
         }
         return set;
     }

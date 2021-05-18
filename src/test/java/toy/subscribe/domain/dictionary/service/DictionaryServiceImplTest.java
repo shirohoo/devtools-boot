@@ -5,23 +5,25 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import toy.subscribe.common.config.properties.ApiProperties;
-import toy.subscribe.domain.dictionary.parser.DocumentParser;
-import toy.subscribe.domain.dictionary.parser.Translator;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
+import toy.subscribe.domain.dictionary.type.HtmlPath;
 
-import java.io.IOException;
-
-@Disabled(value = "API_호출_횟수제한")
-@SpringBootTest(classes = {ApiProperties.class, DocumentParser.class, Translator.class, DictionaryServiceImpl.class})
+@SpringBootTest
+@Disabled(value = "단어장생성기_테스트용도아님_실행&활성화_신중하게")
 class DictionaryServiceImplTest {
     
     @Autowired
     DictionaryService dictionaryService;
     
     @Test
-    @DisplayName("단어장생성")
-    void create() throws IOException {
-        dictionaryService.create();
+    @Transactional
+    @Rollback(value = false)
+    @DisplayName("단어장생성_카카오사전_API_일일호출제한_약2,000회")
+    void create() {
+        String htmlPath = HtmlPath.SPRING_SECURITY.getPath();
+        
+        dictionaryService.create(htmlPath);
     }
     
 }

@@ -22,20 +22,9 @@
                 <div class="row" >
                     <div class="col-1" ></div >
                     <div class="col-7" id="companyBox" >
-                        <span class="badge badge-danger text-wrap" style="width: 6rem;" >회사</span >
-                        <input type="hidden" id="company" name="company" value="" />
-                        <select class="form-control" id="selectCompany" v-model="search.company" @change="findContents();" style="cursor: pointer" >
-                            <option value="" >- 전체 -</option >
-                            <option value="우아한형제들" >우아한형제들</option >
-                            <option value="데일리호텔" >데일리호텔</option >
-                            <option value="카카오" >카카오</option >
-                            <option value="야놀자" >야놀자</option >
-                            <option value="라인" >라인</option >
-                            <option value="토스" >토스</option >
-                            <option value="당근마켓" >당근마켓</option >
-                            <option value="마켓컬리" >마켓컬리</option >
-                            <option value="왓챠" >왓챠</option >
-                        </select >
+                        <span class="badge badge-danger text-wrap" style="width: 6rem;" >영어</span >
+                        <input class="form-control" type="text" id="enWord" v-model="search.enWord" name="enWord"
+                               placeholder="검색할 영어를 입력하세요" @keyup.enter="findContents();" />
                     </div >
                     <div class="col-3" >
                         <button class="btn btn-outline-info" type="button" id="initialize" @click="resetSearchForm();" >초기화</button >
@@ -46,8 +35,9 @@
                 <div class="row" >
                     <div class="col-1" ></div >
                     <div class="col-7" >
-                        <span class="badge badge-info text-wrap" style="width: 6rem;" >제목</span >
-                        <input class="form-control" type="text" id="title" v-model="search.title" name="title" placeholder="검색할 제목을 입력하세요" @keyup.enter="findContents();" />
+                        <span class="badge badge-info text-wrap" style="width: 6rem;" >한글</span >
+                        <input class="form-control" type="text" id="krWord" v-model="search.krWord" name="krWord"
+                               placeholder="검색할 한글을 입력하세요" @keyup.enter="findContents();" />
                     </div >
                     <div class="col-3" >
                         <button class="btn btn-outline-info" type="button" id="search" @click="findContents();" >검색</button >
@@ -63,7 +53,7 @@
 
     <!-- total post & size area -->
     <div class="form-inline" >
-        <h4 id="totalResultCount" >전체 글 : {{pager.totalElements}}개</h4 >
+        <h4 id="totalResultCount" >전체 단어 : {{pager.totalElements}}개</h4 >
         <span style="margin-left: auto;" >
                 <input type="hidden" id="currentPageNum" />
                 <select v-model="search.size" class="custom-select" id="renderingCount" @change="findContents();" >
@@ -84,22 +74,27 @@
         <table class="table" id="table" >
             <thead >
             <tr class="text-center" >
-                <th style="width:20%" >회사</th >
-                <th style="width:50%" >제목</th >
-                <th style="width:20%" >수집일</th >
+                <th style="width:25%" >영어</th >
+                <th style="width:25%" >한글</th >
+                <th style="width:25%" >사진</th >
+                <th style="width:25%" >구글</th >
             </tr >
             </thead >
 
             <tbody id="posts" >
             <tr v-for="content in contents" >
-                <td style="text-align:center" >
-                    <img :src="content.imgPath" height="48px" width="96px" :title="content.company" />
+                <td style="text-align:center; font-weight: bold; color: purple" >
+                    {{content.enWord}}
                 </td >
-                <td style="text-align:left; font-weight: bold; color: skyblue;" >
-                    <span :class="{'badge badge-danger' : isBetweenDay(content.regDate)}" v-show="isBetweenDay(content.regDate)" >Today</span >
-                    <a :href="content.link" target="blank" >{{content.title}}</a >
+                <td style="text-align:center; font-weight: bold; color: navy" >
+                    {{content.krWord}}
                 </td >
-                <td style="text-align:center" >{{content.regDate}}</td >
+                <td style="text-align:center; font-weight: bold; color: skyblue;" >
+                    <a :href="'https://www.google.com/search?q=' + content.enWord + '&newwindow=1&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjwgc7Lj83wAhXHFogKHYUABiYQ_AUoAXoECAEQAw&biw=1920&bih=937'" target="blank" > 👓</a >
+                </td >
+                <td style="text-align:center; font-weight: bold; color: skyblue;" >
+                    <a :href="'https://www.google.com/search?q=' + content.enWord + '&rlz=1C1GCEA_koKR939KR939&oq=taglib&aqs=chrome..69i57j0l6j69i60.1267j0j4&sourceid=chrome&ie=UTF-8'" target="blank" > 📚</a >
+                </td >
             </tr >
             </tbody >
         </table >
@@ -137,10 +132,10 @@
                             el        : '#app',
                             data      : {
                                 search          : {
-                                    page   : 0,
-                                    size   : 10,
-                                    company: '',
-                                    title  : ''
+                                    page  : 0,
+                                    size  : 10,
+                                    enWord: '',
+                                    krWord: ''
                                 },
                                 contents        : {},
                                 pager           : {},
@@ -169,7 +164,8 @@
                                     let queryString = Object.keys(this.search)
                                                             .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(this.search[k]))
                                                             .join('&');
-                                    let uri = '/boards?' + queryString;
+                                    let uri = '/dictionaries?' + queryString;
+                                    console.log(uri);
                                     fetch(uri).then(res => {if(res.status === 200) return res.json()})
                                               .then(data => {
                                                   this.contents = data.pages.content;
@@ -182,17 +178,9 @@
                                 resetSearchForm(){
                                     this.search.page = 0;
                                     this.search.size = 10;
-                                    this.search.company = '';
-                                    this.search.title = '';
+                                    this.search.enWord = '';
+                                    this.search.krWord = '';
                                     this.findContents();
-                                },
-                                isBetweenDay(regDate){
-                                    let regDateArray = String(regDate).split('-');
-                                    let date = new Date(regDateArray[0], regDateArray[1] - 1, regDateArray[2])
-
-                                    let nowDate = new Date();
-                                    let betweenDay = Math.floor((nowDate.getTime() - date.getTime()) / 1000 / 60 / 60 / 24);
-                                    return betweenDay === 0;
                                 },
                             },
                         });

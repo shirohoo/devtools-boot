@@ -1,5 +1,6 @@
 package toy.subscribe.common.manual;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -8,6 +9,8 @@ import toy.subscribe.domain.board.model.FeedBoard;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,13 +22,26 @@ import java.util.List;
  * 기존 게시글을 DB에 직접 입력해주기 위한 클래스
  * </pre>
  */
+@Slf4j
 public class ManualExcelReader {
     
-    public List<FeedBoard> readFeedBoardsFromXLSX(ManualFilePath company) throws Exception {
+    public List<FeedBoard> read(ManualFilePath company) {
         List<FeedBoard> feedBoards = new ArrayList<>();
         
         File file = new File(company.XLSX);
-        Workbook workbook = new XSSFWorkbook(new FileInputStream(file));
+        Workbook workbook = null;
+        try {
+            workbook = new XSSFWorkbook(new FileInputStream(file));
+        }
+        catch(FileNotFoundException e) {
+            log.error("File not found!");
+            return null;
+        }
+        catch(IOException e) {
+            log.error("XSSFWorkbook IOException!");
+            return null;
+        }
+        
         Sheet sheet = workbook.getSheetAt(0);
         
         for(Row rows : sheet) {

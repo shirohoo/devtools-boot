@@ -23,5 +23,19 @@
         😎누적 방문자 :
         <span class="SHOW-allVisitors" > {{numberFormat(visitorsOfReduce)}}명</span >
     </div >
+    <br />
+    <div class="menus" >
+        <button type="button" class="btn btn-outline-info" onClick="location.href='/'"
+                data-toggle="tooltip" data-placement="right" title="IT 기술블로그의 최신글을 확인합니다." >기술 블로그
+        </button >
+        <button type="button" class="btn btn-outline-info" onClick="location.href='/dictionary'"
+                data-toggle="tooltip" data-placement="right" title="Spring-Boot Documentation과 같은 문서에서 자주 나오는 단어들입니다." >공식문서 단어사전
+        </button >
+    </div >
     <hr />
 </div >
+<script >
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script >
