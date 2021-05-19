@@ -19,9 +19,9 @@ class DictionaryServiceImplTest {
     @Rollback(value = false)
     @DisplayName(value = "단어장생성기_실행")
     void create() {
-        String htmlPath = HtmlPath.SPRING_SECURITY.getPath();
-        
-        dictionaryService.create(htmlPath);
+        String html = HtmlPath.HIBERNATE.getPath();
+    
+        dictionaryService.run(html);
     }
     
 }

@@ -22,8 +22,8 @@ public class DocumentParserTest {
         // when
         DocumentParser parser = new DocumentParser();
         String html = parser.read(path);
-        Set<String> set = parser.parsing(html);
-        
+        Set<String> set = parser.filtering(parser.parsing(html));
+    
         // ##############################################################################
         // ################################ 출 력 로 직 #################################
         // ##############################################################################
@@ -38,7 +38,7 @@ public class DocumentParserTest {
         // ##############################################################################
         
         // then
-        assertThat(set).isNotNull();
+        assertThat(parser.parsing(html)).isNotNull();
     }
     
     // given
