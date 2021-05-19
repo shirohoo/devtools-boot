@@ -8,4 +8,6 @@ public interface DictionaryRepository extends JpaRepository<Dictionary, Long>,
                                               QuerydslPredicateExecutor<Dictionary>,
                                               DictionaryCustomRepository {
     
+    long countByEnWord(String enWord);
+    
 }

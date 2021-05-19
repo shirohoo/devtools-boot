@@ -9,7 +9,9 @@ import toy.subscribe.domain.dictionary.parser.DocumentParser;
 import toy.subscribe.domain.dictionary.parser.Translator;
 import toy.subscribe.domain.dictionary.repository.DictionaryRepository;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.NoSuchElementException;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -23,7 +25,24 @@ public class DictionaryServiceImpl implements DictionaryService {
     
     private final String[] conlangFilter = {"taglib", "springframework", "namespace", "jackson", "springboot", "spring", "login",
                                             "username", "logback", "autoscaler", "hibernate", "kubernetes", "docker", "homebrew",
-                                            "livereload", "jersey", "kotlin", "framework", "oauth", "testinstance"};
+                                            "livereload", "jersey", "kotlin", "framework", "oauth", "testinstance", "junit4", "junit5",
+                                            "webflux", "redis", "kafka", "elasticsearch", "log4j", "slf4j", "logstash", "kibana",
+                                            "stackdriver", "timestamps", "timestamp", "nassert", "namespaces", "localhost", "initializer",
+                                            "catalina", "hardcoding", "software", "jolokia", "param", "oracle", "apache", "github",
+                                            "initializers", "exejar", "dockerfiles", "logstartupinfo", "rabbitmq", "testcontainers",
+                                            "https", "mustache", "thymeleaf", "sigterm", "javax", "appname", "webapp", "fullstack",
+                                            "backend", "frontend", "mappers", "formatters", "reloadtrigger", "autowire", "autowired",
+                                            "kairos", "formatter", "mapper", "matcher", "atomikos", "buildpacks", "coroutines", "myapp",
+                                            "setter", "getter", "lombok", "plugin", "gradle", "maven", "iframe", "matching", "cookies", "cookie",
+                                            "session", "sessions", "proxies", "proxy", "cache", "mongodb", "infinispan", "tomcat", "netty",
+                                            "mymodule", "pooled", "loggers", "logger", "devtools", "fasterxml", "humio", "facebook", "google",
+                                            "mongo", "vanilla", "javascript", "jsonp", "jsonb", "cassandra", "dynatrace", "hikari", "header",
+                                            "messaginghub", "myconfig", "servlets", "artemis", "nonheap", "whitelabel", "mytag", "servlet",
+                                            "webjars", "petclinic", "mockito", "openjdk", "sidecar", "hamcrest", "dockerfile", "prodmq",
+                                            "unmapper", "couchbase", "firebase", "groovy", "stackoverflow", "hazelcast", "liquibase",
+                                            "layertools", "benmanes", "flywaydb", "antlib", "cloudfoundryapplication", "appengine", "wildfly",
+                                            "rabbit", "prefixing", "populator", "keycloak", "sessionid", "reauthenticate", "mybank", "myopenid",
+                                            "encodings", "decodings", "subdomains", "vicitim", "currval", "boolean", "arguments"};
     
     @Override
     @Transactional
@@ -36,10 +55,7 @@ public class DictionaryServiceImpl implements DictionaryService {
             return;
         }
         
-        List<Dictionary> dictionaries = new ArrayList<>();
-        
         for(String enWord : enWords) {
-    
             if(Arrays.stream(conlangFilter).anyMatch(enWord::equals)) {
                 log.info("Filtered word : {}!", enWord);
                 continue;
@@ -52,9 +68,11 @@ public class DictionaryServiceImpl implements DictionaryService {
                                               .krWord(krWord)
                                               .build();
     
-            dictionaries.add(dictionary);
+            if(dictionaryRepository.countByEnWord(enWord) == 0) {
+                dictionaryRepository.save(dictionary);
+            }
         }
-        dictionaryRepository.saveAll(dictionaries);
+    
     }
     
 }

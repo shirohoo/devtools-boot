@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.transaction.annotation.Transactional;
 import toy.subscribe.domain.dictionary.model.HtmlPath;
 
 @SpringBootTest
@@ -17,11 +16,10 @@ class DictionaryServiceImplTest {
     DictionaryService dictionaryService;
     
     @Test
-    @Transactional
     @Rollback(value = false)
     @DisplayName(value = "단어장생성기_실행")
     void create() {
-        String htmlPath = HtmlPath.SPRING_BOOT.getPath();
+        String htmlPath = HtmlPath.SPRING_SECURITY.getPath();
         
         dictionaryService.create(htmlPath);
     }
