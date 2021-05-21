@@ -19,7 +19,7 @@ class DictionaryServiceImplTest {
     @Rollback(value = false)
     @DisplayName(value = "단어장생성기_실행")
     void create() {
-        String html = HtmlPath.HIBERNATE.getPath();
+        String html = HtmlPath.SPRING_DATA_JPA.getPath();
     
         dictionaryService.run(html);
     }

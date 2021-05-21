@@ -49,7 +49,7 @@ public class DictionaryServiceImpl implements DictionaryService {
                                               .krWord(krWord)
                                               .build();
             
-            if(dictionaryRepository.countByEnWord(enWord) == 0) {
+            if(!dictionaryRepository.existsByEnWord(enWord)) {
                 dictionaries.add(dictionary);
             }
         }

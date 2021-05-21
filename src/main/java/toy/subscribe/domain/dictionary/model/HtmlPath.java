@@ -10,7 +10,7 @@ public enum HtmlPath {
     SPRING_BOOT(System.getProperty("user.home") + "/env/springboot_document.html"),
     SPRING_SECURITY(System.getProperty("user.home") + "/env/springsecurity_document.html");
     
-    public final String path;
+    private final String path;
     
     HtmlPath(String path) {
         this.path = path;

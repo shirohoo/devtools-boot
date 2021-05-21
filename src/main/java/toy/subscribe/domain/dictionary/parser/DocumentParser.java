@@ -16,14 +16,14 @@ public class DocumentParser {
     
     private final String[] conlangFilter = {"taglib", "springframework", "namespace", "jackson", "springboot", "spring", "login", "winsw",
                                             "username", "logback", "autoscaler", "hibernate", "kubernetes", "docker", "homebrew", "datadog",
-                                            "livereload", "jersey", "kotlin", "framework", "oauth", "testinstance", "junit4", "junit5",
+                                            "livereload", "jersey", "kotlin", "framework", "oauth", "testinstance", "junit4", "junit5", "bugfix",
                                             "webflux", "redis", "kafka", "elasticsearch", "log4j", "slf4j", "logstash", "kibana", "hsqldb",
                                             "stackdriver", "timestamps", "timestamp", "nassert", "namespaces", "localhost", "initializer",
-                                            "catalina", "hardcoding", "software", "jolokia", "param", "oracle", "apache", "github",
+                                            "catalina", "hardcoding", "software", "jolokia", "param", "oracle", "apache", "github", "querydsl",
                                             "initializers", "exejar", "dockerfiles", "logstartupinfo", "rabbitmq", "testcontainers", "filesystem",
                                             "https", "mustache", "thymeleaf", "sigterm", "javax", "appname", "webapp", "fullstack", "websocket",
                                             "backend", "frontend", "mappers", "formatters", "reloadtrigger", "autowire", "kairos", "clinic",
-                                            "formatter", "mapper", "matcher", "atomikos", "buildpacks", "coroutines", "myapp", "logout",
+                                            "formatter", "mapper", "matcher", "atomikos", "buildpacks", "coroutines", "myapp", "logout", "wikipedia",
                                             "setter", "getter", "lombok", "plugin", "gradle", "maven", "iframe", "matching", "cookies", "cookie",
                                             "session", "sessions", "proxies", "proxy", "cache", "mongodb", "infinispan", "tomcat", "netty",
                                             "mymodule", "pooled", "loggers", "logger", "devtools", "fasterxml", "humio", "facebook", "google",
@@ -34,7 +34,7 @@ public class DocumentParser {
                                             "layertools", "benmanes", "flywaydb", "antlib", "cloudfoundryapplication", "appengine", "wildfly",
                                             "rabbit", "prefixing", "populator", "keycloak", "sessionid", "reauthenticate", "mybank", "myopenid",
                                             "encodings", "decodings", "subdomains", "vicitim", "currval", "boolean", "arguments", "charset",
-                                            "subdirectory", "proddb", "datasource", "bootapp", "application", "authn"};
+                                            "subdirectory", "proddb", "datasource", "bootapp", "application", "authn", "jayway", "eclipselink"};
     
     public String read(String path) {
         StringBuilder sb = new StringBuilder();
