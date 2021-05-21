@@ -19,7 +19,6 @@ public class RSSScheduler {
     @Transactional
     @Scheduled(fixedRate = COLLECT_DELAY)
     public void collect() {
-        log.info("Collect RSS from all group !");
         collectPostService.getAllGroupFeed();
     }
 

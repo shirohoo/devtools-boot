@@ -34,7 +34,7 @@ public class DocumentParser {
                                             "layertools", "benmanes", "flywaydb", "antlib", "cloudfoundryapplication", "appengine", "wildfly",
                                             "rabbit", "prefixing", "populator", "keycloak", "sessionid", "reauthenticate", "mybank", "myopenid",
                                             "encodings", "decodings", "subdomains", "vicitim", "currval", "boolean", "arguments", "charset",
-                                            "subdirectory", "proddb", "datasource", "bootapp", "application"};
+                                            "subdirectory", "proddb", "datasource", "bootapp", "application", "authn"};
     
     public String read(String path) {
         StringBuilder sb = new StringBuilder();

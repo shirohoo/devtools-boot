@@ -24,27 +24,28 @@ public class FeedBoardFactory {
             List<Company> companies = JsonReader.readCompanies();
             
             if(companies != null) {
-                for(int i = 0; i < companies.size(); i++) {
+                int size = companies.size();
+                for(int i = 0; i < size; i++) {
                     if(url.contains(companies.get(i).getKey())) {
                         message.setCompany(companies.get(i).getName());
                         message.setImgPath(companies.get(i).getImgPath());
                         break;
                     }
                 }
-                
+    
                 return FeedBoard.builder()
                                 .title(message.getTitle())
                                 .company(message.getCompany())
                                 .imgPath(message.getImgPath())
-                        .guid(message.getGuid())
-                        .build();
+                                .guid(message.getGuid())
+                                .build();
             }
         }
         return null;
     }
     
     private boolean isNonDuplicate(RSSFeedMessage message) {
-        return feedBoardRepository.countByGuid(message.getGuid().trim()) == 0L;
+        return !feedBoardRepository.existsByGuid(message.getGuid());
     }
     
 }

@@ -10,6 +10,7 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Builder
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FeedBoard extends BaseTime implements Serializable {

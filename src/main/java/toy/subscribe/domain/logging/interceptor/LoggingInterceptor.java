@@ -30,7 +30,6 @@ public class LoggingInterceptor implements HandlerInterceptor {
         }
 
         saveRequestLog(clientIp, httpMethod, requestUri);
-        
         return true;
     }
     

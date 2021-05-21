@@ -8,6 +8,6 @@ public interface FeedBoardRepository extends JpaRepository<FeedBoard, Long>,
                                              QuerydslPredicateExecutor<FeedBoard>,
                                              FeedBoardCustomRepository {
     
-    Long countByGuid(String guid);
+    boolean existsByGuid(String guid);
     
 }
