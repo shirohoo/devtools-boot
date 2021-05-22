@@ -15,6 +15,8 @@ import java.io.Serializable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FeedBoard extends BaseTime implements Serializable {
     
+    private static final long serialVersionUID = -6683539796802328761L;
+    
     @Column(name = "feed_board_id")
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

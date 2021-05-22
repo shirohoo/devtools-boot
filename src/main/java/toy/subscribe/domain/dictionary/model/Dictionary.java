@@ -15,6 +15,8 @@ import java.io.Serializable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Dictionary extends BaseTime implements Serializable {
     
+    private static final long serialVersionUID = -3299351751273048089L;
+    
     @Column(name = "dictionary_id")
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

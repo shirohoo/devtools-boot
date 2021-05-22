@@ -66,9 +66,11 @@ public class Translator {
     
     @Data
     private static class ReadObject implements Serializable {
-        
+    
+        private static final long serialVersionUID = 1874463342481741705L;
+    
         private List translated_text;
-        
+    
     }
     
 }

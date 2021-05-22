@@ -16,6 +16,8 @@ import java.io.Serializable;
 @EntityListeners({AuditingEntityListener.class})
 public class RequestLog extends BaseTime implements Serializable {
     
+    private static final long serialVersionUID = -8594020435254416824L;
+    
     @Column(name = "request_log_id")
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
