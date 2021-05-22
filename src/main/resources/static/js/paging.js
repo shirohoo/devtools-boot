@@ -19,10 +19,12 @@ const pagingComponent = {
 };
 
 function setPager(pages){
+	let totalPages = pages.totalPages;
+	let currentPage = pages.pageable.pageNumber;
 	let endPage = Math.ceil((pages.pageable.pageNumber + 1) / 10.0) * 10 - 1;
 	let startPage = endPage - 9;
-	if(pages.totalPages <= endPage){
-		endPage = pages.totalPages - 1;
+	if(totalPages <= endPage){
+		endPage = totalPages - 1;
 	}
 
 	let index = [];
@@ -35,8 +37,8 @@ function setPager(pages){
 		size         : pages.size,
 		first        : pages.first,
 		last         : pages.last,
-		currentPage  : pages.pageable.pageNumber,
-		totalPages   : pages.totalPages,
+		currentPage  : currentPage,
+		totalPages   : totalPages,
 		totalElements: pages.totalElements
 	};
 }

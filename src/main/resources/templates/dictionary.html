@@ -21,9 +21,9 @@
             <div class="form-group" >
                 <div class="row" >
                     <div class="col-1" ></div >
-                    <div class="col-7" id="companyBox" >
+                    <div class="col-7" >
                         <span class="badge badge-danger text-wrap" style="width: 6rem;" >영어</span >
-                        <input class="form-control" type="text" id="enWord" v-model="search.enWord" name="enWord"
+                        <input class="form-control" type="text" v-model="search.enWord"
                                placeholder="검색할 영어를 입력하세요" @keyup.enter="findContents();" />
                     </div >
                     <div class="col-3" >
@@ -36,7 +36,7 @@
                     <div class="col-1" ></div >
                     <div class="col-7" >
                         <span class="badge badge-info text-wrap" style="width: 6rem;" >한글</span >
-                        <input class="form-control" type="text" id="krWord" v-model="search.krWord" name="krWord"
+                        <input class="form-control" type="text" v-model="search.krWord"
                                placeholder="검색할 한글을 입력하세요" @keyup.enter="findContents();" />
                     </div >
                     <div class="col-3" >
@@ -55,8 +55,7 @@
     <div class="form-inline" >
         <h4 id="totalResultCount" >전체 단어 : {{pager.totalElements}}개</h4 >
         <span style="margin-left: auto;" >
-                <input type="hidden" id="currentPageNum" />
-                <select v-model="search.size" class="custom-select" id="renderingCount" @change="findContents();" >
+                <select v-model="search.size" class="custom-select" @change="findContents();" >
                     <option value="10" >10개</option >
                     <option value="30" >30개</option >
                     <option value="50" >50개</option >
@@ -159,19 +158,25 @@
                                 },
                             },
                             methods   : {
-                                findContents: function(page){
+                                findContents(page){
                                     if(page !== undefined) this.search.page = page;
                                     let queryString = Object.keys(this.search)
                                                             .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(this.search[k]))
                                                             .join('&');
                                     let uri = '/dictionaries?' + queryString;
-                                    console.log(uri);
                                     fetch(uri).then(res => {if(res.status === 200) return res.json()})
                                               .then(data => {
                                                   this.contents = data.pages.content;
                                                   this.visitorsOfReduce = data.visitorsOfReduce;
                                                   this.visitorsOfDay = data.visitorsOfDay;
                                                   this.pager = setPager(data.pages);
+
+                                                  // 페이징 버그 방지용 로직
+                                                  if(this.search.page === 0 && this.pager.totalPages === 0) return;
+                                                  if(this.search.page >= this.pager.totalPages){
+                                                      this.search.page = 0;
+                                                      this.findContents();
+                                                  }
                                               })
                                               .catch(() => alert('400, Bad Request'));
                                 },

@@ -21,10 +21,9 @@
             <div class="form-group" >
                 <div class="row" >
                     <div class="col-1" ></div >
-                    <div class="col-7" id="companyBox" >
+                    <div class="col-7" >
                         <span class="badge badge-danger text-wrap" style="width: 6rem;" >회사</span >
-                        <input type="hidden" id="company" name="company" value="" />
-                        <select class="form-control" id="selectCompany" v-model="search.company" @change="findContents();" style="cursor: pointer" >
+                        <select class="form-control" v-model="search.company" @change="findContents();" style="cursor: pointer" >
                             <option value="" >- 전체 -</option >
                             <option value="우아한형제들" >우아한형제들</option >
                             <option value="데일리호텔" >데일리호텔</option >
@@ -47,7 +46,8 @@
                     <div class="col-1" ></div >
                     <div class="col-7" >
                         <span class="badge badge-info text-wrap" style="width: 6rem;" >제목</span >
-                        <input class="form-control" type="text" id="title" v-model="search.title" name="title" placeholder="검색할 제목을 입력하세요" @keyup.enter="findContents();" />
+                        <input class="form-control" type="text" v-model="search.title"
+                               placeholder="검색할 제목을 입력하세요" @keyup.enter="findContents();" />
                     </div >
                     <div class="col-3" >
                         <button class="btn btn-outline-info" type="button" id="search" @click="findContents();" >검색</button >
@@ -65,8 +65,7 @@
     <div class="form-inline" >
         <h4 id="totalResultCount" >전체 글 : {{pager.totalElements}}개</h4 >
         <span style="margin-left: auto;" >
-                <input type="hidden" id="currentPageNum" />
-                <select v-model="search.size" class="custom-select" id="renderingCount" @change="findContents();" >
+                <select v-model="search.size" class="custom-select" @change="findContents();" >
                     <option value="10" >10개</option >
                     <option value="30" >30개</option >
                     <option value="50" >50개</option >
@@ -164,7 +163,7 @@
                                 },
                             },
                             methods   : {
-                                findContents: function(page){
+                                findContents(page){
                                     if(page !== undefined) this.search.page = page;
                                     let queryString = Object.keys(this.search)
                                                             .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(this.search[k]))
@@ -176,8 +175,16 @@
                                                   this.visitorsOfReduce = data.visitorsOfReduce;
                                                   this.visitorsOfDay = data.visitorsOfDay;
                                                   this.pager = setPager(data.pages);
+
+                                                  // 페이징 버그 방지용 로직
+                                                  if(this.search.page === 0 && this.pager.totalPages === 0) return;
+                                                  if(this.search.page >= this.pager.totalPages){
+                                                      this.search.page = 0;
+                                                      this.findContents();
+                                                  }
                                               })
                                               .catch(() => alert('400, Bad Request'));
+
                                 },
                                 resetSearchForm(){
                                     this.search.page = 0;
