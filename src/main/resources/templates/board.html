@@ -46,6 +46,9 @@
                     <div class="col-1" ></div >
                     <div class="col-7" >
                         <span class="badge badge-info text-wrap" style="width: 6rem;" >제목</span >
+
+                        <!-- Enter keyup not submit hidden input -->
+                        <input type="text" style="display:none" />
                         <input class="form-control" type="text" v-model="search.title"
                                placeholder="검색할 제목을 입력하세요" @keyup.enter="findContents();" />
                     </div >
@@ -195,7 +198,7 @@
                                 },
                                 isBetweenDay(regDate){
                                     let regDateArray = String(regDate).split('-');
-                                    let date = new Date(regDateArray[0], regDateArray[1] - 1, regDateArray[2])
+                                    let date = new Date(regDateArray[0] *= 1, regDateArray[1] - 1, regDateArray[2] *= 1)
 
                                     let nowDate = new Date();
                                     let betweenDay = Math.floor((nowDate.getTime() - date.getTime()) / 1000 / 60 / 60 / 24);
