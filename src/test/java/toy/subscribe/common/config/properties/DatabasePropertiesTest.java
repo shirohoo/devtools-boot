@@ -11,9 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Disabled(value = "운영서버_테스트이슈_DB프로퍼티")
 @SpringBootTest(classes = DatabaseProperties.class)
 class DatabasePropertiesTest {
-    
-    @Autowired
-    DatabaseProperties databaseProperties;
+    @Autowired DatabaseProperties databaseProperties;
     
     @Test
     @DisplayName("프로퍼티를_역직렬화_한다")
@@ -33,5 +31,4 @@ class DatabasePropertiesTest {
                                                     .isNotEmpty()
                                                     .isNotBlank();
     }
-    
 }

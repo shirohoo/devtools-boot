@@ -12,7 +12,6 @@ import java.util.List;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RSSFeed {
-    
     private String title;
     private String link;
     private String language;
@@ -32,6 +31,5 @@ public class RSSFeed {
         this.pubDate = pubDate;
         this.messages = messages;
     }
-    
 }
 

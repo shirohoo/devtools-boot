@@ -16,8 +16,7 @@ import java.util.stream.Collectors;
 import static toy.subscribe.domain.board.model.QFeedBoard.feedBoard;
 
 public class FeedBoardCustomRepositoryImpl extends QuerydslRepositorySupport implements FeedBoardCustomRepository {
-    
-    public FeedBoardCustomRepositoryImpl () {
+    public FeedBoardCustomRepositoryImpl() {
         super(FeedBoard.class);
     }
     
@@ -29,10 +28,8 @@ public class FeedBoardCustomRepositoryImpl extends QuerydslRepositorySupport imp
         QueryResults<FeedBoard> results = queryFactory
                 .select(feedBoard)
                 .from(feedBoard)
-                .where(
-                        feedBoard.company.contains(company)
-                                         .and(feedBoard.title.contains(title))
-                      )
+                .where(feedBoard.company.contains(company)
+                                        .and(feedBoard.title.contains(title)))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(feedBoard.id.desc())
@@ -45,5 +42,4 @@ public class FeedBoardCustomRepositoryImpl extends QuerydslRepositorySupport imp
         
         return new PageImpl<>(content, pageable, results.getTotal());
     }
-    
 }

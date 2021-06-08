@@ -15,12 +15,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Disabled(value = "운영서버_테스트이슈_DB설정")
 @SpringBootTest(classes = {DatabaseProperties.class, DatabaseConfig.class})
 class DatabaseConfigTest {
-    
-    @Autowired
-    DatabaseProperties databaseProperties;
-    
-    @Autowired
-    DatabaseConfig databaseConfig;
+    @Autowired DatabaseProperties databaseProperties;
+    @Autowired DatabaseConfig databaseConfig;
     
     @Test
     @DisplayName("프로퍼티를_읽어_데이터소스를_생성한다")
@@ -32,5 +28,4 @@ class DatabaseConfigTest {
         assertThat(dataSource).isNotNull();
         assertThat(dataSource.getConnection()).isNotNull();
     }
-    
 }

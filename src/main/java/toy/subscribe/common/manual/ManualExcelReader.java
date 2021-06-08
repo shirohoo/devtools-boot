@@ -24,7 +24,6 @@ import java.util.List;
  */
 @Slf4j
 public class ManualExcelReader {
-    
     public List<FeedBoard> read(ManualFilePath company) {
         List<FeedBoard> feedBoards = new ArrayList<>();
         
@@ -54,5 +53,4 @@ public class ManualExcelReader {
         }
         return feedBoards;
     }
-    
 }

@@ -12,7 +12,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ManualService {
-    
     private final FeedBoardRepository feedBoardRepository;
     
     public void save() {
@@ -25,5 +24,4 @@ public class ManualService {
             }
         }
     }
-    
 }

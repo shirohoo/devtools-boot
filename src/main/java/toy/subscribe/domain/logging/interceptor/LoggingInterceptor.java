@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 @RequiredArgsConstructor
 public class LoggingInterceptor implements HandlerInterceptor {
-    
     private final RequestLogRepository requestLogRepository;
     
     @Override
@@ -24,11 +23,11 @@ public class LoggingInterceptor implements HandlerInterceptor {
         String clientIp = request.getHeader("X-Forwarded-For");
         String httpMethod = request.getMethod();
         String requestUri = request.getRequestURI();
-
-        if (clientIp == null) {
+        
+        if(clientIp == null) {
             clientIp = request.getRemoteAddr();
         }
-
+        
         saveRequestLog(clientIp, httpMethod, requestUri);
         return true;
     }
@@ -39,8 +38,7 @@ public class LoggingInterceptor implements HandlerInterceptor {
                                           .httpMethod(httpMethod)
                                           .requestUri(requestUri)
                                           .build();
-    
+        
         requestLogRepository.save(requestLog);
     }
-    
 }

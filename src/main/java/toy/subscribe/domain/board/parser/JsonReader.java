@@ -18,7 +18,6 @@ import java.util.List;
 
 @Slf4j
 public class JsonReader {
-    
     public static List<String> readUrls() {
         JSONObject jsonObj = null;
         try {
@@ -45,11 +44,9 @@ public class JsonReader {
     public static List<Company> readCompanies() {
         List<Company> companies = null;
         JSONArray jsonCompanies = null;
-        
         try {
             FileReader reader = new FileReader(readFileFromPropertiesUseInputStream());
             JSONParser parser = new JSONParser();
-            
             companies = new ArrayList<>();
             JSONObject jsonObj = (JSONObject) parser.parse(reader);
             jsonCompanies = (JSONArray) jsonObj.get("companies");
@@ -62,8 +59,7 @@ public class JsonReader {
             log.error("Json parsing error !");
             return null;
         }
-
-        if (jsonCompanies != null) {
+        if(jsonCompanies != null) {
             for(int i = 0; i < jsonCompanies.size(); i++) {
                 JSONObject o = (JSONObject) jsonCompanies.get(i);
                 companies.add(new Company(
@@ -72,7 +68,6 @@ public class JsonReader {
                                       (String) o.get("imgPath"))
                              );
             }
-    
             return companies;
         }
         else {
@@ -82,8 +77,8 @@ public class JsonReader {
     
     private static File readFileFromPropertiesUseInputStream() throws IOException {
         File file;
-        try(InputStream inputStream = new ClassPathResource("static/properties/propertiesFactory.json").getInputStream()) {
-            file = File.createTempFile("propertiesFactory", ".json");
+        try(InputStream inputStream = new ClassPathResource("properties/properties-factory.json").getInputStream()) {
+            file = File.createTempFile("properties-factory", ".json");
             FileUtils.copyInputStreamToFile(inputStream, file);
         }
         return file;

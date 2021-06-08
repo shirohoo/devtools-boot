@@ -21,7 +21,6 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class CollectPostServiceImpl implements CollectPostService {
-
     private final FeedBoardFactory feedBoardFactory;
     private final FeedBoardRepository feedBoardRepository;
     
@@ -59,5 +58,4 @@ public class CollectPostServiceImpl implements CollectPostService {
             log.error("Urls is null. please check JsonReader !");
         }
     }
-
 }

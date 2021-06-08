@@ -15,7 +15,6 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class FeedBoardFactory {
-    
     private final FeedBoardRepository feedBoardRepository;
     
     public FeedBoard getFeedBoard(RSSFeedMessage message) {
@@ -47,5 +46,4 @@ public class FeedBoardFactory {
     private boolean isNonDuplicate(RSSFeedMessage message) {
         return !feedBoardRepository.existsByGuid(message.getGuid());
     }
-    
 }

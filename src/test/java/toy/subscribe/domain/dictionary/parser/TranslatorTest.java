@@ -15,9 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Disabled(value = "API_호출_횟수제한")
 @SpringBootTest(classes = ApiProperties.class)
 class TranslatorTest {
-    
-    @Autowired
-    ApiProperties apiProperties;
+    @Autowired ApiProperties apiProperties;
     
     @Test
     @DisplayName("운영서버_테스트이슈_한영단어찾기")
@@ -36,5 +34,4 @@ class TranslatorTest {
                      .isNotBlank();
         
     }
-    
 }
