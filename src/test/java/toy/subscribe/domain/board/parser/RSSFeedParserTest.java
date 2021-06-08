@@ -35,7 +35,6 @@ class RSSFeedParserTest {
         return Stream.of(
                 Arguments.of("https://woowabros.github.io/feed.xml", "woowabros"),
                 Arguments.of("https://medium.com/feed/watcha", "watcha"),
-                Arguments.of("https://blog.toss.im/feed/", "toss"),
                 Arguments.of("https://dailyhotel.io/feed", "dailyhotel"),
                 Arguments.of("https://medium.com/feed/daangn", "daangn"),
                 Arguments.of("https://tech.kakao.com/feed/", "kakao"),
@@ -50,8 +49,7 @@ class RSSFeedParserTest {
     public void invokeGoogleApi() throws Exception {
         // given
         WebClient.RequestHeadersSpec<?> invoke = WebClient.builder().codecs(configurer->configurer.defaultCodecs()
-                                                                                                  .maxInMemorySize(16 * 1024 * 1024)
-                                                                           )
+                                                                                                  .maxInMemorySize(16 * 1024 * 1024))
                                                           .build()
                                                           .get()
                                                           .uri("https://www.blogger.com/feeds/456720922432942888/posts/default");

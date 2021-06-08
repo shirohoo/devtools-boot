@@ -4,8 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum ManualFilePath {
-    WOOWABROS("src/test/resources/woowa_tech.xlsx", "/images/woowabros.png"),
-    TOSS("src/test/resources/toss_tech.xlsx", "/images/toss.png");
+    WOOWABROS("src/test/resources/woowa_tech.xlsx", "/images/woowabros.png");
     
     public final String XLSX;
     public final String IMG;

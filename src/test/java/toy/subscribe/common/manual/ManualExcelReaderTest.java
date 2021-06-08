@@ -15,20 +15,10 @@ class ManualExcelReaderTest {
         // given
         ManualExcelReader manualExcelReader = new ManualExcelReader();
         
+        // when
+        List<FeedBoard> feedBoards = manualExcelReader.read(ManualFilePath.WOOWABROS);
+        
         // then
-        for(ManualFilePath company : ManualFilePath.values()) {
-            List<FeedBoard> feedBoards = manualExcelReader.read(company);
-            
-            switch(company) {
-                case WOOWABROS:
-                    assertThat(feedBoards.size()).isEqualTo(224);
-                    break;
-                
-                case TOSS:
-                    assertThat(feedBoards.size()).isEqualTo(68);
-                    break;
-            }
-            
-        }
+        assertThat(feedBoards.size()).isEqualTo(224);
     }
 }
