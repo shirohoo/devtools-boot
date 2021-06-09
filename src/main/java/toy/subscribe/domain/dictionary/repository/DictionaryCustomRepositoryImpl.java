@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 import static toy.subscribe.domain.dictionary.model.QDictionary.dictionary;
 
 public class DictionaryCustomRepositoryImpl extends QuerydslRepositorySupport implements DictionaryCustomRepository {
-    
     public DictionaryCustomRepositoryImpl() {
         super(Dictionary.class);
     }
@@ -29,10 +28,8 @@ public class DictionaryCustomRepositoryImpl extends QuerydslRepositorySupport im
         QueryResults<Dictionary> results = queryFactory
                 .select(dictionary)
                 .from(dictionary)
-                .where(
-                        dictionary.enWord.contains(enWord)
-                                         .and(dictionary.krWord.contains(krWord))
-                      )
+                .where(dictionary.enWord.contains(enWord)
+                                        .and(dictionary.krWord.contains(krWord)))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(dictionary.id.desc())
@@ -45,5 +42,4 @@ public class DictionaryCustomRepositoryImpl extends QuerydslRepositorySupport im
         
         return new PageImpl<>(content, pageable, results.getTotal());
     }
-    
 }

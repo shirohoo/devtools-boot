@@ -11,7 +11,6 @@ import toy.subscribe.domain.logging.repository.RequestLogRepository;
 @Service
 @RequiredArgsConstructor
 public class FeedBoardProvideServiceImpl implements FeedBoardProvideService {
-    
     private final FeedBoardRepository feedBoardRepository;
     private final RequestLogRepository requestLogRepository;
     
@@ -22,5 +21,4 @@ public class FeedBoardProvideServiceImpl implements FeedBoardProvideService {
                                             requestLogRepository.getCumulativeVisitors(),
                                             requestLogRepository.getDAU());
     }
-    
 }

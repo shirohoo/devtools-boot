@@ -13,7 +13,6 @@ import static com.querydsl.core.types.dsl.Expressions.stringTemplate;
 import static toy.subscribe.domain.logging.model.QRequestLog.requestLog;
 
 public class RequestLogCustomRepositoryImpl extends QuerydslRepositorySupport implements RequestLogCustomRepository {
-    
     public RequestLogCustomRepositoryImpl() {
         super(RequestLog.class);
     }
@@ -42,16 +41,15 @@ public class RequestLogCustomRepositoryImpl extends QuerydslRepositorySupport im
                 .stream()
                 .reduce(0L, Long::sum);
     }
-
+    
     private StringTemplate date(DateTimePath regDate) {
         return stringTemplate("date({0})", regDate);
     }
-
+    
     private LocalDateTime onTime() {
         return LocalDateTime.of(LocalDateTime.now().getYear(),
-                LocalDateTime.now().getMonth(),
-                LocalDateTime.now().getDayOfMonth(),
-                0, 0, 0);
+                                LocalDateTime.now().getMonth(),
+                                LocalDateTime.now().getDayOfMonth(),
+                                0, 0, 0);
     }
-
 }

@@ -7,7 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RSSFeedMessage {
-    
     private String title;
     private String company;
     private String imgPath;
@@ -15,7 +14,6 @@ public class RSSFeedMessage {
     private String author;
     private String guid;
     private String pubDate;
-    
 }
 
 

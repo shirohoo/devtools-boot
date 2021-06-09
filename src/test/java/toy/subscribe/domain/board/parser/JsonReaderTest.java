@@ -9,7 +9,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class JsonReaderTest {
-    
     @Test
     @DisplayName("JSON_프로퍼티에서_URL_리스트를_읽어온다")
     public void readUrls() throws Exception {
@@ -36,5 +35,4 @@ public class JsonReaderTest {
             assertThat(company.getImgPath()).isNotEmpty();
         });
     }
-    
 }

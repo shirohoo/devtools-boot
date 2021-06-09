@@ -14,9 +14,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class RSSFeedParser {
-    
-    private final URL url;
-    
     private static final String TITLE = "title";
     private static final String LANGUAGE = "language";
     private static final String COPYRIGHT = "copyright";
@@ -25,11 +22,14 @@ public class RSSFeedParser {
     private static final String ITEM = "item";
     private static final String GUID = "guid";
     private static final String PUBDATE = "pubdate";
-
+    
+    private final URL url;
+    
     public RSSFeedParser(String feedUrl) throws MalformedURLException {
         try {
             this.url = new URL(feedUrl);
-        } catch (MalformedURLException e) {
+        }
+        catch(MalformedURLException e) {
             throw new MalformedURLException(e.getMessage());
         }
     }
@@ -38,7 +38,7 @@ public class RSSFeedParser {
         RSSFeed feed = null;
         try {
             boolean isFeedHeader = true;
-    
+            
             String title = "";
             String link = "";
             String language = "";
@@ -46,21 +46,21 @@ public class RSSFeedParser {
             String author = "";
             String pubdate = "";
             String guid = "";
-    
+            
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-    
+            
             try(InputStream inputStream = openInputStream()) {
-        
+                
                 XMLEventReader eventReader = inputFactory.createXMLEventReader(inputStream);
-        
+                
                 while(eventReader.hasNext()) {
                     XMLEvent event = eventReader.nextEvent();
-            
+                    
                     if(event.isStartElement()) {
                         String localPart = event.asStartElement().getName().getLocalPart();
-                
+                        
                         switch(localPart) {
-                    
+                            
                             case ITEM:
                                 if(isFeedHeader) {
                                     isFeedHeader = false;
@@ -68,32 +68,32 @@ public class RSSFeedParser {
                                 }
                                 event = eventReader.nextEvent();
                                 break;
-                    
+                            
                             case TITLE:
-                        
+                                
                                 title = getCharacterData(event, eventReader);
                                 break;
                             case LINK:
-                        
+                                
                                 link = getCharacterData(event, eventReader);
                                 break;
-                    
+                            
                             case GUID:
                                 guid = getCharacterData(event, eventReader);
                                 break;
-                    
+                            
                             case LANGUAGE:
                                 language = getCharacterData(event, eventReader);
                                 break;
-                    
+                            
                             case AUTHOR:
                                 author = getCharacterData(event, eventReader);
                                 break;
-                    
+                            
                             case PUBDATE:
                                 pubdate = getCharacterData(event, eventReader);
                                 break;
-                    
+                            
                             case COPYRIGHT:
                                 copyright = getCharacterData(event, eventReader);
                                 break;
@@ -108,9 +108,9 @@ public class RSSFeedParser {
                                                                    .title(title)
                                                                    .pubDate(pubdate)
                                                                    .build();
-                    
+                            
                             feed.getMessages().add(message);
-                    
+                            
                             event = eventReader.nextEvent();
                             continue;
                         }
@@ -129,7 +129,7 @@ public class RSSFeedParser {
         try {
             return url.openStream();
         }
-        catch (IOException e) {
+        catch(IOException e) {
             throw new IOException(e.getMessage());
         }
     }
@@ -137,14 +137,13 @@ public class RSSFeedParser {
     private String getCharacterData(XMLEvent event, XMLEventReader eventReader) throws XMLStreamException {
         String s = "";
         event = eventReader.nextEvent();
-    
+        
         if(event instanceof Characters) {
             s = event.asCharacters().getData();
         }
-    
+        
         return s;
     }
-    
 }
 
 

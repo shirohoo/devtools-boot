@@ -14,7 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Disabled(value = "파싱테스트_패스_실패하는_경우_HTML_경로_잘못된_경우")
 public class DocumentParserTest {
-    
     @ParameterizedTest
     @DisplayName("Document_파싱")
     @MethodSource("whereDocuments")
@@ -23,7 +22,7 @@ public class DocumentParserTest {
         DocumentParser parser = new DocumentParser();
         String html = parser.read(path);
         Set<String> set = parser.filtering(parser.parsing(html));
-    
+        
         // ##############################################################################
         // ################################ 출 력 로 직 #################################
         // ##############################################################################
@@ -43,13 +42,10 @@ public class DocumentParserTest {
     
     // given
     private static Stream<Arguments> whereDocuments() {
-        return Stream.of(
-                Arguments.of(HtmlPath.JUNIT5.getPath()),
-                Arguments.of(HtmlPath.HIBERNATE.getPath()),
-                Arguments.of(HtmlPath.SPRING_DATA_JPA.getPath()),
-                Arguments.of(HtmlPath.SPRING_BOOT.getPath()),
-                Arguments.of(HtmlPath.SPRING_SECURITY.getPath())
-                        );
+        return Stream.of(Arguments.of(HtmlPath.JUNIT5.getPath()),
+                         Arguments.of(HtmlPath.HIBERNATE.getPath()),
+                         Arguments.of(HtmlPath.SPRING_DATA_JPA.getPath()),
+                         Arguments.of(HtmlPath.SPRING_BOOT.getPath()),
+                         Arguments.of(HtmlPath.SPRING_SECURITY.getPath()));
     }
-    
 }

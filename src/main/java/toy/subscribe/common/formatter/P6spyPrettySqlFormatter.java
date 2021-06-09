@@ -8,7 +8,6 @@ import org.thymeleaf.util.StringUtils;
 import java.util.Locale;
 
 public class P6spyPrettySqlFormatter implements MessageFormattingStrategy {
-    
     @Override
     public String formatMessage(int connectionId, String now, long elapsed, String category, String prepared, String sql, String url) {
         return format(category, sql);
@@ -34,5 +33,4 @@ public class P6spyPrettySqlFormatter implements MessageFormattingStrategy {
         }
         return "\n=============================================================" + sql.toUpperCase() + "\n=============================================================";
     }
-    
 }

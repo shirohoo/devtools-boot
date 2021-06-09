@@ -2,7 +2,6 @@
   "urls": [
     "https://woowabros.github.io/feed.xml",
     "https://medium.com/feed/watcha",
-    "https://blog.toss.im/feed/",
     "https://dailyhotel.io/feed",
     "https://medium.com/feed/daangn",
     "https://tech.kakao.com/feed/",
@@ -15,11 +14,6 @@
       "key": "woowabros",
       "name": "우아한형제들",
       "imgPath": "/images/woowabros.png"
-    },
-    {
-      "key": "toss",
-      "name": "토스",
-      "imgPath": "/images/toss.png"
     },
     {
       "key": "dailyhotel",

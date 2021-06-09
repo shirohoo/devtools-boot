@@ -11,9 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Disabled(value = "운영서버_테스트이슈_API프로퍼티")
 @SpringBootTest(classes = ApiProperties.class)
 class ApiPropertiesTest {
-    
-    @Autowired
-    ApiProperties apiProperties;
+    @Autowired ApiProperties apiProperties;
     
     @Test
     @DisplayName("프로퍼티를_역직렬화_한다")
@@ -24,5 +22,4 @@ class ApiPropertiesTest {
                             .isNotBlank()
                             .startsWith("KakaoAK");
     }
-    
 }

@@ -7,9 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DictionaryResponse {
-    
     private Long id;
     private String enWord;
     private String krWord;
-    
 }

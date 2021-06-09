@@ -11,7 +11,6 @@ import toy.subscribe.domain.logging.interceptor.LoggingInterceptor;
 @Configuration
 @RequiredArgsConstructor
 public class InterceptorConfig implements WebMvcConfigurer {
-    
     private final LoggingInterceptor loggingInterceptor;
     
     @Override
@@ -31,5 +30,4 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/images/**", "/js/**", "/css/**")
                 .addPathPatterns("/**");
     }
-    
 }
