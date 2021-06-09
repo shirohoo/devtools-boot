@@ -15,7 +15,7 @@ import toy.subscribe.domain.board.service.FeedBoardProvideService;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class BoardApiController {
     private final FeedBoardProvideService feedBoardProvideService;
     

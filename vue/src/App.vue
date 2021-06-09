@@ -2,7 +2,7 @@
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer" app clipped>
       <v-list dense>
-        <v-list-item router-link :to="{name: 'blog'}" exact>
+        <v-list-item router :to="{name: 'blog'}" exact>
           <v-list-item-action>
             <v-icon>fas fa-arrow-alt-circle-right</v-icon>
           </v-list-item-action>
@@ -10,7 +10,7 @@
             <v-list-item-title>Tech Blogs</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item router-link :to="{name: 'bookmark'}" exact>
+        <v-list-item router :to="{name: 'bookmark'}" exact>
           <v-list-item-action>
             <v-icon>fas fa-arrow-alt-circle-right</v-icon>
           </v-list-item-action>
@@ -18,7 +18,7 @@
             <v-list-item-title>Bookmarks</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item router-link :to="{name: 'dictionary'}" exact>
+        <v-list-item router :to="{name: 'dictionary'}" exact>
           <v-list-item-action>
             <v-icon>fas fa-arrow-alt-circle-right</v-icon>
           </v-list-item-action>
@@ -26,7 +26,7 @@
             <v-list-item-title>Open Source Dictionary</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item router-link :to="{name: 'manager'}" exact>
+        <v-list-item router :to="{name: 'manager'}" exact>
           <v-list-item-action>
             <v-icon>fas fa-lock</v-icon>
           </v-list-item-action>
@@ -43,23 +43,21 @@
     </v-app-bar>
 
     <v-main>
-      <v-container class="fill-height" fluid>
+      <v-container fill-height fluid align-center>
         <router-view></router-view>
       </v-container>
     </v-main>
 
     <v-footer dark padless>
       <v-card class="flex" flat tile>
-        <v-card-title class="teal">
-          <strong class="subheading">🐱‍🏍 No one can do it for me, Only I can change my life.</strong>
-
-          <v-spacer></v-spacer>
-
+        <v-card-title class="teal justify-center">
           <v-btn v-for="icon in icons" :key="icon" class="mx-4" dark icon href="https://github.com/shirohoo/development-dictionary" target="_blank">
             <v-icon size="24px">
               {{ icon }}
             </v-icon>
+            <strong class="font-italic text-caption">&nbsp;V3.0</strong>
           </v-btn>
+          <strong class="subheading font-italic text-caption"> No one can do it for me, Only I can change my life.</strong>
         </v-card-title>
       </v-card>
     </v-footer>
@@ -72,9 +70,7 @@ import Vuetify from "vuetify";
 export default {
   name   : 'App',
   vuetify: new Vuetify(),
-  props  : {
-    source: String,
-  },
+  props  : {},
 
   data: () => ({
     drawer: null,

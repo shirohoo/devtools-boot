@@ -1,6 +1,6 @@
 # Link : http://15.165.178.142/
 
-# Toy - IT 개발사전
+# Toy - DEVELOPMENT DICTIONARY
 
 - 유명 IT기업들의 기술 블로그 포스팅 수집
 - 개발 공식문서(Spring-Boot Document etc.)에서 자주 사용되는 단어 추출
