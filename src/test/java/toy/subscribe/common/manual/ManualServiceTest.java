@@ -11,9 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest
 @Disabled(value = "엑셀_메뉴얼입력기_테스트용도아님_실행&활성화_신중하게")
 class ManualServiceTest {
-    
-    @Autowired
-    ManualService manualService;
+    @Autowired ManualService manualService;
     
     @Test
     @Transactional
@@ -22,5 +20,4 @@ class ManualServiceTest {
     public void save() throws Exception {
         manualService.save();
     }
-    
 }

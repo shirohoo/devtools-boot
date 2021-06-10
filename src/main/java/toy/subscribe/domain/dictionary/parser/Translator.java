@@ -18,7 +18,6 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class Translator {
-    
     private final ApiProperties apiProperties;
     
     public Optional<String> translate(String enWord) {
@@ -26,7 +25,7 @@ public class Translator {
         String uri = "v2/translation/translate";
         String srcLang = "en";
         String targetLang = "kr";
-    
+        
         WebClient.RequestHeadersSpec<?> header = WebClient.builder()
                                                           .baseUrl(baseURl)
                                                           .build()
@@ -36,16 +35,16 @@ public class Translator {
                                                                                      .queryParam("target_lang", targetLang)
                                                                                      .queryParam("query", enWord)
                                                                                      .build())
-    
+        
                                                           .header("Authorization", apiProperties.getKakaoKey());
-    
+        
         ReadObject readObject = null;
-    
+        
         try {
             Mono<String> stringMono = (Mono<String>) header
                     .retrieve()
                     .bodyToMono(String.class);
-        
+            
             ObjectMapper mapper = new ObjectMapper();
             readObject = mapper.readValue(stringMono.block(), ReadObject.class);
         }
@@ -55,7 +54,7 @@ public class Translator {
         catch(Exception e) {
             log.error("KaKao API Error!");
         }
-    
+        
         String result = null;
         if(readObject != null) {
             result = String.valueOf(readObject.getTranslated_text()
@@ -66,11 +65,7 @@ public class Translator {
     
     @Data
     private static class ReadObject implements Serializable {
-    
         private static final long serialVersionUID = 1874463342481741705L;
-    
         private List translated_text;
-    
     }
-    
 }

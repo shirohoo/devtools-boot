@@ -14,7 +14,6 @@ import javax.sql.DataSource;
 @RequiredArgsConstructor
 @EnableTransactionManagement
 public class DatabaseConfig {
-    
     private final DatabaseProperties databaseProperties;
     
     @Bean

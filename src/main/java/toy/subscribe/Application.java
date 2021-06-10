@@ -11,7 +11,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableJpaAuditing
 @SpringBootApplication
 public class Application {
-    
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
@@ -20,5 +19,4 @@ public class Application {
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
         return new PersistenceExceptionTranslationPostProcessor();
     }
-    
 }

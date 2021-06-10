@@ -18,7 +18,6 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class DictionaryServiceImpl implements DictionaryService {
-    
     private final Translator translator;
     private final DictionaryRepository dictionaryRepository;
     
@@ -55,5 +54,4 @@ public class DictionaryServiceImpl implements DictionaryService {
         }
         dictionaryRepository.saveAll(dictionaries);
     }
-    
 }

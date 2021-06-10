@@ -9,28 +9,16 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ManualExcelReaderTest {
-    
     @Test
     @DisplayName("크롤링_엑셀데이터를_역직렬화한다")
     public void menualWoowabros() throws Exception {
         // given
         ManualExcelReader manualExcelReader = new ManualExcelReader();
         
+        // when
+        List<FeedBoard> feedBoards = manualExcelReader.read(ManualFilePath.WOOWABROS);
+        
         // then
-        for(ManualFilePath company : ManualFilePath.values()) {
-            List<FeedBoard> feedBoards = manualExcelReader.read(company);
-            
-            switch(company) {
-                case WOOWABROS:
-                    assertThat(feedBoards.size()).isEqualTo(224);
-                    break;
-                
-                case TOSS:
-                    assertThat(feedBoards.size()).isEqualTo(68);
-                    break;
-            }
-            
-        }
+        assertThat(feedBoards.size()).isEqualTo(224);
     }
-    
 }

@@ -10,9 +10,7 @@ import org.springframework.data.domain.Page;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DictionaryResponseWrapper<T> {
-    
     private Page<DictionaryResponse> pages;
     private Long visitorsOfReduce;
     private Long visitorsOfDay;
-    
 }

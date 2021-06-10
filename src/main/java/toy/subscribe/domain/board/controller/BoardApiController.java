@@ -2,20 +2,21 @@ package toy.subscribe.domain.board.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.thymeleaf.util.StringUtils;
 import toy.subscribe.domain.board.service.FeedBoardProvideService;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1")
 public class BoardApiController {
-    
     private final FeedBoardProvideService feedBoardProvideService;
     
     @GetMapping("/boards")
@@ -27,14 +28,13 @@ public class BoardApiController {
             return new ResponseEntity<>("Request page size is too large !", HttpStatus.BAD_REQUEST);
         }
         else {
-            if(StringUtils.isEmptyOrWhitespace(company)) {
+            if(StringUtils.isEmpty(company)) {
                 company = "";
             }
-            if(StringUtils.isEmptyOrWhitespace(title)) {
+            if(StringUtils.isEmpty(title)) {
                 title = "";
             }
             return new ResponseEntity<>(feedBoardProvideService.provideFeedBoardWrapper(pageable, company, title), HttpStatus.OK);
         }
     }
-    
 }

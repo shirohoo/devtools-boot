@@ -11,7 +11,6 @@ import toy.subscribe.domain.logging.repository.RequestLogRepository;
 @Service
 @RequiredArgsConstructor
 public class DictionaryProvideServiceImpl implements DictionaryProvideService {
-    
     private final DictionaryRepository feedBoardRepository;
     private final RequestLogRepository requestLogRepository;
     
@@ -22,5 +21,4 @@ public class DictionaryProvideServiceImpl implements DictionaryProvideService {
                                              requestLogRepository.getCumulativeVisitors(),
                                              requestLogRepository.getDAU());
     }
-    
 }

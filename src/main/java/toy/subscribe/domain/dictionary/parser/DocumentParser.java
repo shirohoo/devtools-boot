@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 
 @Slf4j
 public class DocumentParser {
-    
     private final String[] conlangFilter = {"taglib", "springframework", "namespace", "jackson", "springboot", "spring", "login", "winsw",
                                             "username", "logback", "autoscaler", "hibernate", "kubernetes", "docker", "homebrew", "datadog",
                                             "livereload", "jersey", "kotlin", "framework", "oauth", "testinstance", "junit4", "junit5", "bugfix",
@@ -54,7 +53,7 @@ public class DocumentParser {
         StringBuilder sb = new StringBuilder();
         Pattern pattern = Pattern.compile("<p>.*</p>");
         Matcher matcher = pattern.matcher(html);
-    
+        
         while(matcher.find()) {
             String s = " " + html.substring(matcher.start(), matcher.end())
                                  .replaceAll("<b>", "").replaceAll("</b>", "")
@@ -84,18 +83,18 @@ public class DocumentParser {
                 sb.append(s);
             }
         }
-    
+        
         String s = sb.toString().trim().toLowerCase()
                      .replaceAll("[^a-zA-Z\\s\\.]", " ")
                      .replaceAll(" +", " ");
-    
+        
         Set<String> set = null;
         try(InputStream inputStream = getClass()
                 .getResourceAsStream("/models/en-token.bin")) {
             TokenizerModel model = new TokenizerModel(inputStream);
             TokenizerME tokenizer = new TokenizerME(model);
             String[] tokens = tokenizer.tokenize(s);
-    
+            
             set = new HashSet<>();
             for(String s1 : tokens) {
                 if(s1.length() > 4) {
@@ -106,7 +105,7 @@ public class DocumentParser {
         catch(IOException e) {
             log.error(e.getMessage());
         }
-    
+        
         return set;
     }
     
@@ -133,5 +132,4 @@ public class DocumentParser {
                                           "(?<=[A-Za-z])(?=[^A-Za-z])"),
                             " ");
     }
-    
 }

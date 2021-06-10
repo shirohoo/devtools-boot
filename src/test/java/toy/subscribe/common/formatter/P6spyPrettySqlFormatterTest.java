@@ -6,9 +6,6 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class P6spyPrettySqlFormatterTest {
-    
-    P6spyPrettySqlFormatter p6spyPrettySqlFormatter = new P6spyPrettySqlFormatter();
-    
     @Test
     @DisplayName("P6Spy_CustomFormatter")
     public void formatMessage() {
@@ -22,6 +19,7 @@ class P6spyPrettySqlFormatterTest {
         String sql = "select count(feedboard0_.feed_board_id) as col_0_0_ from feed_board feedboard0_ where feedboard0_.guid='http://thefarmersfront.github.io/blog/welcome-to-kurly/'";
         
         // when
+        P6spyPrettySqlFormatter p6spyPrettySqlFormatter = new P6spyPrettySqlFormatter();
         String actual = p6spyPrettySqlFormatter.formatMessage(connectionId, now, elapsed, category, prepared, sql, url);
         
         // then

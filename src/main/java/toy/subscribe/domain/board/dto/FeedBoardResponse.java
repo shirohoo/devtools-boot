@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FeedBoardResponse {
-    
     private Long id;
     private String company;
     private String imgPath;
@@ -19,5 +18,4 @@ public class FeedBoardResponse {
     
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime regDate;
-    
 }

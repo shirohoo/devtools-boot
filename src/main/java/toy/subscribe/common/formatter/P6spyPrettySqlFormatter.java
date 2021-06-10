@@ -2,20 +2,19 @@ package toy.subscribe.common.formatter;
 
 import com.p6spy.engine.logging.Category;
 import com.p6spy.engine.spy.appender.MessageFormattingStrategy;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.engine.jdbc.internal.FormatStyle;
-import org.thymeleaf.util.StringUtils;
 
 import java.util.Locale;
 
 public class P6spyPrettySqlFormatter implements MessageFormattingStrategy {
-    
     @Override
     public String formatMessage(int connectionId, String now, long elapsed, String category, String prepared, String sql, String url) {
         return format(category, sql);
     }
     
     private String format(String category, String sql) {
-        if(StringUtils.isEmptyOrWhitespace(sql.trim())) {
+        if(StringUtils.isEmpty(sql.trim())) {
             return sql;
         }
         
@@ -34,5 +33,4 @@ public class P6spyPrettySqlFormatter implements MessageFormattingStrategy {
         }
         return "\n=============================================================" + sql.toUpperCase() + "\n=============================================================";
     }
-    
 }
