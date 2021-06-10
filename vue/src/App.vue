@@ -10,7 +10,16 @@
             <v-list-item-title>Tech Blogs</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item router :to="{name: 'bookmark'}" exact>
+        <v-list-item router :to="{name: 'dictionary'}" exact>
+          <v-list-item-action>
+            <v-icon>fas fa-arrow-alt-circle-right</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Document Dictionary</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <!--        <v-list-item router :to="{name: 'bookmark'}" exact>-->
+        <v-list-item @click="notReady">
           <v-list-item-action>
             <v-icon>fas fa-arrow-alt-circle-right</v-icon>
           </v-list-item-action>
@@ -18,15 +27,8 @@
             <v-list-item-title>Bookmarks</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item router :to="{name: 'dictionary'}" exact>
-          <v-list-item-action>
-            <v-icon>fas fa-arrow-alt-circle-right</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Open Source Dictionary</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item router :to="{name: 'manager'}" exact>
+<!--        <v-list-item router :to="{name: 'manager'}" exact>-->
+        <v-list-item @click="notReady">
           <v-list-item-action>
             <v-icon>fas fa-lock</v-icon>
           </v-list-item-action>
@@ -40,6 +42,20 @@
     <v-app-bar app clipped-left>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>DEVELOPMENT DICTIONARY</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-tab>
+        <v-badge color="pink" dot>
+          UV <br />
+          {{ numberFormat(visitors.day) }}
+        </v-badge>
+      </v-tab>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <v-tab>
+        <v-badge color="teal" dot>
+          TOTAL <br />
+          {{ numberFormat(visitors.reduce) }}
+        </v-badge>
+      </v-tab>
     </v-app-bar>
 
     <v-main>
@@ -65,7 +81,8 @@
 </template>
 
 <script>
-import Vuetify from "vuetify";
+import Vuetify    from "vuetify";
+import {mapState} from "vuex";
 
 export default {
   name   : 'App',
@@ -78,9 +95,22 @@ export default {
       'mdi-github',
     ],
   }),
-
   created(){
-    this.$vuetify.theme.dark = true
+    this.$vuetify.theme.dark = true;
   },
+  computed: {
+    ...mapState(["visitors"]),
+    numberFormat(){
+      return (num) => {
+        let regexp = /\B(?=(\d{3})+(?!\d))/g;
+        return num.toString().replace(regexp, ',');
+      };
+    },
+  },
+  methods : {
+    notReady(){
+      alert('준비중입니다.')
+    }
+  }
 };
 </script>

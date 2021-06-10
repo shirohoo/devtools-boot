@@ -2,6 +2,7 @@ package toy.subscribe.domain.dictionary.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,13 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.thymeleaf.util.StringUtils;
 import toy.subscribe.domain.dictionary.service.DictionaryProvideService;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class DictionaryApiController {
     private final DictionaryProvideService dictionaryProvideService;
     
@@ -28,10 +28,10 @@ public class DictionaryApiController {
             return new ResponseEntity<>("Request page size is too large !", HttpStatus.BAD_REQUEST);
         }
         else {
-            if(StringUtils.isEmptyOrWhitespace(enWord)) {
+            if(StringUtils.isEmpty(enWord)) {
                 enWord = "";
             }
-            if(StringUtils.isEmptyOrWhitespace(krWord)) {
+            if(StringUtils.isEmpty(krWord)) {
                 krWord = "";
             }
             return new ResponseEntity<>(dictionaryProvideService.provideDictionaryWrapper(pageable, enWord, krWord), HttpStatus.OK);

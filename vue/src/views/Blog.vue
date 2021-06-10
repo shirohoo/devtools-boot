@@ -25,8 +25,17 @@
     <v-row justify="center">
       <v-col cols="1">
       </v-col>
-      <v-col>
-        <h1 id="totalResultCount">TOTAL : {{ numberFormat(pager.totalElements) }}</h1>
+      <v-col align-self="center" class="text-h6">
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon dark v-bind="attrs" v-on="on" large color="teal">
+              fas fa-newspaper
+            </v-icon>
+            &nbsp;
+            {{ numberFormat(pager.totalElements) }}
+          </template>
+          <span>articles</span>
+        </v-tooltip>
       </v-col>
       <v-col cols="3">
         <v-select v-model="search.size" :items="display" label="Display" @change="findContents(1);"></v-select>
@@ -38,19 +47,20 @@
     <!-- board area -->
     <v-row class="text-center pa-3" justify="center">
       <v-col>
-        <v-simple-table fixed-header dense height="100%">
+        <v-simple-table class="rounded-lg" fixed-header dense height="100%">
           <template v-slot:default>
             <thead>
               <tr>
-                <th class="text-center" style="width: 15%;">Group</th>
+                <th class="text-center rounded-tl-lg" style="width: 15%;">Group</th>
                 <th class="text-center" style="width: 60%;">Title</th>
-                <th class="text-center" style="width: 25%;">Date</th>
+                <th class="text-center rounded-tr-lg" style="width: 25%;">Date</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="content in contents">
                 <td>
-                  <img class="rounded-lg" :src="require('@/assets'+content.imgPath)" height="48px" width="96px" :title="content.company" />
+                  <!-- <img class="rounded-lg" :src="require('@/assets'+content.imgPath)" height="48px" width="96px" :title="content.company" />-->
+                  <img class="rounded-lg" :src="content.imgPath" height="48px" width="96px" :title="content.company" />
                 </td>
                 <td class="text-left">
                   <v-btn x-small v-show="isBetweenDay(content.regDate)" class="ma-2" color="purple" dark>Today</v-btn>
@@ -67,11 +77,11 @@
     <!-- pagination area -->
     <v-row justify="center">
       <v-col>
-        <v-pagination
-            :value="pager.currentPage"
-            :length="pager.total"
-            :total-visible="9"
-            @input="findContents"
+        <v-pagination color="teal"
+                      :value="pager.currentPage"
+                      :length="pager.total"
+                      :total-visible="9"
+                      @input="findContents"
         ></v-pagination>
       </v-col>
     </v-row>
@@ -80,28 +90,27 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios        from 'axios';
+import {mapActions} from "vuex";
 
 export default {
   name: 'Blog',
   data(){
     return {
-      search          : {
+      search  : {
         page   : 0,
         size   : 10,
         company: '',
         title  : ''
       },
-      contents        : {},
-      pager           : {
+      contents: {},
+      pager   : {
         currentPage  : 0,
         total        : 0,
         totalElements: 0,
       },
-      groups          : ["우아한형제들", "데일리호텔", "카카오", "야놀자", "라인", "당근마켓", "마켓컬리", "왓챠"],
-      display         : [10, 30, 50, 100, 200],
-      visitorsOfReduce: 0,
-      visitorsOfDay   : 0,
+      groups  : ["우아한형제들", "데일리호텔", "카카오", "야놀자", "라인", "당근마켓", "마켓컬리", "왓챠"],
+      display : [10, 30, 50, 100, 200],
     }
   },
   mounted(){
@@ -116,14 +125,11 @@ export default {
     },
   },
   methods : {
+    ...mapActions(["getCurrentVisitors"]),
     findContents(page){
-      console.log("첫째", page);
-      // page--;
-      console.log("둘째", page);
       if(page !== undefined){
         this.search.page = page - 1;
       }
-      console.log("셋째", page);
 
       let url = '/api/v1/boards';
       axios.get(url, {
@@ -135,8 +141,9 @@ export default {
         }
       }).then(res => {
         this.contents = res.data.pages.content;
-        this.visitorsOfReduce = res.visitorsOfReduce;
-        this.visitorsOfDay = res.visitorsOfDay;
+
+        this.getCurrentVisitors(res);
+
         this.pager.currentPage = res.data.pages.number + 1;
         this.pager.total = res.data.pages.totalPages;
         this.pager.totalElements = res.data.pages.totalElements;
