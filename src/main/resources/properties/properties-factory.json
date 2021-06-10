@@ -2,7 +2,6 @@
   "urls": [
     "https://woowabros.github.io/feed.xml",
     "https://medium.com/feed/watcha",
-    "https://dailyhotel.io/feed",
     "https://medium.com/feed/daangn",
     "https://tech.kakao.com/feed/",
     "https://yanolja.github.io/feed.xml",
@@ -14,11 +13,6 @@
       "key": "woowabros",
       "name": "우아한형제들",
       "imgPath": "/images/woowabros.png"
-    },
-    {
-      "key": "dailyhotel",
-      "name": "데일리호텔",
-      "imgPath": "/images/dailyhotel.png"
     },
     {
       "key": "daangn",

@@ -35,7 +35,6 @@ class RSSFeedParserTest {
         return Stream.of(
                 Arguments.of("https://woowabros.github.io/feed.xml", "woowabros"),
                 Arguments.of("https://medium.com/feed/watcha", "watcha"),
-                Arguments.of("https://dailyhotel.io/feed", "dailyhotel"),
                 Arguments.of("https://medium.com/feed/daangn", "daangn"),
                 Arguments.of("https://tech.kakao.com/feed/", "kakao"),
                 Arguments.of("https://yanolja.github.io/feed.xml", "yanolja"),
