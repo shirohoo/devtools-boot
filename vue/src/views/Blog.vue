@@ -47,7 +47,7 @@
     <!-- board area -->
     <v-row class="text-center pa-3" justify="center">
       <v-col>
-        <v-simple-table class="rounded-lg" fixed-header dense height="100%">
+        <v-simple-table class="rounded-lg" fixed-header height="100%">
           <template v-slot:default>
             <thead>
               <tr>
@@ -59,8 +59,9 @@
             <tbody>
               <tr v-for="content in contents">
                 <td>
-                  <!-- <img class="rounded-lg" :src="require('@/assets'+content.imgPath)" height="48px" width="96px" :title="content.company" />-->
-                  <img class="rounded-lg" :src="content.imgPath" height="48px" width="96px" :title="content.company" />
+                  <div class="pa-2">
+                    <img class="rounded-lg" :src="content.imgPath" height="48px" width="96px" :title="content.company" />
+                  </div>
                 </td>
                 <td class="text-left">
                   <v-btn x-small v-show="isBetweenDay(content.regDate)" class="ma-2" color="purple" dark>Today</v-btn>

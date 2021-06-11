@@ -45,7 +45,7 @@
       <v-spacer></v-spacer>
       <v-tab>
         <v-badge color="pink" dot>
-          UV <br />
+          DAU <br />
           {{ numberFormat(visitors.day) }}
         </v-badge>
       </v-tab>
@@ -71,9 +71,9 @@
             <v-icon size="24px">
               {{ icon }}
             </v-icon>
-            <strong class="font-italic text-caption">&nbsp;V3.0</strong>
+            <strong class="font-italic text-caption">&nbsp;V3.0 # </strong>
           </v-btn>
-          <strong class="subheading font-italic text-caption"> No one can do it for me, Only I can change my life.</strong>
+          <strong class="subheading font-italic text-caption"> Only I can change my life. No one can do it for me.</strong>
         </v-card-title>
       </v-card>
     </v-footer>

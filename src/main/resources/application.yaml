@@ -1,22 +1,39 @@
 spring:
+  profiles:
+    active: dev
   main:
     allow-bean-definition-overriding: true
-
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: validate
     properties:
       hibernate:
         default_batch_fetch_size: 1000
-
-    open-in-view: false
-
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
 logging:
   level:
-    org.hibernate.SQL: info
-
+    org.hibernate.SQL: debug
 decorator:
   datasource:
     p6spy:
-      ## Query Interceptor 개발=true / 운영=false 권장
+      enable-logging: true
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+logging:
+  level:
+    org.hibernate.SQL: info
+    com.zaxxer.hikari.HikariConfig: DEBUG
+    com.zaxxer.hikari: TRACE
+decorator:
+  datasource:
+    p6spy:
       enable-logging: false
+

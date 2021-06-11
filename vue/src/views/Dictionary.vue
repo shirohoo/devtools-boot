@@ -43,7 +43,7 @@
     <!-- board area -->
     <v-row class="text-center pa-3" justify="center">
       <v-col>
-        <v-simple-table class="rounded-lg" fixed-header dense height="100%">
+        <v-simple-table class="rounded-lg" fixed-header height="100%">
           <template v-slot:default>
             <thead>
               <tr>
