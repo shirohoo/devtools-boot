@@ -2,25 +2,55 @@ package toy.subscribe.common.formatter;
 
 import com.p6spy.engine.logging.Category;
 import com.p6spy.engine.spy.appender.MessageFormattingStrategy;
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.engine.jdbc.internal.FormatStyle;
 
 import java.util.Locale;
+import java.util.Stack;
 
 public class P6spyPrettySqlFormatter implements MessageFormattingStrategy {
+    private static final String[] EXCLUDE_KEYWORD = {"feed_board", "request_log"};
+    
     @Override
-    public String formatMessage(int connectionId, String now, long elapsed, String category, String prepared, String sql, String url) {
-        return format(category, sql);
+    public String formatMessage(final int connectionId, final String now, final long elapsed, final String category, final String prepared, final String sql, final String url) {
+        for(int i = 0; i < EXCLUDE_KEYWORD.length; i++) {
+            if(sql.contains(EXCLUDE_KEYWORD[i])) {
+                return "Filtered queries";
+            }
+        }
+        
+        Stack<String> callStack = new Stack<>();
+        StackTraceElement[] stackTrace = new Throwable().getStackTrace();
+        
+        for(int i = 0; i < stackTrace.length; i++) {
+            String trace = stackTrace[i].toString();
+            if(trace.startsWith("toy.subscribe") && !trace.contains("P6spyPrettySqlFormatter")) {
+                callStack.push(trace);
+            }
+        }
+        
+        StringBuilder callStackBuilder = new StringBuilder();
+        int order = 1;
+        while(callStack.size() != 0) {
+            callStackBuilder.append("\n\t\t" + (order++) + ". " + callStack.pop());
+        }
+        
+        String message = new StringBuilder().append("\n\n\tConnection ID: ").append(connectionId)
+                                            .append("\n\tExecution Time: ").append(elapsed).append(" ms\n")
+                                            .append("\n\tCall Stack (number 1 is entry point): ").append(callStackBuilder).append("\n")
+                                            .append("\n----------------------------------------------------------------------------------------------------")
+                                            .toString();
+        
+        return sqlFormat(sql, category, message);
     }
     
-    private String format(String category, String sql) {
-        if(StringUtils.isEmpty(sql.trim())) {
-            return sql;
+    private String sqlFormat(String sql, String category, String message) {
+        if(sql.trim() == null || sql.trim().isEmpty()) {
+            return "";
         }
         
         if(Category.STATEMENT.getName().equals(category)) {
             String s = sql.trim().toLowerCase(Locale.ROOT);
-            if("create".startsWith(s) || "alter".startsWith(s) || "comment".startsWith(s)) {
+            if(s.startsWith("create") || s.startsWith("alter") || s.startsWith("comment")) {
                 sql = FormatStyle.DDL
                         .getFormatter()
                         .format(sql);
@@ -31,6 +61,11 @@ public class P6spyPrettySqlFormatter implements MessageFormattingStrategy {
                         .format(sql);
             }
         }
-        return "\n=============================================================" + sql.toUpperCase() + "\n=============================================================";
+        
+        return new StringBuilder().append("\n")
+                                  .append(sql.toUpperCase())
+                                  .append(message)
+                                  .toString();
     }
+    
 }

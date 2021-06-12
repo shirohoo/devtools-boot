@@ -156,7 +156,7 @@ export default {
           this.findContents();
         }
       }).catch(() => {
-        alert('400, Bad Request')
+        alert('400, Bad Request!')
       });
     },
     resetSearchForm(){

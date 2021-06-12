@@ -18,22 +18,12 @@
             <v-list-item-title>Document Dictionary</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <!--        <v-list-item router :to="{name: 'bookmark'}" exact>-->
-        <v-list-item @click="notReady">
+        <v-list-item router :to="{name: 'bookmark'}" exact>
           <v-list-item-action>
             <v-icon>fas fa-arrow-alt-circle-right</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Bookmarks</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-<!--        <v-list-item router :to="{name: 'manager'}" exact>-->
-        <v-list-item @click="notReady">
-          <v-list-item-action>
-            <v-icon>fas fa-lock</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Manager</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
