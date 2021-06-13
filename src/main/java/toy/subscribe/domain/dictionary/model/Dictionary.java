@@ -2,7 +2,7 @@ package toy.subscribe.domain.dictionary.model;
 
 import lombok.*;
 import toy.subscribe.common.BaseTime;
-import toy.subscribe.domain.dictionary.dto.DictionaryResponse;
+import toy.subscribe.common.dtos.DictionaryResponse;
 
 import javax.persistence.*;
 import java.io.Serializable;

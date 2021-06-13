@@ -62,14 +62,18 @@
                   {{ content.krWord }}
                 </td>
                 <td class="text-center">
-                  <a class="text-decoration-none" :href="'https://www.google.com/search?q=' + content.enWord + '&newwindow=1&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjwgc7Lj83wAhXHFogKHYUABiYQ_AUoAXoECAEQAw&biw=1920&bih=937'" target="blank">
+                  <a class="text-decoration-none"
+                     :href="'https://www.google.com/search?q=' + content.enWord + '&newwindow=1&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjwgc7Lj83wAhXHFogKHYUABiYQ_AUoAXoECAEQAw&biw=1920&bih=937'"
+                     target="blank">
                     <v-icon>
                       fas fa-images
                     </v-icon>
                   </a>
                 </td>
                 <td>
-                  <a class="text-decoration-none" :href="'https://www.google.com/search?q=' + content.enWord + '&rlz=1C1GCEA_koKR939KR939&oq=taglib&aqs=chrome..69i57j0l6j69i60.1267j0j4&sourceid=chrome&ie=UTF-8'" target="blank">
+                  <a class="text-decoration-none"
+                     :href="'https://www.google.com/search?q=' + content.enWord + '&rlz=1C1GCEA_koKR939KR939&oq=taglib&aqs=chrome..69i57j0l6j69i60.1267j0j4&sourceid=chrome&ie=UTF-8'"
+                     target="blank">
                     <v-icon>
                       mdi-google
                     </v-icon>
@@ -103,6 +107,7 @@ import {mapActions} from "vuex";
 
 export default {
   name: 'Dictionary',
+
   data(){
     return {
       search  : {
@@ -120,9 +125,11 @@ export default {
       display : [10, 30, 50, 100, 200],
     }
   },
+
   mounted(){
     this.findContents();
   },
+
   computed: {
     numberFormat(){
       return (num) => {
@@ -131,8 +138,10 @@ export default {
       };
     },
   },
-  methods : {
+
+  methods: {
     ...mapActions(["getCurrentVisitors"]),
+
     findContents(page){
       if(page !== undefined){
         this.search.page = page - 1;
@@ -161,16 +170,18 @@ export default {
           this.findContents();
         }
       }).catch(() => {
-        alert('400, Bad Request')
+        alert('400, Bad Request!')
       });
     },
+
     resetSearchForm(){
       this.search.page = 0;
       this.search.size = 10;
-      this.search.company = '';
-      this.search.title = '';
+      this.search.enWord = '';
+      this.search.krWord = '';
       this.findContents(1);
     },
+
     isBetweenDay(regDate){
       let regDateArray = String(regDate).split('-');
       let date = new Date(regDateArray[0] *= 1, regDateArray[1] - 1, regDateArray[2] *= 1)

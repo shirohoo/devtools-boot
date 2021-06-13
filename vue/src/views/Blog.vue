@@ -96,6 +96,7 @@ import {mapActions} from "vuex";
 
 export default {
   name: 'Blog',
+
   data(){
     return {
       search  : {
@@ -114,9 +115,11 @@ export default {
       display : [10, 30, 50, 100, 200],
     }
   },
+
   mounted(){
     this.findContents();
   },
+
   computed: {
     numberFormat(){
       return (num) => {
@@ -125,8 +128,10 @@ export default {
       };
     },
   },
-  methods : {
+
+  methods: {
     ...mapActions(["getCurrentVisitors"]),
+
     findContents(page){
       if(page !== undefined){
         this.search.page = page - 1;
@@ -156,9 +161,10 @@ export default {
           this.findContents();
         }
       }).catch(() => {
-        alert('400, Bad Request')
+        alert('400, Bad Request!')
       });
     },
+
     resetSearchForm(){
       this.search.page = 0;
       this.search.size = 10;
@@ -166,6 +172,7 @@ export default {
       this.search.title = '';
       this.findContents(1);
     },
+
     isBetweenDay(regDate){
       let regDateArray = String(regDate).split('-');
       let date = new Date(regDateArray[0] *= 1, regDateArray[1] - 1, regDateArray[2] *= 1)

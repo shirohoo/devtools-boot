@@ -1,4 +1,4 @@
-package toy.subscribe.domain.dictionary.model;
+package toy.subscribe.common.enums;
 
 import lombok.Getter;
 

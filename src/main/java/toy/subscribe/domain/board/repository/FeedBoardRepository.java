@@ -6,5 +6,4 @@ import toy.subscribe.domain.board.model.FeedBoard;
 
 public interface FeedBoardRepository extends JpaRepository<FeedBoard, Long>, QuerydslPredicateExecutor<FeedBoard>, FeedBoardCustomRepository {
     boolean existsByGuid(String guid);
-    
 }

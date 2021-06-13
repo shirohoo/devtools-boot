@@ -13,7 +13,7 @@
 
 <h1 align="center">모바일</h1>
 <p align="center">
-<img src="https://user-images.githubusercontent.com/71188307/121541334-2c035400-ca42-11eb-9ad9-de8170b9595b.png" />
+<img src="https://manager-images.githubusercontent.com/71188307/121541334-2c035400-ca42-11eb-9ad9-de8170b9595b.png" />
 </p>  
  
 <br />
@@ -22,7 +22,7 @@
 
 <h1 align="center">PC</h1>
 <p align="center">
-<img src="https://user-images.githubusercontent.com/71188307/121541233-15f59380-ca42-11eb-8728-84801bc4c0c3.png" />
+<img src="https://manager-images.githubusercontent.com/71188307/121541233-15f59380-ca42-11eb-8728-84801bc4c0c3.png" />
 </p>  
 
 <br />

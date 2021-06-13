@@ -19,15 +19,9 @@ const routes = [
     name     : 'dictionary',
     component: () => import('../views/Dictionary.vue')
   },
-  {
-    path     : '/manager',
-    name     : 'manager',
-    component: () => import('../views/Manager.vue')
-  },
 ]
 
 const router = new VueRouter({
-  mode: 'history',
   base: process.env.BASE_URL,
   routes
 })

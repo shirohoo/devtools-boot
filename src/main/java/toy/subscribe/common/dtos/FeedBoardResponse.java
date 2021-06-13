@@ -1,4 +1,4 @@
-package toy.subscribe.domain.board.dto;
+package toy.subscribe.common.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;

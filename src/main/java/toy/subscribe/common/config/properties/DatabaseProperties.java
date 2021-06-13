@@ -17,5 +17,4 @@ public class DatabaseProperties {
     
     @Value ("${spring.datasource.password}")
     private String password;
-    
 }

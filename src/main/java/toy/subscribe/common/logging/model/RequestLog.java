@@ -1,4 +1,4 @@
-package toy.subscribe.domain.logging.model;
+package toy.subscribe.common.logging.model;
 
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;

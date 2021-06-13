@@ -11,12 +11,13 @@ import toy.subscribe.domain.board.service.CollectPostService;
 @Service
 @RequiredArgsConstructor
 public class RSSScheduler {
-    private final int COLLECT_DELAY = 1000 * 60 * 1; // 단위: ms
     private final CollectPostService collectPostService;
+    
+    private static final int COLLECT_DELAY = 1000 * 60 * 1; // 단위: ms
     
     @Transactional
     @Scheduled(fixedRate = COLLECT_DELAY)
     public void collect() {
-        collectPostService.getAllGroupFeed();
+        collectPostService.allGroupFeedCollect();
     }
 }

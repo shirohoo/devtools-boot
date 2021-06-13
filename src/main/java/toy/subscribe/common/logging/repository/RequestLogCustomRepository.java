@@ -1,4 +1,4 @@
-package toy.subscribe.domain.logging.repository;
+package toy.subscribe.common.logging.repository;
 
 public interface RequestLogCustomRepository {
     Long getDAU();

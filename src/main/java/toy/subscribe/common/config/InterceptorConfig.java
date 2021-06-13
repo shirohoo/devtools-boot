@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.PathResourceResolver;
-import toy.subscribe.domain.logging.interceptor.LoggingInterceptor;
+import toy.subscribe.common.logging.interceptor.LoggingInterceptor;
 
 @Configuration
 @RequiredArgsConstructor

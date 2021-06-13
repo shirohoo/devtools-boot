@@ -23,14 +23,7 @@ class P6spyPrettySqlFormatterTest {
         String actual = p6spyPrettySqlFormatter.formatMessage(connectionId, now, elapsed, category, prepared, sql, url);
         
         // then
-        assertThat(actual).startsWith("\n======")
-                          .contains("SELECT",
-                                    "COUNT(FEEDBOARD0_.FEED_BOARD_ID) AS COL_0_0_",
-                                    "FROM",
-                                    "FEED_BOARD FEEDBOARD0_",
-                                    "WHERE",
-                                    "FEEDBOARD0_.GUID='HTTP://THEFARMERSFRONT.GITHUB.IO/BLOG/WELCOME-TO-KURLY/'")
-                          .endsWith("======");
+        assertThat(actual).isEqualTo("Filtered queries");
     }
     
 }

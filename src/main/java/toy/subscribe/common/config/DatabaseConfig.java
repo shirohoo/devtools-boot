@@ -25,5 +25,4 @@ public class DatabaseConfig {
                                 .password(databaseProperties.getPassword())
                                 .build();
     }
-    
 }

@@ -7,7 +7,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.transaction.annotation.Transactional;
-import toy.subscribe.domain.board.dto.FeedBoardResponse;
+import toy.subscribe.common.dtos.FeedBoardResponse;
 import toy.subscribe.domain.board.model.FeedBoard;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class FeedBoardCustomRepositoryImpl extends QuerydslRepositorySupport imp
     
     @Override
     @Transactional(readOnly = true)
-    public Page<FeedBoardResponse> getPageByFeedBoard(Pageable pageable, String company, String title) {
+    public Page<FeedBoardResponse> getPageFromFeedBoard(Pageable pageable, String company, String title) {
         
         JPAQueryFactory queryFactory = new JPAQueryFactory(getEntityManager());
         QueryResults<FeedBoard> results = queryFactory
@@ -37,7 +37,7 @@ public class FeedBoardCustomRepositoryImpl extends QuerydslRepositorySupport imp
         
         List<FeedBoardResponse> content = results.getResults()
                                                  .stream()
-                                                 .map(FeedBoard::convertToFeedBoardDto)
+                                                 .map(FeedBoard::toFeedBoardResponse)
                                                  .collect(Collectors.toList());
         
         return new PageImpl<>(content, pageable, results.getTotal());
