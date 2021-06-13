@@ -6,7 +6,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BookmarkDTO {
+public class BookmarkDto {
     private Long id;
     private String category;
     private String title;

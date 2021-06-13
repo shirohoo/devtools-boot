@@ -10,7 +10,7 @@ import org.springframework.data.domain.Page;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BookmarkResponseWrapper<T> {
-    private Page<BookmarkDTO> pages;
+    private Page<BookmarkDto> pages;
     private Long visitorsOfReduce;
     private Long visitorsOfDay;
 }
