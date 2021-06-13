@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import toy.subscribe.domain.bookmark.model.BookmarkResponseWrapper;
+import toy.subscribe.common.logging.repository.RequestLogRepository;
 import toy.subscribe.domain.bookmark.repository.BookmarkRepository;
-import toy.subscribe.domain.logging.repository.RequestLogRepository;
+import toy.subscribe.common.dtos.ResponseWrapper;
 
 @Service
 @RequiredArgsConstructor
@@ -16,9 +16,9 @@ public class BookmarkProvideServiceImpl implements BookmarkProvideService {
     
     @Override
     @Transactional(readOnly = true)
-    public BookmarkResponseWrapper provideBookmarkWrapper(Pageable pageable, String category, String title) {
-        return new BookmarkResponseWrapper(bookmarkRepository.getPageFromBookmark(pageable, category, title),
-                                           requestLogRepository.getCumulativeVisitors(),
-                                           requestLogRepository.getDAU());
+    public ResponseWrapper provideBookmarkWrapper(Pageable pageable, String category, String title) {
+        return new ResponseWrapper(bookmarkRepository.getPageFromBookmark(pageable, category, title),
+                                   requestLogRepository.getCumulativeVisitors(),
+                                   requestLogRepository.getDAU());
     }
 }

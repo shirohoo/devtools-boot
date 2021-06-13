@@ -7,7 +7,6 @@ import java.io.Serializable;
 
 @Entity
 @Getter
-@Builder
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

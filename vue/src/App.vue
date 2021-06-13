@@ -50,14 +50,20 @@
 
     <v-main>
       <v-container fill-height fluid align-center>
-        <router-view></router-view>
+        <router-view />
       </v-container>
     </v-main>
 
     <v-footer dark padless>
       <v-card class="flex" flat tile>
         <v-card-title class="teal justify-center">
-          <v-btn v-for="icon in icons" :key="icon" class="mx-4" dark icon href="https://github.com/shirohoo/development-dictionary" target="_blank">
+          <v-btn
+              v-for="icon in icons"
+              :key="icon"
+              class="mx-4"
+              dark
+              icon
+              href="https://github.com/shirohoo/development-dictionary" target="_blank">
             <v-icon size="24px">
               {{ icon }}
             </v-icon>
@@ -85,9 +91,11 @@ export default {
       'mdi-github',
     ],
   }),
+
   created(){
     this.$vuetify.theme.dark = true;
   },
+
   computed: {
     ...mapState(["visitors"]),
     numberFormat(){
@@ -97,7 +105,8 @@ export default {
       };
     },
   },
-  methods : {
+
+  methods: {
     notReady(){
       alert('준비중입니다.')
     }

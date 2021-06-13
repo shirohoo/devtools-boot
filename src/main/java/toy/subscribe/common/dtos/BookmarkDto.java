@@ -1,6 +1,7 @@
-package toy.subscribe.domain.bookmark.model;
+package toy.subscribe.common.dtos;
 
 import lombok.*;
+import toy.subscribe.domain.bookmark.model.Bookmark;
 
 @Data
 @Builder

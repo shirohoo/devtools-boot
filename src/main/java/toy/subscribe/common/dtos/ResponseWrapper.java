@@ -1,16 +1,16 @@
-package toy.subscribe.domain.bookmark.model;
+package toy.subscribe.common.dtos;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;
 
-@Data
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BookmarkResponseWrapper<T> {
-    private Page<BookmarkDto> pages;
+public class ResponseWrapper<T> {
+    private Page<T> pages;
     private Long visitorsOfReduce;
     private Long visitorsOfDay;
 }

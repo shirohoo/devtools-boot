@@ -25,7 +25,7 @@ public class CollectPostServiceImpl implements CollectPostService {
     private final FeedBoardRepository feedBoardRepository;
     
     @Transactional
-    public void getAllGroupFeed() {
+    public void allGroupFeedCollect() {
         RSSFeed feed = null;
         List<String> urls = JsonReader.readUrls();
         

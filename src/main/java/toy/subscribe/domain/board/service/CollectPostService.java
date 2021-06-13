@@ -1,5 +1,5 @@
 package toy.subscribe.domain.board.service;
 
 public interface CollectPostService {
-    void getAllGroupFeed();
+    void allGroupFeedCollect();
 }

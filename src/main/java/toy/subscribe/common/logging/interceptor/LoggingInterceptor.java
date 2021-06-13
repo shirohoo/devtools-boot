@@ -1,12 +1,12 @@
-package toy.subscribe.domain.logging.interceptor;
+package toy.subscribe.common.logging.interceptor;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.HandlerInterceptor;
-import toy.subscribe.domain.logging.model.RequestLog;
-import toy.subscribe.domain.logging.repository.RequestLogRepository;
+import toy.subscribe.common.logging.model.RequestLog;
+import toy.subscribe.common.logging.repository.RequestLogRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

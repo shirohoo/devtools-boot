@@ -1,8 +1,8 @@
 package toy.subscribe.domain.bookmark.service;
 
 import org.springframework.data.domain.Pageable;
-import toy.subscribe.domain.bookmark.model.BookmarkResponseWrapper;
+import toy.subscribe.common.dtos.ResponseWrapper;
 
 public interface BookmarkProvideService {
-    BookmarkResponseWrapper provideBookmarkWrapper(Pageable pageable, String category, String title);
+    ResponseWrapper provideBookmarkWrapper(Pageable pageable, String category, String title);
 }

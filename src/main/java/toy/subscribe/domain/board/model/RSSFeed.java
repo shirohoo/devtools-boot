@@ -1,15 +1,13 @@
 package toy.subscribe.domain.board.model;
 
 import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
-@Builder
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RSSFeed {
     private String title;
@@ -17,7 +15,7 @@ public class RSSFeed {
     private String language;
     private String copyright;
     private String pubDate;
-    @Builder.Default private List<RSSFeedMessage> messages = new ArrayList<>();
+    private List<RSSFeedMessage> messages = new ArrayList<>();
     
     public RSSFeed(String title, String link, String language, String copyright, String pubDate) {
         this(title, link, language, copyright, pubDate, new ArrayList<>());

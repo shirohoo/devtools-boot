@@ -7,7 +7,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.transaction.annotation.Transactional;
-import toy.subscribe.domain.dictionary.dto.DictionaryResponse;
+import toy.subscribe.common.dtos.DictionaryResponse;
 import toy.subscribe.domain.dictionary.model.Dictionary;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class DictionaryCustomRepositoryImpl extends QuerydslRepositorySupport im
     
     @Override
     @Transactional(readOnly = true)
-    public Page<DictionaryResponse> getPageByDictionaries(Pageable pageable, String enWord, String krWord) {
+    public Page<DictionaryResponse> getPageFromDictionaries(Pageable pageable, String enWord, String krWord) {
         
         JPAQueryFactory queryFactory = new JPAQueryFactory(getEntityManager());
         QueryResults<Dictionary> results = queryFactory

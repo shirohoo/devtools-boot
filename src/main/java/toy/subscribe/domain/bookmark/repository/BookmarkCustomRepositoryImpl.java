@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.transaction.annotation.Transactional;
 import toy.subscribe.domain.bookmark.model.Bookmark;
-import toy.subscribe.domain.bookmark.model.BookmarkDto;
+import toy.subscribe.common.dtos.BookmarkDto;
 
 import java.util.List;
 import java.util.stream.Collectors;

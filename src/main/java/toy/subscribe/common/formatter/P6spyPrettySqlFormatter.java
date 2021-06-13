@@ -67,5 +67,4 @@ public class P6spyPrettySqlFormatter implements MessageFormattingStrategy {
                                   .append(message)
                                   .toString();
     }
-    
 }

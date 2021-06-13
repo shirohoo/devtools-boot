@@ -1,16 +1,16 @@
-package toy.subscribe.domain.logging.repository;
+package toy.subscribe.common.logging.repository;
 
 import com.querydsl.core.types.dsl.DateTimePath;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.transaction.annotation.Transactional;
-import toy.subscribe.domain.logging.model.RequestLog;
+import toy.subscribe.common.logging.model.RequestLog;
 
 import java.time.LocalDateTime;
 
 import static com.querydsl.core.types.dsl.Expressions.stringTemplate;
-import static toy.subscribe.domain.logging.model.QRequestLog.requestLog;
+import static toy.subscribe.common.logging.model.QRequestLog.requestLog;
 
 public class RequestLogCustomRepositoryImpl extends QuerydslRepositorySupport implements RequestLogCustomRepository {
     public RequestLogCustomRepositoryImpl() {

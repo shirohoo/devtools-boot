@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import toy.subscribe.domain.dictionary.dto.DictionaryResponseWrapper;
+import toy.subscribe.common.dtos.ResponseWrapper;
+import toy.subscribe.common.logging.repository.RequestLogRepository;
 import toy.subscribe.domain.dictionary.repository.DictionaryRepository;
-import toy.subscribe.domain.logging.repository.RequestLogRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -16,9 +16,9 @@ public class DictionaryProvideServiceImpl implements DictionaryProvideService {
     
     @Override
     @Transactional(readOnly = true)
-    public DictionaryResponseWrapper provideDictionaryWrapper(Pageable pageable, String enWord, String krWord) {
-        return new DictionaryResponseWrapper(feedBoardRepository.getPageByDictionaries(pageable, enWord, krWord),
-                                             requestLogRepository.getCumulativeVisitors(),
-                                             requestLogRepository.getDAU());
+    public ResponseWrapper provideDictionaryWrapper(Pageable pageable, String enWord, String krWord) {
+        return new ResponseWrapper(feedBoardRepository.getPageFromDictionaries(pageable, enWord, krWord),
+                                   requestLogRepository.getCumulativeVisitors(),
+                                   requestLogRepository.getDAU());
     }
 }
