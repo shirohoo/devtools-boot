@@ -18,7 +18,7 @@ import toy.subscribe.domain.board.service.FeedBoardProvideService;
 @RequestMapping("/api/v1")
 public class BoardApiController {
     private final FeedBoardProvideService feedBoardProvideService;
-    
+
     @GetMapping("/boards")
     public ResponseEntity<?> receiveFeedBoardsRequest(Pageable pageable,
                                                       @RequestParam(value = "company", required = false) String company,
@@ -37,4 +37,5 @@ public class BoardApiController {
             return new ResponseEntity<>(feedBoardProvideService.provideFeedBoardWrapper(pageable, company, title), HttpStatus.OK);
         }
     }
+
 }
