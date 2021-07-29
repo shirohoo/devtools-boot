@@ -56,11 +56,10 @@ public class HttpLog extends BaseEntity {
 
     public static HttpLog of(HttpServletRequest request, HttpServletResponse response, ObjectMapper objectMapper) {
         return getResponseBody(response, objectMapper)
-                .map(responseBody -> {
-                    return of(request.getMethod(), request.getRequestURI(), getRequestBody(request, objectMapper),
-                              responseBody.toString(), getClientIp(request), getToken(request), response.getStatus());
-                }).orElse(of(request.getMethod(), request.getRequestURI(), getRequestBody(request, objectMapper),
-                             getClientIp(request), getToken(request), response.getStatus()));
+                .map(responseBody -> of(request.getMethod(), request.getRequestURI(), getRequestBody(request, objectMapper),
+                                        responseBody.toString(), getClientIp(request), getToken(request), response.getStatus()))
+                .orElse(of(request.getMethod(), request.getRequestURI(), getRequestBody(request, objectMapper),
+                           getClientIp(request), getToken(request), response.getStatus()));
     }
 
     private static String getToken(HttpServletRequest request) {
