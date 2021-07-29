@@ -1,20 +1,24 @@
 plugins {
     id 'java'
-//    id 'com.moowork.node' version '1.3.1'
-    id "com.github.node-gradle.node" version "3.0.1"
+    id 'com.github.node-gradle.node' version '3.1.0'
     id 'org.springframework.boot' version '2.4.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'org.asciidoctor.convert' version '1.5.8'
-    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+    id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
 }
 
 jar {
-    archivesBaseName = "dev-dictionary"
+    archivesBaseName = 'dev-dictionary'
 }
 
-group = 'toy'
-version = '3.2'
-sourceCompatibility = '11'
+version = '3.3'
+sourceCompatibility = 11
+
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile){
+        options.compilerArgs << "-Xlint:unchecked"
+    }
+}
 
 configurations {
     compileOnly {
@@ -27,7 +31,8 @@ repositories {
 }
 
 ext {
-    set('snippetsDir', file("build/generated-snippets"))
+    querydslDir = "$buildDir/generated/querydsl"
+    set('snippetsDir', file('build/generated-snippets'))
 }
 
 dependencies {
@@ -37,14 +42,14 @@ dependencies {
             'org.springframework.boot:spring-boot-starter-web',
             'org.springframework.boot:spring-boot-starter-webflux',
             'org.springframework.boot:spring-boot-starter-security',
+            'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.6.2',
             'org.apache.poi:poi:5.0.0',
             'org.apache.poi:poi-ooxml:5.0.0',
-            'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.6.2', // P6SPY
-            'com.querydsl:querydsl-jpa', // QueryDSL
-            'com.googlecode.json-simple:json-simple:1.1.1', // JSON Simple
-            'commons-io:commons-io:2.8.0', //Apache Commons
-            'org.apache.commons:commons-lang3:3.12.0', // Apache Commons
-            'org.apache.opennlp:opennlp-tools:1.9.3' // Apache OpenNLP
+            'com.querydsl:querydsl-jpa',
+            'com.googlecode.json-simple:json-simple:1.1.1',
+            'commons-io:commons-io:2.8.0',
+            'org.apache.commons:commons-lang3:3.12.0',
+            'org.apache.opennlp:opennlp-tools:1.9.3'
     )
     compileOnly(
             'org.projectlombok:lombok'
@@ -75,8 +80,6 @@ asciidoctor {
     dependsOn test
 }
 
-// QueryDSL
-def querydslDir = "$buildDir/generated/querydsl"
 querydsl {
     jpa = true
     querydslSourcesDir = querydslDir
@@ -91,10 +94,9 @@ compileQuerydsl {
     options.annotationProcessorPath = configurations.querydsl
 }
 
-// gradle-node-plugin
 node {
-    version = '14.17.0'
-    npmVersion = '6.14.13'
+//    version = '14.17.0'
+//    npmVersion = '6.14.13'
     workDir = file('./vue')
     npmWorkDir = file('./vue')
     nodeModulesDir = file('./vue')
