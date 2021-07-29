@@ -37,7 +37,7 @@ public class BookmarkCustomRepositoryImpl extends QuerydslRepositorySupport impl
 
         List<BookmarkDto> content = results.getResults()
                                            .stream()
-                                           .map(Bookmark::toResponseDto)
+                                           .map(Bookmark::convert)
                                            .collect(Collectors.toList());
 
         return new PageImpl<>(content, pageable, results.getTotal());

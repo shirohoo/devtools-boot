@@ -6,12 +6,15 @@ import lombok.NoArgsConstructor;
 import toy.subscribe.configs.dtos.DictionaryResponse;
 import toy.subscribe.configs.model.BaseEntity;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Dictionary extends BaseEntity {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "dictionary_id")
+    private Long id;
     private String enWord;
     private String krWord;
 

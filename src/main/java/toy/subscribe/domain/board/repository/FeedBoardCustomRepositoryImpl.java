@@ -37,7 +37,7 @@ public class FeedBoardCustomRepositoryImpl extends QuerydslRepositorySupport imp
 
         List<FeedBoardResponse> content = results.getResults()
                                                  .stream()
-                                                 .map(FeedBoard::toFeedBoardResponse)
+                                                 .map(FeedBoard::convert)
                                                  .collect(Collectors.toList());
 
         return new PageImpl<>(content, pageable, results.getTotal());

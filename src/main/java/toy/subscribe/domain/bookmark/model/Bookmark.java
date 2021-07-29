@@ -5,31 +5,30 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import toy.subscribe.configs.dtos.BookmarkDto;
+import toy.subscribe.configs.model.BaseEntity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
-@Entity @Getter
+@Getter
+@Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Bookmark implements Serializable {
-    private static final long serialVersionUID = 2674924202908029629L;
-
-    @Column(name = "bookmark_id")
+public class Bookmark extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "bookmark_id")
     private Long id;
     private String category;
     private String title;
     private String link;
 
-    @Builder
-    public Bookmark(Long id, String category, String title, String link) {
+    @Builder(access = AccessLevel.PUBLIC)
+    private Bookmark(Long id, String category, String title, String link) {
         this.id = id;
         this.category = category;
         this.title = title;
         this.link = link;
     }
 
-    public BookmarkDto toResponseDto() {
+    public BookmarkDto convert() {
         return BookmarkDto.builder()
                           .id(this.id)
                           .category(this.category)
