@@ -11,7 +11,6 @@ import toy.subscribe.configs.http.log.repository.HttpLogRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Objects;
 
 @Slf4j
 @Component
@@ -30,12 +29,6 @@ public class HttpLogInterceptor implements HandlerInterceptor {
         if (request.getClass().getName().contains("SecurityContextHolderAwareRequestWrapper")) {
             return;
         }
-
-        String contentType = request.getHeader("Content-Type");
-        if (Objects.isNull(contentType)) {
-            return;
-        }
-
         httpLogRepository.save(HttpLog.of(request, response, objectMapper));
     }
 }
