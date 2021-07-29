@@ -10,7 +10,7 @@ import org.springframework.web.servlet.resource.PathResourceResolver;
 @Configuration
 @RequiredArgsConstructor
 public class InterceptorConfig implements WebMvcConfigurer {
-    private final LoggingInterceptor loggingInterceptor;
+    private final HttpLogInterceptor httpLogInterceptor;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -25,7 +25,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry
-                .addInterceptor(loggingInterceptor)
+                .addInterceptor(httpLogInterceptor)
                 .excludePathPatterns("/images/**", "/js/**", "/css/**")
                 .addPathPatterns("/**");
     }

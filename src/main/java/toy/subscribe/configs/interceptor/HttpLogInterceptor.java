@@ -16,7 +16,7 @@ import java.util.Objects;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class LoggingInterceptor implements HandlerInterceptor {
+public class HttpLogInterceptor implements HandlerInterceptor {
     private final ObjectMapper objectMapper;
     private final HttpLogRepository httpLogRepository;
 
