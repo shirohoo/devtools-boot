@@ -7,7 +7,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.transaction.annotation.Transactional;
-import toy.subscribe.common.dtos.FeedBoardResponse;
+import toy.subscribe.configs.dtos.FeedBoardResponse;
 import toy.subscribe.domain.board.model.FeedBoard;
 
 import java.util.List;
@@ -19,11 +19,11 @@ public class FeedBoardCustomRepositoryImpl extends QuerydslRepositorySupport imp
     public FeedBoardCustomRepositoryImpl() {
         super(FeedBoard.class);
     }
-    
+
     @Override
     @Transactional(readOnly = true)
     public Page<FeedBoardResponse> getPageFromFeedBoard(Pageable pageable, String company, String title) {
-        
+
         JPAQueryFactory queryFactory = new JPAQueryFactory(getEntityManager());
         QueryResults<FeedBoard> results = queryFactory
                 .select(feedBoard)
@@ -34,12 +34,12 @@ public class FeedBoardCustomRepositoryImpl extends QuerydslRepositorySupport imp
                 .limit(pageable.getPageSize())
                 .orderBy(feedBoard.id.desc())
                 .fetchResults();
-        
+
         List<FeedBoardResponse> content = results.getResults()
                                                  .stream()
                                                  .map(FeedBoard::toFeedBoardResponse)
                                                  .collect(Collectors.toList());
-        
+
         return new PageImpl<>(content, pageable, results.getTotal());
     }
 }

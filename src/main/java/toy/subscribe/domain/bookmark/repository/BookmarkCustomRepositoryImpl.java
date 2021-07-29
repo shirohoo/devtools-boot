@@ -7,8 +7,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.transaction.annotation.Transactional;
+import toy.subscribe.configs.dtos.BookmarkDto;
 import toy.subscribe.domain.bookmark.model.Bookmark;
-import toy.subscribe.common.dtos.BookmarkDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,11 +19,11 @@ public class BookmarkCustomRepositoryImpl extends QuerydslRepositorySupport impl
     public BookmarkCustomRepositoryImpl() {
         super(Bookmark.class);
     }
-    
+
     @Override
     @Transactional(readOnly = true)
     public Page<BookmarkDto> getPageFromBookmark(Pageable pageable, String category, String title) {
-        
+
         JPAQueryFactory queryFactory = new JPAQueryFactory(getEntityManager());
         QueryResults<Bookmark> results = queryFactory
                 .select(bookmark)
@@ -34,12 +34,12 @@ public class BookmarkCustomRepositoryImpl extends QuerydslRepositorySupport impl
                 .limit(pageable.getPageSize())
                 .orderBy(bookmark.id.desc())
                 .fetchResults();
-        
+
         List<BookmarkDto> content = results.getResults()
                                            .stream()
                                            .map(Bookmark::toResponseDto)
                                            .collect(Collectors.toList());
-        
+
         return new PageImpl<>(content, pageable, results.getTotal());
     }
 }

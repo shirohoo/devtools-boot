@@ -4,34 +4,28 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import toy.subscribe.common.BaseTime;
-import toy.subscribe.common.dtos.FeedBoardResponse;
+import toy.subscribe.configs.dtos.FeedBoardResponse;
+import toy.subscribe.configs.model.BaseEntity;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Entity;
 
-@Entity @Getter
+@Getter
+@Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FeedBoard extends BaseTime implements Serializable {
-    private static final long serialVersionUID = -6683539796802328761L;
-    
-    @Column(name = "feed_board_id")
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class FeedBoard extends BaseEntity {
     private String company;
     private String imgPath;
     private String title;
     private String guid;
-    
-    @Builder
-    public FeedBoard(Long id, String company, String imgPath, String title, String guid) {
-        this.id = id;
+
+    @Builder(access = AccessLevel.PUBLIC)
+    private FeedBoard(String company, String imgPath, String title, String guid) {
         this.company = company;
         this.imgPath = imgPath;
         this.title = title;
         this.guid = guid;
     }
-    
+
     public FeedBoardResponse toFeedBoardResponse() {
         return FeedBoardResponse.builder()
                                 .id(this.getId())

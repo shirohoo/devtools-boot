@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-import toy.subscribe.common.config.properties.ApiProperties;
+import toy.subscribe.configs.external.ApiProperties;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,13 +19,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class Translator {
     private final ApiProperties apiProperties;
-    
+
     public Optional<String> translate(String enWord) {
         String baseURl = "https://dapi.kakao.com/";
         String uri = "v2/translation/translate";
         String srcLang = "en";
         String targetLang = "kr";
-        
+
         WebClient.RequestHeadersSpec<?> header = WebClient.builder()
                                                           .baseUrl(baseURl)
                                                           .build()
@@ -35,16 +35,16 @@ public class Translator {
                                                                                      .queryParam("target_lang", targetLang)
                                                                                      .queryParam("query", enWord)
                                                                                      .build())
-        
+
                                                           .header("Authorization", apiProperties.getKakaoKey());
-        
+
         ReadObject readObject = null;
-        
+
         try {
             Mono<String> stringMono = (Mono<String>) header
                     .retrieve()
                     .bodyToMono(String.class);
-            
+
             ObjectMapper mapper = new ObjectMapper();
             readObject = mapper.readValue(stringMono.block(), ReadObject.class);
         }
@@ -54,7 +54,7 @@ public class Translator {
         catch(Exception e) {
             log.error("KaKao API Error!");
         }
-        
+
         String result = null;
         if(readObject != null) {
             result = String.valueOf(readObject.getTranslated_text()
@@ -62,7 +62,7 @@ public class Translator {
         }
         return Optional.of(result);
     }
-    
+
     @Data
     private static class ReadObject implements Serializable {
         private static final long serialVersionUID = 1874463342481741705L;

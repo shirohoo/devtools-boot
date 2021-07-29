@@ -1,28 +1,30 @@
 package toy.subscribe.domain.dictionary.model;
 
-import lombok.*;
-import toy.subscribe.common.BaseTime;
-import toy.subscribe.common.dtos.DictionaryResponse;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import toy.subscribe.configs.dtos.DictionaryResponse;
+import toy.subscribe.configs.model.BaseEntity;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Entity;
 
 @Entity
 @Getter
-@Builder
-@ToString
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Dictionary extends BaseTime implements Serializable {
-    private static final long serialVersionUID = -3299351751273048089L;
-    
-    @Column(name = "dictionary_id")
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Dictionary extends BaseEntity {
     private String enWord;
     private String krWord;
-    
-    public DictionaryResponse convertToDictionaryDto() {
+
+    private Dictionary(String enWord, String krWord) {
+        this.enWord = enWord;
+        this.krWord = krWord;
+    }
+
+    public static Dictionary of(String enWord, String krWord) {
+        return new Dictionary(enWord, krWord);
+    }
+
+    public DictionaryResponse convert() {
         return DictionaryResponse.builder()
                                  .id(this.getId())
                                  .enWord(this.enWord)

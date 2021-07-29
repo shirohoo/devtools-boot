@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import toy.subscribe.common.dtos.BookmarkDto;
+import toy.subscribe.configs.dtos.BookmarkDto;
 import toy.subscribe.domain.bookmark.repository.BookmarkRepository;
 import toy.subscribe.domain.bookmark.service.BookmarkProvideService;
 
@@ -18,7 +18,7 @@ import toy.subscribe.domain.bookmark.service.BookmarkProvideService;
 public class BookmarkApiController {
     private final BookmarkProvideService service;
     private final BookmarkRepository repository;
-    
+
     @GetMapping("/bookmarks")
     public ResponseEntity<?> receiveBookmarksRequest(Pageable pageable,
                                                      @RequestParam(value = "category", required = false) String category,
@@ -37,12 +37,12 @@ public class BookmarkApiController {
             return new ResponseEntity<>(service.provideBookmarkWrapper(pageable, category, title), HttpStatus.OK);
         }
     }
-    
+
     @PostMapping("/bookmark")
     public void create(BookmarkDto bookmarkDTO) {
         repository.save(bookmarkDTO.toEntity());
     }
-    
+
     @DeleteMapping("/bookmark/{id}")
     public void delete(@PathVariable("id") Long id) {
         repository.deleteById(id);

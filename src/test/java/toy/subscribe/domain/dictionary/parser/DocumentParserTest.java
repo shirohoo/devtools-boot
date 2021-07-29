@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import toy.subscribe.common.enums.HtmlPath;
+import toy.subscribe.configs.enums.HtmlPath;
 
 import java.util.Set;
 import java.util.stream.Stream;
@@ -22,7 +22,7 @@ public class DocumentParserTest {
         DocumentParser parser = new DocumentParser();
         String html = parser.read(path);
         Set<String> set = parser.filtering(parser.parsing(html));
-        
+
         // ##############################################################################
         // ################################ 출 력 로 직 #################################
         // ##############################################################################
@@ -35,11 +35,11 @@ public class DocumentParserTest {
         // ##############################################################################
         // ##############################################################################
         // ##############################################################################
-        
+
         // then
         assertThat(parser.parsing(html)).isNotNull();
     }
-    
+
     // given
     private static Stream<Arguments> whereDocuments() {
         return Stream.of(Arguments.of(HtmlPath.JUNIT5.getPath()),
