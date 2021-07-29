@@ -67,7 +67,7 @@
             <v-icon size="24px">
               {{ icon }}
             </v-icon>
-            <strong class="font-italic text-caption">&nbsp;V3.0 # </strong>
+            <strong class="font-italic text-caption">&nbsp;V3.3 # </strong>
           </v-btn>
           <strong class="subheading font-italic text-caption"> Only I can change my life. No one can do it for me.</strong>
         </v-card-title>
