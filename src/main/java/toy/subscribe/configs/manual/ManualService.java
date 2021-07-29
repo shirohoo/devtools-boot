@@ -17,9 +17,9 @@ public class ManualService {
     public void save() {
         ManualExcelReader manualExcelReader = new ManualExcelReader();
 
-        for(ManualFilePath company : ManualFilePath.values()) {
+        for (ManualFilePath company : ManualFilePath.values()) {
             List<FeedBoard> feedBoards = manualExcelReader.read(company);
-            if(feedBoards != null) {
+            if (feedBoards != null) {
                 feedBoardRepository.saveAll(feedBoards);
             }
         }

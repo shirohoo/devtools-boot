@@ -1,4 +1,4 @@
-package toy.subscribe.common.config;
+package toy.subscribe.configs.interceptor;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -6,13 +6,12 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.PathResourceResolver;
-import toy.subscribe.common.logging.interceptor.LoggingInterceptor;
 
 @Configuration
 @RequiredArgsConstructor
 public class InterceptorConfig implements WebMvcConfigurer {
     private final LoggingInterceptor loggingInterceptor;
-    
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
@@ -22,7 +21,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .resourceChain(true)
                 .addResolver(new PathResourceResolver());
     }
-    
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry
