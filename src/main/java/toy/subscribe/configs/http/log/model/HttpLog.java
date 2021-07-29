@@ -18,8 +18,8 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 
-@Entity
 @Getter
+@Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class HttpLog extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
