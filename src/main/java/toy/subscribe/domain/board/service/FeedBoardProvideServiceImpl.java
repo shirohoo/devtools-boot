@@ -17,7 +17,7 @@ public class FeedBoardProvideServiceImpl implements FeedBoardProvideService {
     @Override
     @Transactional(readOnly = true)
     public ResponseWrapper provideFeedBoardWrapper(Pageable pageable, String company, String title) {
-        return new ResponseWrapper(feedBoardRepository.getPageFromFeedBoard(pageable, company, title),
+        return new ResponseWrapper(feedBoardRepository.findPage(pageable, company, title),
                                    requestLogRepository.findCumulativeVisitors(),
                                    requestLogRepository.findDau());
     }
