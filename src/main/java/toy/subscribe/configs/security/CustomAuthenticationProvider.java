@@ -12,24 +12,28 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RequiredArgsConstructor
 public class CustomAuthenticationProvider implements AuthenticationProvider {
-    private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
+    private final UserDetailsService userDetailsService;
 
     @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();
         UserDetails manager = userDetailsService.loadUserByUsername(username);
 
-        if(!passwordEncoder.matches(password, manager.getPassword())) {
-            throw new BadCredentialsException("BadCredentialsException: Password not matched !");
-        }
+        validate(password, manager);
+
         return new UsernamePasswordAuthenticationToken(manager.getUsername(), null, manager.getAuthorities());
+    }
+
+    private void validate(final String password, final UserDetails manager) {
+        if (!passwordEncoder.matches(password, manager.getPassword())) {
+            throw new BadCredentialsException("Password not matched !");
+        }
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return UsernamePasswordAuthenticationToken.class
-                .isAssignableFrom(authentication);
+        return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
     }
 }

@@ -16,12 +16,15 @@ public class CustomUserDetailsService implements UserDetailsService {
     private ManagerRepository managerRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
         Manager manager = managerRepository.findByUsername(username)
-                                           .orElseThrow(()->new UsernameNotFoundException("UsernameNotFoundException: User not found!"));
+                                           .orElseThrow(() -> new UsernameNotFoundException("User not found!"));
+        return new User(manager.getUsername(), manager.getPassword(), getGrantedAuthorities(manager));
+    }
 
+    private List<GrantedAuthority> getGrantedAuthorities(final Manager manager) {
         List<GrantedAuthority> roles = new ArrayList<>();
         roles.add(new SimpleGrantedAuthority(manager.getAuthority()));
-        return new User(manager.getUsername(), manager.getPassword(), roles);
+        return roles;
     }
 }

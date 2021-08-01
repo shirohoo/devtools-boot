@@ -20,10 +20,13 @@ public class Manager extends BaseEntity {
     private String authority;
 
     @Builder(access = AccessLevel.PUBLIC)
-    private Manager(Long id, String username, String password, String authority) {
-        this.id = id;
+    private Manager(String username, String password, String authority) {
         this.username = username;
         this.password = password;
         this.authority = authority;
+    }
+
+    public static Manager of(String username, String password, String authority) {
+        return new Manager(username, password, authority);
     }
 }
