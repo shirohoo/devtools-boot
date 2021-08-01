@@ -1,14 +1,13 @@
 package toy.subscribe.configs.manual;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import toy.subscribe.domain.board.model.FeedBoard;
 import toy.subscribe.domain.board.repository.FeedBoardRepository;
 
-import java.util.List;
+import java.util.Objects;
 
-@Slf4j
+import static java.util.Arrays.stream;
+
 @Service
 @RequiredArgsConstructor
 public class ManualService {
@@ -17,11 +16,9 @@ public class ManualService {
     public void save() {
         ManualExcelReader manualExcelReader = new ManualExcelReader();
 
-        for (ManualFilePath company : ManualFilePath.values()) {
-            List<FeedBoard> feedBoards = manualExcelReader.read(company);
-            if (feedBoards != null) {
-                feedBoardRepository.saveAll(feedBoards);
-            }
-        }
+        stream(ManualFilePath.values())
+                .map(manualExcelReader::read)
+                .filter(Objects::nonNull)
+                .forEach(feedBoardRepository::saveAll);
     }
 }

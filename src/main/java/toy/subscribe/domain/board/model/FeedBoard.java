@@ -31,7 +31,6 @@ public class FeedBoard extends BaseEntity {
 
     public FeedBoardResponse convert() {
         return FeedBoardResponse.builder()
-                                .id(this.getId())
                                 .company(this.getCompany())
                                 .imgPath(this.getImgPath())
                                 .title(this.getTitle())

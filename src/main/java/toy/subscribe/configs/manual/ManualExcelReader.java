@@ -2,7 +2,6 @@ package toy.subscribe.configs.manual;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import toy.subscribe.domain.board.model.FeedBoard;
@@ -13,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <pre>
@@ -24,33 +24,40 @@ import java.util.List;
  */
 @Slf4j
 public class ManualExcelReader {
+    private static final int FIRST_EXCEL_SHEET = 0;
+
     public List<FeedBoard> read(ManualFilePath company) {
+        Workbook workbook = getWorkbook(new File(company.getXLSX()));
+
+        if (Objects.isNull(workbook)) {
+            return null;
+        }
+
         List<FeedBoard> feedBoards = new ArrayList<>();
-
-        File file = new File(company.XLSX);
-        Workbook workbook = null;
-        try {
-            workbook = new XSSFWorkbook(new FileInputStream(file));
-        }
-        catch(FileNotFoundException e) {
-            log.error("File not found!");
-            return null;
-        }
-        catch(IOException e) {
-            log.error("XSSFWorkbook IOException!");
-            return null;
-        }
-
-        Sheet sheet = workbook.getSheetAt(0);
-
-        for(Row rows : sheet) {
+        for (Row rows : workbook.getSheetAt(FIRST_EXCEL_SHEET)) {
             feedBoards.add(FeedBoard.builder()
                                     .title(rows.getCell(0).getStringCellValue())
                                     .guid(rows.getCell(1).getStringCellValue())
                                     .company(rows.getCell(2).getStringCellValue())
-                                    .imgPath(company.IMG)
+                                    .imgPath(company.getIMG())
                                     .build());
         }
         return feedBoards;
+    }
+
+    private Workbook getWorkbook(File file) {
+        Workbook workbook;
+        try {
+            workbook = new XSSFWorkbook(new FileInputStream(file));
+        }
+        catch (FileNotFoundException e) {
+            log.warn("failed to create XSSWorkbook because file not found. please check ManualFilePath.");
+            return null;
+        }
+        catch (IOException e) {
+            log.warn("IOException occureed for XSSFWorkbook.");
+            return null;
+        }
+        return workbook;
     }
 }

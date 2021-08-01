@@ -6,8 +6,8 @@ import lombok.Getter;
 public enum ManualFilePath {
     WOOWABROS("src/test/resources/woowa_tech.xlsx", "/images/woowabros.png");
 
-    public final String XLSX;
-    public final String IMG;
+    private final String XLSX;
+    private final String IMG;
 
     ManualFilePath(String XLSX, String IMG) {
         this.XLSX = XLSX;
