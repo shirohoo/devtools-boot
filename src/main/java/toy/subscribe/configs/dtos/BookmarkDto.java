@@ -1,7 +1,7 @@
 package toy.subscribe.configs.dtos;
 
 import lombok.*;
-import toy.subscribe.domain.bookmark.model.Bookmark;
+import toy.subscribe.bookmark.model.Bookmark;
 
 @Data
 @Builder

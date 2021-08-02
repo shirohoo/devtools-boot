@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
-import toy.subscribe.domain.board.service.SchedulingService;
+import toy.subscribe.board.service.SchedulingService;
 
 @Configuration
 @EnableScheduling
