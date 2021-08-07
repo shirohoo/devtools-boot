@@ -17,17 +17,21 @@ public class RSSFeed {
     private String pubDate;
     private List<RSSFeedMessage> messages = new ArrayList<>();
 
-    public RSSFeed(String title, String link, String language, String copyright, String pubDate) {
+    public RSSFeed(final String title, final String link, final String language, final String copyright, final String pubDate) {
         this(title, link, language, copyright, pubDate, new ArrayList<>());
     }
 
-    public RSSFeed(String title, String link, String language, String copyright, String pubDate, List<RSSFeedMessage> messages) {
+    private RSSFeed(final String title, final String link, final String language, final String copyright, final String pubDate, final List<RSSFeedMessage> messages) {
         this.title = title;
         this.link = link;
         this.language = language;
         this.copyright = copyright;
         this.pubDate = pubDate;
         this.messages = messages;
+    }
+
+    public static RSSFeed of(final String title, final String link, final String language, final String copyright, final String pubDate, final List<RSSFeedMessage> messages) {
+        return new RSSFeed(title, link, language, copyright, pubDate, messages);
     }
 }
 

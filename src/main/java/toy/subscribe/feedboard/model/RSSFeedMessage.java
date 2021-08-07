@@ -17,7 +17,7 @@ public class RSSFeedMessage {
     private String pubDate;
 
     @Builder(access = AccessLevel.PUBLIC)
-    public RSSFeedMessage(final String title, final String company, final String imgPath, final String link, final String author, final String guid, final String pubDate) {
+    private RSSFeedMessage(final String title, final String company, final String imgPath, final String link, final String author, final String guid, final String pubDate) {
         this.title = title;
         this.company = company;
         this.imgPath = imgPath;

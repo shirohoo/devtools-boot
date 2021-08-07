@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
-import toy.subscribe.feedboard.service.SchedulingService;
+import toy.subscribe.feedboard.service.RssSchedulingService;
 
 @Configuration
 @EnableScheduling
@@ -13,11 +13,11 @@ import toy.subscribe.feedboard.service.SchedulingService;
 public class RssSchedulerConfig {
     private static final int COLLECT_DELAY = 1000 * 60 * 1; // 단위: ms
 
-    private final SchedulingService schedulingService;
+    private final RssSchedulingService rssSchedulingService;
 
     @Transactional
     @Scheduled(fixedRate = COLLECT_DELAY)
     public void collect() {
-        schedulingService.allGroupFeedCollect();
+        rssSchedulingService.collect();
     }
 }

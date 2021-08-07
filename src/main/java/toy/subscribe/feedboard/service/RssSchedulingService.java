@@ -23,12 +23,12 @@ import static java.util.stream.Collectors.toList;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class RssSchedulingServiceImpl implements SchedulingService {
+public class RssSchedulingService {
     private final FeedBoardFactory feedBoardFactory;
     private final FeedBoardRepository feedBoardRepository;
 
     @Transactional
-    public void allGroupFeedCollect() {
+    public void collect() {
         List<String> urls = JsonReader.readUrls();
         if (Objects.nonNull(urls)) {
             feedBoardRepository.saveAll(urls.stream()
