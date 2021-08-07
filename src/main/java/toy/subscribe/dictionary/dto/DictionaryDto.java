@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class DictionaryResponseDto {
+public class DictionaryDto {
     private Long id;
     private String enWord;
     private String krWord;
 
     @Builder(access = AccessLevel.PUBLIC)
-    private DictionaryResponseDto(Long id, String enWord, String krWord) {
+    private DictionaryDto(Long id, String enWord, String krWord) {
         this.id = id;
         this.enWord = enWord;
         this.krWord = krWord;

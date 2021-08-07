@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import toy.subscribe.configs.model.BaseEntity;
-import toy.subscribe.feedboard.dto.FeedBoardResponseDto;
+import toy.subscribe.feedboard.dto.FeedBoardDto;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -32,14 +32,14 @@ public class FeedBoard extends BaseEntity {
         this.guid = guid;
     }
 
-    public FeedBoardResponseDto convert() {
-        return FeedBoardResponseDto.builder()
-                                   .company(this.getCompany())
-                                   .imgPath(this.getImgPath())
-                                   .title(this.getTitle())
-                                   .link(this.getGuid())
-                                   .regDate(this.getRegDate())
-                                   .build();
+    public FeedBoardDto convert() {
+        return FeedBoardDto.builder()
+                           .company(this.getCompany())
+                           .imgPath(this.getImgPath())
+                           .title(this.getTitle())
+                           .link(this.getGuid())
+                           .regDate(this.getRegDate())
+                           .build();
     }
 
     @Override

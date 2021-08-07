@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FeedBoardResponseDto {
+public class FeedBoardDto {
     private Long id;
     private String company;
     private String imgPath;
@@ -20,7 +20,7 @@ public class FeedBoardResponseDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime regDate;
 
-    private FeedBoardResponseDto(final Long id, final String company, final String imgPath, final String title, final String link, final LocalDateTime regDate) {
+    private FeedBoardDto(final Long id, final String company, final String imgPath, final String title, final String link, final LocalDateTime regDate) {
         this.id = id;
         this.company = company;
         this.imgPath = imgPath;
@@ -30,7 +30,7 @@ public class FeedBoardResponseDto {
     }
 
     @Builder
-    public static FeedBoardResponseDto of(final Long id, final String company, final String imgPath, final String title, final String link, final LocalDateTime regDate) {
-        return new FeedBoardResponseDto(id, company, imgPath, title, link, regDate);
+    public static FeedBoardDto of(final Long id, final String company, final String imgPath, final String title, final String link, final LocalDateTime regDate) {
+        return new FeedBoardDto(id, company, imgPath, title, link, regDate);
     }
 }

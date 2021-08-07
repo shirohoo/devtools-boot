@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.transaction.annotation.Transactional;
-import toy.subscribe.dictionary.dto.DictionaryResponseDto;
+import toy.subscribe.dictionary.dto.DictionaryDto;
 import toy.subscribe.dictionary.model.Dictionary;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class DictionaryQueryRepositoryImpl implements DictionaryQueryRepository 
 
     @Override
     @Transactional(readOnly = true)
-    public Page<DictionaryResponseDto> findPage(final Pageable pageable, final String enWord, final String krWord) {
+    public Page<DictionaryDto> findPage(final Pageable pageable, final String enWord, final String krWord) {
         return PageableExecutionUtils.getPage(convert(queryFactory
                                                               .select(dictionary)
                                                               .from(dictionary)
@@ -36,7 +36,7 @@ public class DictionaryQueryRepositoryImpl implements DictionaryQueryRepository 
                                               getCountQuery(enWord, krWord)::fetchCount);
     }
 
-    private List<DictionaryResponseDto> convert(final List<Dictionary> feedBoards) {
+    private List<DictionaryDto> convert(final List<Dictionary> feedBoards) {
         return feedBoards.stream().map(Dictionary::convert).collect(toList());
     }
 

@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.transaction.annotation.Transactional;
-import toy.subscribe.feedboard.dto.FeedBoardResponseDto;
+import toy.subscribe.feedboard.dto.FeedBoardDto;
 import toy.subscribe.feedboard.model.FeedBoard;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class FeedBoardQueryRepositoryImpl implements FeedBoardQueryRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<FeedBoardResponseDto> findPage(final Pageable pageable, final String company, final String title) {
+    public Page<FeedBoardDto> findPage(final Pageable pageable, final String company, final String title) {
         return PageableExecutionUtils.getPage(convert(queryFactory
                                                               .selectFrom(feedBoard)
                                                               .where(allContains(company, title))
@@ -35,7 +35,7 @@ public class FeedBoardQueryRepositoryImpl implements FeedBoardQueryRepository {
                                               getCountQuery(company, title)::fetchCount);
     }
 
-    private List<FeedBoardResponseDto> convert(final List<FeedBoard> feedBoards) {
+    private List<FeedBoardDto> convert(final List<FeedBoard> feedBoards) {
         return feedBoards.stream().map(FeedBoard::convert).collect(toList());
     }
 
