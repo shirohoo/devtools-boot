@@ -27,6 +27,9 @@ public class DocumentParser {
         return INSTANCE;
     }
 
+    /**
+     * 머신러닝으로 정제되지 않는 단어들을 정제하기 위한 수동 필터
+     */
     private final String[] conlangFilter = {"taglib", "springframework", "namespace", "jackson", "springboot", "spring", "login", "winsw",
                                             "username", "logback", "autoscaler", "hibernate", "kubernetes", "docker", "homebrew", "datadog",
                                             "livereload", "jersey", "kotlin", "framework", "oauth", "testinstance", "junit4", "junit5", "bugfix",
@@ -50,7 +53,7 @@ public class DocumentParser {
                                             "subdirectory", "proddb", "datasource", "bootapp", "application", "authn", "jayway", "eclipselink"};
 
     /**
-     * HTML PATH를 입력받아 해당 HTML에 접근하여 모든 문자열을 읽어 String 객체로 반환합니다.
+     * HTML PATH를 입력받아 해당 HTML에 접근하여 모든 문자열을 읽어 String 객체로 반환한다.
      *
      * @return String
      */
@@ -67,7 +70,7 @@ public class DocumentParser {
     }
 
     /**
-     * BufferedReader로 읽은 HTML 문서에서 모든 HTML 태그를 제거합니다. 이후 HTML이 제거된 문자열을 대해 머신러닝으로 학습된 자연어로 필터링합니다. 필터링 된 자연어를 HashSet 객체로 변환하여 중복을 제거하고 반환합니다.
+     * BufferedReader로 읽은 HTML 문서에서 모든 HTML 태그를 제거한다. 이후 HTML이 제거된 문자열을 대해 머신러닝으로 학습된 자연어로 필터링한다. 필터링 된 자연어를 HashSet 객체로 변환하여 중복을 제거하고 반환한다.
      *
      * @return HashSet
      */
@@ -76,7 +79,7 @@ public class DocumentParser {
     }
 
     /**
-     * 입력된 문자열이 4글자 이상의 자연어라면 HashSet 에 담습니다.
+     * 입력된 문자열이 4글자 이상의 자연어라면 HashSet 에 담는다.
      */
     private Set<String> parsingNaturalLanguage(final String charSequence) {
         try (InputStream inputStream = getClass().getResourceAsStream(APACHE_OPENNLP_EN_MODEL)) {
@@ -99,7 +102,7 @@ public class DocumentParser {
     }
 
     /**
-     * BufferedReader 로 읽은 HTML 문서에서 모든 HTML 태그를 제거하고 각 단어를 공백(" ")으로 구분하여 결합해 반환합니다.
+     * BufferedReader 로 읽은 HTML 문서에서 모든 HTML 태그를 제거하고 각 단어를 공백(" ")으로 구분하여 결합해 반환한다.
      *
      * @return String
      */
@@ -121,7 +124,7 @@ public class DocumentParser {
     }
 
     /**
-     * 단어가 카멜 케이스임에도 필터링 되지 않은 경우 참을 반환합니다.
+     * 단어가 카멜 케이스임에도 필터링 되지 않은 경우 참을 반환한다.
      *
      * @return boolean
      */
@@ -130,7 +133,7 @@ public class DocumentParser {
     }
 
     /**
-     * 각 단어를 공백(" ")으로 구분하여 결합합니다.
+     * 각 단어를 공백(" ")으로 구분하여 결합한다.
      */
     private void concat(final StringBuilder sb, final String refinedWord) {
         stream(refinedWord.split(" ")).forEach(s2 -> sb.append(s2).append(" "));
@@ -157,7 +160,7 @@ public class DocumentParser {
     }
 
     /**
-     * 카멜 케이스로 구성된 단어를 분리하여 의미있는 단어로 변환합니다.
+     * 카멜 케이스로 구성된 단어를 분리하여 의미있는 단어로 변환한다.
      * <pre>
      *
      *     예: anyMatch -> any, match
@@ -175,7 +178,7 @@ public class DocumentParser {
     }
 
     /**
-     * 머신러닝으로 필터링 되지 않은 단어를 수동 필터로 필터링합니다.
+     * 머신러닝으로 필터링 되지 않은 단어를 수동 필터로 필터링한다.
      *
      * @return HashSet
      */
