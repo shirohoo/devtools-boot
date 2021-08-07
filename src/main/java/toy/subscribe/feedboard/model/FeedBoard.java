@@ -24,8 +24,7 @@ public class FeedBoard extends BaseEntity {
     private String guid;
 
     @Builder(access = AccessLevel.PUBLIC)
-    private FeedBoard(final Long id, final String company, final String imgPath, final String title, final String guid) {
-        this.id = id;
+    private FeedBoard(final String company, final String imgPath, final String title, final String guid) {
         this.company = company;
         this.imgPath = imgPath;
         this.title = title;
