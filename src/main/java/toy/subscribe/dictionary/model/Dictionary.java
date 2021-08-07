@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import toy.subscribe.configs.model.BaseEntity;
-import toy.subscribe.dictionary.dto.DictionaryDto;
+import toy.subscribe.dictionary.dto.DictionaryResponseDto;
 
 import javax.persistence.*;
 
@@ -28,11 +28,11 @@ public class Dictionary extends BaseEntity {
         return new Dictionary(enWord, krWord);
     }
 
-    public DictionaryDto convert() {
-        return DictionaryDto.builder()
-                            .id(this.getId())
-                            .enWord(this.enWord)
-                            .krWord(this.krWord)
-                            .build();
+    public DictionaryResponseDto convert() {
+        return DictionaryResponseDto.builder()
+                                    .id(this.getId())
+                                    .enWord(this.enWord)
+                                    .krWord(this.krWord)
+                                    .build();
     }
 }
