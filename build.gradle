@@ -15,7 +15,7 @@ version = '3.3'
 sourceCompatibility = 11
 
 gradle.projectsEvaluated {
-    tasks.withType(JavaCompile){
+    tasks.withType(JavaCompile) {
         options.compilerArgs << "-Xlint:unchecked"
     }
 }
@@ -55,19 +55,28 @@ dependencies {
             'org.apache.opennlp:opennlp-tools:1.9.3',
             'org.modelmapper:modelmapper:2.4.4',
     )
+
     compileOnly(
             'org.projectlombok:lombok'
     )
+
     runtimeOnly(
             'mysql:mysql-connector-java'
     )
+
     testRuntimeOnly(
             'com.h2database:h2'
     )
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude group: "junit", module: "junit"
+    }
+
     annotationProcessor(
             'org.springframework.boot:spring-boot-configuration-processor',
             'org.projectlombok:lombok'
     )
+
     testImplementation(
             'org.springframework.boot:spring-boot-starter-test',
             'org.springframework.restdocs:spring-restdocs-mockmvc'
@@ -99,8 +108,6 @@ compileQuerydsl {
 }
 
 node {
-//    version = '14.17.0'
-//    npmVersion = '6.14.13'
     workDir = file('./vue')
     npmWorkDir = file('./vue')
     nodeModulesDir = file('./vue')
