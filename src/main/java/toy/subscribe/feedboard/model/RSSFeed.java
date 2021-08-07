@@ -17,7 +17,7 @@ public class RSSFeed {
     private String pubDate;
     private List<RSSFeedMessage> messages = new ArrayList<>();
 
-    public RSSFeed(final String title, final String link, final String language, final String copyright, final String pubDate) {
+    private RSSFeed(final String title, final String link, final String language, final String copyright, final String pubDate) {
         this(title, link, language, copyright, pubDate, new ArrayList<>());
     }
 
@@ -28,6 +28,10 @@ public class RSSFeed {
         this.copyright = copyright;
         this.pubDate = pubDate;
         this.messages = messages;
+    }
+
+    public static RSSFeed of(final String title, final String link, final String language, final String copyright, final String pubDate) {
+        return new RSSFeed(title, link, language, copyright, pubDate);
     }
 
     public static RSSFeed of(final String title, final String link, final String language, final String copyright, final String pubDate, final List<RSSFeedMessage> messages) {
