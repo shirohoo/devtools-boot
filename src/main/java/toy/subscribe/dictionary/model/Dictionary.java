@@ -24,8 +24,18 @@ public class Dictionary extends BaseEntity {
         this.krWord = krWord;
     }
 
+    private Dictionary(final Long id, final String enWord, final String krWord) {
+        this.id = id;
+        this.enWord = enWord;
+        this.krWord = krWord;
+    }
+
     public static Dictionary of(String enWord, String krWord) {
         return new Dictionary(enWord, krWord);
+    }
+
+    public static Dictionary of(final Long id, final String enWord, final String krWord) {
+        return new Dictionary(id, enWord, krWord);
     }
 
     public DictionaryDto convert() {

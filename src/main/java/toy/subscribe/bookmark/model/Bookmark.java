@@ -22,7 +22,8 @@ public class Bookmark extends BaseEntity {
     private String link;
 
     @Builder(access = AccessLevel.PUBLIC)
-    private Bookmark(final String category, final String title, final String link) {
+    private Bookmark(final Long id, final String category, final String title, final String link) {
+        this.id = id;
         this.category = category;
         this.title = title;
         this.link = link;
