@@ -23,7 +23,7 @@ public class DictionaryQueryRepositoryImpl implements DictionaryQueryRepository 
 
     @Override
     @Transactional(readOnly = true)
-    public Page<DictionaryResponseDto> findPage(Pageable pageable, String enWord, String krWord) {
+    public Page<DictionaryResponseDto> findPage(final Pageable pageable, final String enWord, final String krWord) {
         return PageableExecutionUtils.getPage(convert(queryFactory
                                                               .select(dictionary)
                                                               .from(dictionary)
@@ -36,27 +36,23 @@ public class DictionaryQueryRepositoryImpl implements DictionaryQueryRepository 
                                               getCountQuery(enWord, krWord)::fetchCount);
     }
 
-    private List<DictionaryResponseDto> convert(List<Dictionary> feedBoards) {
-        return feedBoards.stream()
-                         .map(Dictionary::convert)
-                         .collect(toList());
+    private List<DictionaryResponseDto> convert(final List<Dictionary> feedBoards) {
+        return feedBoards.stream().map(Dictionary::convert).collect(toList());
     }
 
-    private BooleanExpression allContains(String enWord, String krWord) {
+    private BooleanExpression allContains(final String enWord, final String krWord) {
         return enWordContains(enWord).and(krWordContains(krWord));
     }
 
-    private BooleanExpression enWordContains(String enWord) {
+    private BooleanExpression enWordContains(final String enWord) {
         return Objects.nonNull(enWord) ? dictionary.enWord.contains(enWord) : null;
     }
 
-    private BooleanExpression krWordContains(String krWord) {
+    private BooleanExpression krWordContains(final String krWord) {
         return Objects.nonNull(krWord) ? dictionary.krWord.contains(krWord) : null;
     }
 
-    private JPAQuery<Dictionary> getCountQuery(String enWord, String krWord) {
-        return queryFactory
-                .selectFrom(dictionary)
-                .where(allContains(enWord, krWord));
+    private JPAQuery<Dictionary> getCountQuery(final String enWord, final String krWord) {
+        return queryFactory.selectFrom(dictionary).where(allContains(enWord, krWord));
     }
 }

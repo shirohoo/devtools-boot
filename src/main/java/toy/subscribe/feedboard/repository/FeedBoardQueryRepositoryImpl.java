@@ -23,7 +23,7 @@ public class FeedBoardQueryRepositoryImpl implements FeedBoardQueryRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<FeedBoardResponseDto> findPage(Pageable pageable, String company, String title) {
+    public Page<FeedBoardResponseDto> findPage(final Pageable pageable, final String company, final String title) {
         return PageableExecutionUtils.getPage(convert(queryFactory
                                                               .selectFrom(feedBoard)
                                                               .where(allContains(company, title))
@@ -35,27 +35,23 @@ public class FeedBoardQueryRepositoryImpl implements FeedBoardQueryRepository {
                                               getCountQuery(company, title)::fetchCount);
     }
 
-    private List<FeedBoardResponseDto> convert(List<FeedBoard> feedBoards) {
-        return feedBoards.stream()
-                         .map(FeedBoard::convert)
-                         .collect(toList());
+    private List<FeedBoardResponseDto> convert(final List<FeedBoard> feedBoards) {
+        return feedBoards.stream().map(FeedBoard::convert).collect(toList());
     }
 
-    private BooleanExpression allContains(String company, String title) {
+    private BooleanExpression allContains(final String company, final String title) {
         return companyContains(company).and(titleContains(title));
     }
 
-    private BooleanExpression companyContains(String company) {
+    private BooleanExpression companyContains(final String company) {
         return Objects.nonNull(company) ? feedBoard.company.contains(company) : null;
     }
 
-    private BooleanExpression titleContains(String title) {
+    private BooleanExpression titleContains(final String title) {
         return Objects.nonNull(title) ? feedBoard.title.contains(title) : null;
     }
 
-    private JPAQuery<FeedBoard> getCountQuery(String company, String title) {
-        return queryFactory
-                .selectFrom(feedBoard)
-                .where(allContains(company, title));
+    private JPAQuery<FeedBoard> getCountQuery(final String company, final String title) {
+        return queryFactory.selectFrom(feedBoard).where(allContains(company, title));
     }
 }

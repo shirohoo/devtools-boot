@@ -23,7 +23,7 @@ public class BookmarkQueryRepositoryImpl implements BookmarkQueryRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<BookmarkDto> findPage(Pageable pageable, String category, String title) {
+    public Page<BookmarkDto> findPage(final Pageable pageable, final String category, final String title) {
         return PageableExecutionUtils.getPage(convert(queryFactory
                                                               .selectFrom(bookmark)
                                                               .where(allContains(category, title))
@@ -35,27 +35,23 @@ public class BookmarkQueryRepositoryImpl implements BookmarkQueryRepository {
                                               getCountQuery(category, title)::fetchCount);
     }
 
-    private List<BookmarkDto> convert(List<Bookmark> feedBoards) {
-        return feedBoards.stream()
-                         .map(Bookmark::convert)
-                         .collect(toList());
+    private List<BookmarkDto> convert(final List<Bookmark> feedBoards) {
+        return feedBoards.stream().map(Bookmark::convert).collect(toList());
     }
 
-    private BooleanExpression allContains(String category, String title) {
+    private BooleanExpression allContains(final String category, final String title) {
         return categoryContains(category).and(titleContains(title));
     }
 
-    private BooleanExpression categoryContains(String category) {
+    private BooleanExpression categoryContains(final String category) {
         return Objects.nonNull(category) ? bookmark.category.contains(category) : null;
     }
 
-    private BooleanExpression titleContains(String title) {
+    private BooleanExpression titleContains(final String title) {
         return Objects.nonNull(title) ? bookmark.title.contains(title) : null;
     }
 
-    private JPAQuery<Bookmark> getCountQuery(String category, String title) {
-        return queryFactory
-                .selectFrom(bookmark)
-                .where(allContains(category, title));
+    private JPAQuery<Bookmark> getCountQuery(final String category, final String title) {
+        return queryFactory.selectFrom(bookmark).where(allContains(category, title));
     }
 }

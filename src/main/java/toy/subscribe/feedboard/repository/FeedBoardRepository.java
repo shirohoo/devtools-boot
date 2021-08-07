@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import toy.subscribe.feedboard.model.FeedBoard;
 
 public interface FeedBoardRepository extends JpaRepository<FeedBoard, Long>, FeedBoardQueryRepository {
-    boolean existsByGuid(String guid);
+    boolean existsByGuid(final String guid);
 }
