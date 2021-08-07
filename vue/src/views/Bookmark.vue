@@ -6,36 +6,18 @@
       </v-col >
       <v-col >
         <v-select
-            v-model="search.category"
-            :items="categories"
-            label="Category"
-            @change="findContents"
+            v-model="search.category" :items="categories" label="Category" @change="findContents"
         />
-        <v-text-field
-            label="Title"
-            v-model="search.title"
-            @keyup.enter="findContents"
+        <v-text-field label="Title" v-model="search.title" @keyup="findContents"
         />
       </v-col >
       <v-col class="pa-3" cols="3" >
-        <v-btn
-            class="ma-3"
-            color="purple"
-            dark
-            large
-            outlined
-            @click="resetSearchForm"
+        <v-btn class="ma-3" color="purple" dark large outlined @click="resetSearchForm"
         >
           <v-icon dark >fas fa-trash-restore-alt</v-icon >
         </v-btn >
         <br />
-        <v-btn
-            class="ma-3"
-            color="purple"
-            dark
-            large
-            outlined
-            @click="findContents"
+        <v-btn class="ma-3" color="purple" dark large outlined @click="findContents"
         >
           <v-icon dark >fas fa-search</v-icon >
         </v-btn >
