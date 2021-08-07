@@ -2,27 +2,26 @@ package toy.subscribe.configs.http.log.model;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.util.StringUtils;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 import toy.subscribe.configs.model.BaseEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 
-@Getter
 @Entity
-@ToString
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class HttpLog extends BaseEntity {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "http_log_id")
-    private Long id;
     private String clientIp;
     private String httpMethod;
     private String requestUri;

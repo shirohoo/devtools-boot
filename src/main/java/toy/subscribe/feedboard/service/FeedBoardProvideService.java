@@ -19,8 +19,8 @@ public class FeedBoardProvideService {
     public HttpResponseWrapper<FeedBoardDto> provideFeedBoardWrapper(Pageable pageable, String company, String title) {
         return HttpResponseWrapper.<FeedBoardDto>builder()
                                   .pages(feedBoardRepository.findPage(pageable, company, title))
-                                  .visitorsOfDay(requestLogRepository.findCumulativeVisitors())
-                                  .visitorsOfReduce(requestLogRepository.findDau())
+                                  .visitorsOfDay(requestLogRepository.findDau())
+                                  .visitorsOfReduce(requestLogRepository.findCumulativeVisitors())
                                   .build();
     }
 }

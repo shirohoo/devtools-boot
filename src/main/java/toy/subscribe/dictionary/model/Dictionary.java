@@ -6,16 +6,12 @@ import lombok.NoArgsConstructor;
 import toy.subscribe.configs.model.BaseEntity;
 import toy.subscribe.dictionary.dto.DictionaryDto;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Dictionary extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "dictionary_id")
-    private Long id;
     private String enWord;
     private String krWord;
 
@@ -24,23 +20,13 @@ public class Dictionary extends BaseEntity {
         this.krWord = krWord;
     }
 
-    private Dictionary(final Long id, final String enWord, final String krWord) {
-        this.id = id;
-        this.enWord = enWord;
-        this.krWord = krWord;
-    }
-
     public static Dictionary of(String enWord, String krWord) {
         return new Dictionary(enWord, krWord);
     }
 
-    public static Dictionary of(final Long id, final String enWord, final String krWord) {
-        return new Dictionary(id, enWord, krWord);
-    }
-
     public DictionaryDto convert() {
         return DictionaryDto.builder()
-                            .id(this.getId())
+                            .id(super.getId())
                             .enWord(this.enWord)
                             .krWord(this.krWord)
                             .build();

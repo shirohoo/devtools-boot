@@ -10,13 +10,13 @@ import org.springframework.data.domain.Page;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class HttpResponseWrapper<T> {
     private Page<T> pages;
-    private Long visitorsOfReduce;
     private Long visitorsOfDay;
+    private Long visitorsOfReduce;
 
     @Builder(access = AccessLevel.PUBLIC)
-    private HttpResponseWrapper(final Page<T> pages, final Long visitorsOfReduce, final Long visitorsOfDay) {
+    private HttpResponseWrapper(final Page<T> pages, final Long visitorsOfDay, final Long visitorsOfReduce) {
         this.pages = pages;
-        this.visitorsOfReduce = visitorsOfReduce;
         this.visitorsOfDay = visitorsOfDay;
+        this.visitorsOfReduce = visitorsOfReduce;
     }
 }

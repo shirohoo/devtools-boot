@@ -19,8 +19,8 @@ public class DictionaryProvideService {
     public HttpResponseWrapper<DictionaryDto> provideDictionaryWrapper(Pageable pageable, String enWord, String krWord) {
         return HttpResponseWrapper.<DictionaryDto>builder()
                                   .pages(feedBoardRepository.findPage(pageable, enWord, krWord))
-                                  .visitorsOfDay(requestLogRepository.findCumulativeVisitors())
-                                  .visitorsOfReduce(requestLogRepository.findDau())
+                                  .visitorsOfDay(requestLogRepository.findDau())
+                                  .visitorsOfReduce(requestLogRepository.findCumulativeVisitors())
                                   .build();
     }
 }

@@ -7,25 +7,20 @@ import lombok.NoArgsConstructor;
 import toy.subscribe.configs.model.BaseEntity;
 import toy.subscribe.feedboard.dto.FeedBoardDto;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
 import java.util.Objects;
 
-@Getter
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FeedBoard extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "feed_board_id")
-    private Long id;
     private String company;
     private String imgPath;
     private String title;
     private String guid;
 
     @Builder(access = AccessLevel.PUBLIC)
-    private FeedBoard(final Long id, final String company, final String imgPath, final String title, final String guid) {
-        this.id = id;
+    private FeedBoard(final String company, final String imgPath, final String title, final String guid) {
         this.company = company;
         this.imgPath = imgPath;
         this.title = title;
