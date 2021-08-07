@@ -62,11 +62,11 @@ public class JsonReader {
         if(jsonCompanies != null) {
             for(int i = 0; i < jsonCompanies.size(); i++) {
                 JSONObject o = (JSONObject) jsonCompanies.get(i);
-                companies.add(new Company(
-                                      (String) o.get("key"),
-                                      (String) o.get("name"),
-                                      (String) o.get("imgPath"))
-                             );
+                companies.add(Company.of(
+                        (String) o.get("key"),
+                        (String) o.get("name"),
+                        (String) o.get("imgPath"))
+                );
             }
             return companies;
         }

@@ -2,7 +2,10 @@ package toy.subscribe.feedboard.model;
 
 import lombok.*;
 
-@Getter @Setter
+import java.util.Objects;
+
+@Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RSSFeedMessage {
     private String title;
@@ -13,8 +16,8 @@ public class RSSFeedMessage {
     private String guid;
     private String pubDate;
 
-    @Builder
-    public RSSFeedMessage(String title, String company, String imgPath, String link, String author, String guid, String pubDate) {
+    @Builder(access = AccessLevel.PUBLIC)
+    public RSSFeedMessage(final String title, final String company, final String imgPath, final String link, final String author, final String guid, final String pubDate) {
         this.title = title;
         this.company = company;
         this.imgPath = imgPath;
@@ -22,6 +25,23 @@ public class RSSFeedMessage {
         this.author = author;
         this.guid = guid;
         this.pubDate = pubDate;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (Objects.isNull(o) || getClass() != o.getClass()) {
+            return false;
+        }
+        final RSSFeedMessage that = (RSSFeedMessage) o;
+        return Objects.equals(getGuid(), that.getGuid());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getGuid());
     }
 }
 

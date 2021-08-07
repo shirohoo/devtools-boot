@@ -21,7 +21,7 @@ class RSSFeedParserTest {
     @DisplayName("전사_RSS_호출_파싱_테스트")
     @MethodSource("provideFeedUrlAndKeyword")
     public void readAllGroup(String url, String keyword) throws Exception {
-        RSSFeedParser parser = new RSSFeedParser(url);
+        RSSFeedParser parser = RSSFeedParser.from(url);
         RSSFeed feed = parser.readFeed();
 
         feed.getMessages().forEach(message->{

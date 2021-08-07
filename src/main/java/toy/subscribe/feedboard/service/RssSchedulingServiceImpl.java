@@ -35,7 +35,7 @@ public class RssSchedulingServiceImpl implements SchedulingService {
                                             .map(this::getRssFeeds)
                                             .filter(Objects::nonNull)
                                             .flatMap(this::getMessageStreams)
-                                            .map(feedBoardFactory::getFeedBoard)
+                                            .map(feedBoardFactory::ifNonDuplicateConvert)
                                             .filter(Objects::nonNull)
                                             .collect(toList()))
                                .forEach(this::loggingNewFeeds);
@@ -60,7 +60,7 @@ public class RssSchedulingServiceImpl implements SchedulingService {
 
     private RSSFeedParser createRssFeedParser(String url) {
         try {
-            return new RSSFeedParser(url);
+            return RSSFeedParser.from(url);
         }
         catch (MalformedURLException e) {
             log.error("Syntax not found : 'http' or 'https'.");
@@ -69,8 +69,7 @@ public class RssSchedulingServiceImpl implements SchedulingService {
     }
 
     private Stream<? extends RSSFeedMessage> getMessageStreams(RSSFeed rssFeed) {
-        return rssFeed.getMessages()
-                      .stream();
+        return rssFeed.getMessages().stream();
     }
 
     private void loggingNewFeeds(FeedBoard feedBoard) {

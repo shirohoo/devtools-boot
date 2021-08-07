@@ -27,8 +27,12 @@ public class RSSFeedParser {
 
     private final URL url;
 
-    public RSSFeedParser(String feedUrl) throws MalformedURLException {
+    private RSSFeedParser(String feedUrl) throws MalformedURLException {
         url = getUrl(feedUrl);
+    }
+
+    public static RSSFeedParser from(String feedUrl) throws MalformedURLException {
+        return new RSSFeedParser(feedUrl);
     }
 
     private URL getUrl(String feedUrl) throws MalformedURLException {

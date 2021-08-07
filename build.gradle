@@ -39,10 +39,13 @@ dependencies {
     implementation(
             'org.springframework.boot:spring-boot-starter-data-jpa',
             'org.springframework.boot:spring-boot-starter-validation',
+            'org.springframework.boot:spring-boot-starter-cache',
             'org.springframework.boot:spring-boot-starter-web',
             'org.springframework.boot:spring-boot-starter-webflux',
             'org.springframework.boot:spring-boot-starter-security',
             'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.6.2',
+            'javax.cache:cache-api:1.1.1',
+            'org.ehcache:ehcache:3.9.4',
             'org.apache.poi:poi:5.0.0',
             'org.apache.poi:poi-ooxml:5.0.0',
             'com.querydsl:querydsl-jpa',

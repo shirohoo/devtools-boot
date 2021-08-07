@@ -8,12 +8,14 @@ import toy.subscribe.configs.model.BaseEntity;
 import toy.subscribe.feedboard.dto.FeedBoardResponseDto;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FeedBoard extends BaseEntity {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "feed_board_id")
     private Long id;
     private String company;
@@ -22,7 +24,8 @@ public class FeedBoard extends BaseEntity {
     private String guid;
 
     @Builder(access = AccessLevel.PUBLIC)
-    private FeedBoard(String company, String imgPath, String title, String guid) {
+    public FeedBoard(final Long id, final String company, final String imgPath, final String title, final String guid) {
+        this.id = id;
         this.company = company;
         this.imgPath = imgPath;
         this.title = title;
@@ -37,5 +40,22 @@ public class FeedBoard extends BaseEntity {
                                    .link(this.getGuid())
                                    .regDate(this.getRegDate())
                                    .build();
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (Objects.isNull(o) || getClass() != o.getClass()) {
+            return false;
+        }
+        final FeedBoard feedBoard = (FeedBoard) o;
+        return getId().equals(feedBoard.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }
