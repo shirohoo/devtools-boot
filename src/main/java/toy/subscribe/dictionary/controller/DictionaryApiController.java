@@ -20,7 +20,9 @@ public class DictionaryApiController {
     private final DictionaryProvideService dictionaryProvideService;
 
     @GetMapping("/dictionaries")
-    public ResponseEntity<?> receiveDictionariesRequest(Pageable pageable, @RequestParam(value = "enWord", required = false) String enWord, @RequestParam(value = "krWord", required = false) String krWord) {
+    public ResponseEntity<?> receiveDictionariesRequest(Pageable pageable,
+                                                        @RequestParam(value = "enWord", required = false) String enWord,
+                                                        @RequestParam(value = "krWord", required = false) String krWord) {
         validatePageSize(pageable);
         return new ResponseEntity<>(dictionaryProvideService.provideDictionaryWrapper(pageable, enWord, krWord), HttpStatus.OK);
     }

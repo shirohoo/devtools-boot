@@ -20,7 +20,9 @@ public class BoardApiController {
     private final FeedBoardProvideService feedBoardProvideService;
 
     @GetMapping("/boards")
-    public ResponseEntity<?> receiveFeedBoardsRequest(Pageable pageable, @RequestParam(value = "company", required = false) String company, @RequestParam(value = "title", required = false) String title) {
+    public ResponseEntity<?> receiveFeedBoardsRequest(Pageable pageable,
+                                                      @RequestParam(value = "company", required = false) String company,
+                                                      @RequestParam(value = "title", required = false) String title) {
         validatePageSize(pageable);
         return new ResponseEntity<>(feedBoardProvideService.provideFeedBoardWrapper(pageable, company, title), HttpStatus.OK);
     }
