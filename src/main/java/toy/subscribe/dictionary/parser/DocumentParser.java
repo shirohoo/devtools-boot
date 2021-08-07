@@ -5,14 +5,28 @@ import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import static java.util.Arrays.stream;
 
 @Slf4j
 public class DocumentParser {
+    private static final DocumentParser INSTANCE = new DocumentParser();
+    private static final Pattern P_TAG_PATTERN = Pattern.compile("<p>.*</p>");
+    private static final String NEW_LINE = System.lineSeparator();
+    private static final String APACHE_OPENNLP_EN_MODEL = "/models/en-token.bin";
+    private static final int WORD_LIMIT_LENGTH = 4;
+
+    private DocumentParser() {}
+
+    public static DocumentParser getInstance() {
+        return INSTANCE;
+    }
+
     private final String[] conlangFilter = {"taglib", "springframework", "namespace", "jackson", "springboot", "spring", "login", "winsw",
                                             "username", "logback", "autoscaler", "hibernate", "kubernetes", "docker", "homebrew", "datadog",
                                             "livereload", "jersey", "kotlin", "framework", "oauth", "testinstance", "junit4", "junit5", "bugfix",
@@ -35,101 +49,153 @@ public class DocumentParser {
                                             "encodings", "decodings", "subdomains", "vicitim", "currval", "boolean", "arguments", "charset",
                                             "subdirectory", "proddb", "datasource", "bootapp", "application", "authn", "jayway", "eclipselink"};
 
+    /**
+     * HTML PATH를 입력받아 해당 HTML에 접근하여 모든 문자열을 읽어 String 객체로 반환합니다.
+     *
+     * @return String
+     */
     public String read(String path) {
-        StringBuilder sb = new StringBuilder();
-        try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path)))) {
-            String read;
-            while((read = br.readLine()) != null) {
-                sb.append(read).append("\n");
-            }
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path)))) {
+            return br.lines()
+                     .map(read -> read + NEW_LINE)
+                     .collect(Collectors.joining());
         }
-        catch(IOException e) {
+        catch (IOException e) {
             log.error(e.getMessage());
+            return null;
         }
-        return sb.toString();
     }
 
+    /**
+     * BufferedReader로 읽은 HTML 문서에서 모든 HTML 태그를 제거합니다. 이후 HTML이 제거된 문자열을 대해 머신러닝으로 학습된 자연어로 필터링합니다. 필터링 된 자연어를 HashSet 객체로 변환하여 중복을 제거하고 반환합니다.
+     *
+     * @return HashSet
+     */
     public Set<String> parsing(String html) {
-        StringBuilder sb = new StringBuilder();
-        Pattern pattern = Pattern.compile("<p>.*</p>");
-        Matcher matcher = pattern.matcher(html);
+        return parsingNaturalLanguage(removeHtmlTags(html));
+    }
 
-        while(matcher.find()) {
-            String s = " " + html.substring(matcher.start(), matcher.end())
-                                 .replaceAll("<b>", "").replaceAll("</b>", "")
-                                 .replaceAll("<a [^<>]*>", "").replaceAll("</a>", "")
-                                 .replaceAll("<p>", "").replaceAll("</p>", "")
-                                 .replaceAll("<sup [^<>]*>", "").replaceAll("</sup>", "")
-                                 .replaceAll("<span [^<>]*>", "").replaceAll("</span>", "")
-                                 .replaceAll("<i [^<>]*>>", "").replaceAll("</i>", "")
-                                 .replaceAll("<table [^<>]*>>", "").replaceAll("</table>", "")
-                                 .replaceAll("<block [^<>]*>>", "").replaceAll("</block>", "")
-                                 .replaceAll("<ul [^<>]*>>", "").replaceAll("</ul>", "")
-                                 .replaceAll("<li [^<>]*>>", "").replaceAll("</li>", "")
-                                 .replaceAll("<div [^<>]*>>", "").replaceAll("</div>", "")
-                                 .replaceAll("<h [^<>]*>>", "").replaceAll("</h>", "")
-                                 .replaceAll("www\\.", "").replaceAll("http", "")
-                                 .replaceAll("\\.com", "").replace(".", " ")
-                                 .replaceAll("\\[[^\\[\\]]*\\]", "");
+    /**
+     * 입력된 문자열이 4글자 이상의 자연어라면 HashSet 에 담습니다.
+     */
+    private Set<String> parsingNaturalLanguage(final String charSequence) {
+        try (InputStream inputStream = getClass().getResourceAsStream(APACHE_OPENNLP_EN_MODEL)) {
+            final TokenizerModel model = new TokenizerModel(inputStream);
+            final TokenizerME tokenizer = new TokenizerME(model);
+            final String[] tokens = tokenizer.tokenize(charSequence);
 
-            String s1 = splitCamelCase(s);
-            if(s1.contains(" ")) {
-                String[] strings1 = s1.split(" ");
-                for(String s2 : strings1) {
-                    sb.append(s2).append(" ");
-                }
-            }
-            else {
-                sb.append(s);
-            }
-        }
-
-        String s = sb.toString().trim().toLowerCase()
-                     .replaceAll("[^a-zA-Z\\s\\.]", " ")
-                     .replaceAll(" +", " ");
-
-        Set<String> set = null;
-        try(InputStream inputStream = getClass()
-                .getResourceAsStream("/models/en-token.bin")) {
-            TokenizerModel model = new TokenizerModel(inputStream);
-            TokenizerME tokenizer = new TokenizerME(model);
-            String[] tokens = tokenizer.tokenize(s);
-
-            set = new HashSet<>();
-            for(String s1 : tokens) {
-                if(s1.length() > 4) {
+            Set<String> set = new HashSet<>();
+            for (String s1 : tokens) {
+                if (s1.length() > WORD_LIMIT_LENGTH) {
                     set.add(s1);
                 }
             }
+            return set;
         }
-        catch(IOException e) {
+        catch (IOException e) {
             log.error(e.getMessage());
+            return null;
         }
-
-        return set;
     }
 
-    public Set<String> filtering(Set<String> set) {
+    /**
+     * BufferedReader 로 읽은 HTML 문서에서 모든 HTML 태그를 제거하고 각 단어를 공백(" ")으로 구분하여 결합해 반환합니다.
+     *
+     * @return String
+     */
+    private String removeHtmlTags(final String html) {
+        StringBuilder sb = new StringBuilder();
+        Matcher matcher = P_TAG_PATTERN.matcher(html);
+        while (matcher.find()) {
+            String string = removeHtmlTags(html, matcher);
+            String refinedWord = splitCamelCase(string);
+            if (isContainsWhiteSpace(refinedWord)) {
+                concat(sb, refinedWord);
+                continue;
+            }
+            sb.append(string);
+        }
+        return sb.toString().trim().toLowerCase()
+                 .replaceAll("[^a-zA-Z\\s\\.]", " ")
+                 .replaceAll(" +", " ");
+    }
+
+    /**
+     * 단어가 카멜 케이스임에도 필터링 되지 않은 경우 참을 반환합니다.
+     *
+     * @return boolean
+     */
+    private boolean isContainsWhiteSpace(final String refinedWord) {
+        return refinedWord.contains(" ");
+    }
+
+    /**
+     * 각 단어를 공백(" ")으로 구분하여 결합합니다.
+     */
+    private void concat(final StringBuilder sb, final String refinedWord) {
+        stream(refinedWord.split(" ")).forEach(s2 -> sb.append(s2).append(" "));
+    }
+
+    private String removeHtmlTags(final String html, final Matcher matcher) {
+        String unrefinedWord = " " + html.substring(matcher.start(), matcher.end())
+                                         .replaceAll("<b>", "").replaceAll("</b>", "")
+                                         .replaceAll("<a [^<>]*>", "").replaceAll("</a>", "")
+                                         .replaceAll("<p>", "").replaceAll("</p>", "")
+                                         .replaceAll("<sup [^<>]*>", "").replaceAll("</sup>", "")
+                                         .replaceAll("<span [^<>]*>", "").replaceAll("</span>", "")
+                                         .replaceAll("<i [^<>]*>>", "").replaceAll("</i>", "")
+                                         .replaceAll("<table [^<>]*>>", "").replaceAll("</table>", "")
+                                         .replaceAll("<block [^<>]*>>", "").replaceAll("</block>", "")
+                                         .replaceAll("<ul [^<>]*>>", "").replaceAll("</ul>", "")
+                                         .replaceAll("<li [^<>]*>>", "").replaceAll("</li>", "")
+                                         .replaceAll("<div [^<>]*>>", "").replaceAll("</div>", "")
+                                         .replaceAll("<h [^<>]*>>", "").replaceAll("</h>", "")
+                                         .replaceAll("www\\.", "").replaceAll("http", "")
+                                         .replaceAll("\\.com", "").replace(".", " ")
+                                         .replaceAll("\\[[^\\[\\]]*\\]", "");
+        return unrefinedWord;
+    }
+
+    /**
+     * 카멜 케이스로 구성된 단어를 분리하여 의미있는 단어로 변환합니다.
+     * <pre>
+     *
+     *     예: anyMatch -> any, match
+     *
+     * </pre>
+     *
+     * @return String
+     */
+    private String splitCamelCase(String word) {
+        return word.replaceAll(String.format("%s|%s|%s",
+                                             "(?<=[A-Z])(?=[A-Z][a-z])",
+                                             "(?<=[^A-Z])(?=[A-Z])",
+                                             "(?<=[A-Za-z])(?=[^A-Za-z])"),
+                               " ");
+    }
+
+    /**
+     * 머신러닝으로 필터링 되지 않은 단어를 수동 필터로 필터링합니다.
+     *
+     * @return HashSet
+     */
+    public Set<String> filtering(final Set<String> set) {
+        return filteringForConlang(set);
+    }
+
+    private Set<String> filteringForConlang(final Set<String> set) {
         Set<String> result = new HashSet<>();
-        for(String enWord : set) {
-            if(enWord.endsWith("ing") | enWord.endsWith("es") | enWord.endsWith("s") | enWord.endsWith("ed")) {
+        for (String enWord : set) {
+            if (enWord.endsWith("ing") | enWord.endsWith("es") | enWord.endsWith("s") | enWord.endsWith("ed")) {
                 log.info("Filtered word : {}!", enWord);
                 continue;
             }
-            if(Arrays.stream(conlangFilter).anyMatch(enWord::equals)) {
+            if (stream(conlangFilter).anyMatch(enWord::equals)) {
                 log.info("Filtered word : {}!", enWord);
                 continue;
             }
             result.add(enWord);
         }
         return result;
-    }
-
-    private String splitCamelCase(String s) {
-        return s.replaceAll(String.format("%s|%s|%s",
-                                          "(?<=[A-Z])(?=[A-Z][a-z])",
-                                          "(?<=[^A-Z])(?=[A-Z])",
-                                          "(?<=[A-Za-z])(?=[^A-Za-z])"),
-                            " ");
     }
 }

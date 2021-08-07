@@ -10,8 +10,9 @@ import toy.subscribe.dictionary.type.HtmlPath;
 
 @SpringBootTest
 @Disabled("단어장생성_카카오사전_API_일일호출제한_약2,000회")
-class DictionaryServiceImplTest {
-    @Autowired DictionaryService dictionaryService;
+class DictionaryServiceTest {
+    @Autowired
+    DictionaryService dictionaryService;
 
     @Test
     @Rollback(value = false)
@@ -19,6 +20,6 @@ class DictionaryServiceImplTest {
     void create() {
         String html = HtmlPath.SPRING_DATA_JPA.getPath();
 
-        dictionaryService.run(html);
+        dictionaryService.parse(html);
     }
 }

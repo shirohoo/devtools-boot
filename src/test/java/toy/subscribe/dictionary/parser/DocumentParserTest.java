@@ -19,7 +19,7 @@ public class DocumentParserTest {
     @MethodSource("whereDocuments")
     public void parsingDocumentationFromHTMLFile(String path) {
         // when
-        DocumentParser parser = new DocumentParser();
+        DocumentParser parser = DocumentParser.getInstance();
         String html = parser.read(path);
         Set<String> set = parser.filtering(parser.parsing(html));
 
@@ -28,7 +28,7 @@ public class DocumentParserTest {
         // ##############################################################################
         System.out.println(set.size());
         StringBuilder sb = new StringBuilder();
-        for(String s : set) {
+        for (String s : set) {
             sb.append(s + " ");
         }
         System.out.println(sb);
