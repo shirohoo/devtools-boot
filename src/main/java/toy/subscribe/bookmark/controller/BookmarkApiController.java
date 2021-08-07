@@ -2,7 +2,6 @@ package toy.subscribe.bookmark.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import toy.subscribe.bookmark.dto.BookmarkDto;
 import toy.subscribe.bookmark.repository.BookmarkRepository;
 import toy.subscribe.bookmark.service.BookmarkProvideService;
+import toy.subscribe.configs.exception.PageableLargeSizeException;
 
 @Slf4j
 @RestController
@@ -23,28 +23,24 @@ public class BookmarkApiController {
     public ResponseEntity<?> receiveBookmarksRequest(Pageable pageable,
                                                      @RequestParam(value = "category", required = false) String category,
                                                      @RequestParam(value = "title", required = false) String title) {
-        if(pageable.getPageSize() > 200) {
+        validatePageSize(pageable);
+        return new ResponseEntity<>(service.provideBookmarkWrapper(pageable, category, title), HttpStatus.OK);
+    }
+
+    private void validatePageSize(final Pageable pageable) {
+        if (pageable.getPageSize() > 200) {
             log.error("Request page size is too large !");
-            return new ResponseEntity<>("Request page size is too large !", HttpStatus.BAD_REQUEST);
-        }
-        else {
-            if(StringUtils.isEmpty(category)) {
-                category = "";
-            }
-            if(StringUtils.isEmpty(title)) {
-                title = "";
-            }
-            return new ResponseEntity<>(service.provideBookmarkWrapper(pageable, category, title), HttpStatus.OK);
+            throw new PageableLargeSizeException();
         }
     }
 
     @PostMapping("/bookmark")
-    public void create(BookmarkDto bookmarkDTO) {
-        repository.save(bookmarkDTO.convert());
+    public void create(BookmarkDto bookmarkDto) {
+        repository.save(bookmarkDto.convert());
     }
 
     @DeleteMapping("/bookmark/{id}")
-    public void delete(@PathVariable("id") Long id) {
+    public void delete(@PathVariable Long id) {
         repository.deleteById(id);
     }
 }
