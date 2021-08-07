@@ -122,7 +122,7 @@ export default {
         total        : 0,
         totalElements: 0,
       },
-      display : [10, 30, 50, 100, 200],
+      display : [10, 30],
     }
   },
 
