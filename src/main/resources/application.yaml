@@ -10,14 +10,15 @@ spring:
     properties:
       hibernate:
         default_batch_fetch_size: 1000
+logging:
+  level:
+    org.hibernate.SQL: info
+
 ---
 spring:
   config:
     activate:
       on-profile: dev
-logging:
-  level:
-    org.hibernate.SQL: info
 decorator:
   datasource:
     p6spy:
@@ -29,7 +30,6 @@ spring:
       on-profile: prod
 logging:
   level:
-    org.hibernate.SQL: info
     com.zaxxer.hikari.HikariConfig: DEBUG
     com.zaxxer.hikari: TRACE
 decorator:

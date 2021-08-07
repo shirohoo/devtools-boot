@@ -6,7 +6,7 @@
       </v-col>
       <v-col>
         <v-select v-model="search.company" :items="groups" label="Group" @change="findContents"></v-select>
-        <v-text-field label="Title" v-model="search.title" @keyup.enter="findContents"></v-text-field>
+        <v-text-field label="Title" v-model="search.title" @keyup="findContents" ></v-text-field >
       </v-col>
       <v-col class="pa-3" cols="3">
         <v-btn class="ma-3" color="purple" dark large outlined @click="resetSearchForm">
@@ -90,14 +90,14 @@
   </v-container>
 </template>
 
-<script>
-import axios        from 'axios';
+<script >
+import axios from 'axios';
 import {mapActions} from "vuex";
 
 export default {
   name: 'Blog',
 
-  data(){
+  data() {
     return {
       search  : {
         page   : 0,
