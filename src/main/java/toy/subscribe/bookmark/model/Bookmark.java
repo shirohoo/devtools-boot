@@ -13,7 +13,8 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Bookmark extends BaseEntity {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bookmark_id")
     private Long id;
     private String category;
@@ -21,7 +22,7 @@ public class Bookmark extends BaseEntity {
     private String link;
 
     @Builder(access = AccessLevel.PUBLIC)
-    private Bookmark(Long id, String category, String title, String link) {
+    private Bookmark(final Long id, final String category, final String title, final String link) {
         this.id = id;
         this.category = category;
         this.title = title;
