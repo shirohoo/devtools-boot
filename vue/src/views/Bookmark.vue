@@ -230,7 +230,7 @@ export default {
         totalElements: 0,
       },
       categories : ["Java", "Spring", "Test", "Build", "Database", "CS", "Git", "IDE", "Infra", "Javascript", "Front Framework"],
-      display    : [10, 30, 50, 100, 200],
+      display    : [10, 30],
     }
   },
   mounted() {

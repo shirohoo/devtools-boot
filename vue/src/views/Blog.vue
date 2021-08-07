@@ -112,7 +112,7 @@ export default {
         totalElements: 0,
       },
       groups  : ["우아한형제들", "카카오", "야놀자", "라인", "당근마켓", "마켓컬리", "왓챠"],
-      display : [10, 30, 50, 100, 200],
+      display : [10, 30],
     }
   },
 
