@@ -229,7 +229,7 @@ export default {
         total        : 0,
         totalElements: 0,
       },
-      categories : ["Java", "Spring", "Build Tool", "Database", "CS", "Git", "IDE", "Infra", "Javascript", "Vue"],
+      categories : ["Java", "Spring", "Test", "Build", "Database", "CS", "Git", "IDE", "Infra", "Javascript", "Front Framework"],
       display    : [10, 30, 50, 100, 200],
     }
   },
