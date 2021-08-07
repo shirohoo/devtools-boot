@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ManualExcelReaderTest {
     @Test
-    @DisplayName("크롤링_엑셀데이터를_역직렬화한다")
+    @DisplayName("크롤링 엑셀데이터를 역직렬화한다")
     public void menualWoowabros() throws Exception {
         // given
         ManualExcelReader manualExcelReader = new ManualExcelReader();

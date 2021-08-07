@@ -12,11 +12,11 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Disabled(value = "파싱테스트_패스_실패하는_경우_HTML_경로_잘못된_경우")
+@Disabled(value = "파싱테스트 패스 실패하는 경우 HTML 경로 잘못된 경우")
 public class DocumentParserTest {
+    @MethodSource
     @ParameterizedTest
-    @DisplayName("Document_파싱")
-    @MethodSource("whereDocuments")
+    @DisplayName("Document 파싱")
     public void parsingDocumentationFromHTMLFile(String path) {
         // when
         DocumentParser parser = DocumentParser.getInstance();
@@ -27,11 +27,9 @@ public class DocumentParserTest {
         // ################################ 출 력 로 직 #################################
         // ##############################################################################
         System.out.println(set.size());
-        StringBuilder sb = new StringBuilder();
-        for (String s : set) {
-            sb.append(s + " ");
-        }
-        System.out.println(sb);
+        StringBuilder stringBuilder = new StringBuilder();
+        set.stream().map(s -> s + " ").forEach(stringBuilder::append);
+        System.out.println(stringBuilder);
         // ##############################################################################
         // ##############################################################################
         // ##############################################################################
@@ -41,7 +39,7 @@ public class DocumentParserTest {
     }
 
     // given
-    private static Stream<Arguments> whereDocuments() {
+    private static Stream<Arguments> parsingDocumentationFromHTMLFile() {
         return Stream.of(Arguments.of(HtmlPath.JUNIT5.getPath()),
                          Arguments.of(HtmlPath.HIBERNATE.getPath()),
                          Arguments.of(HtmlPath.SPRING_DATA_JPA.getPath()),

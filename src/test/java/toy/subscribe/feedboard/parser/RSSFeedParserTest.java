@@ -17,21 +17,21 @@ import static org.assertj.core.api.Assertions.assertThat;
  * 테스트가 실패하는 경우는 사이트의 RSS 피드 주소가 변하는 경우로 예상 됨
  */
 class RSSFeedParserTest {
+    @MethodSource
     @ParameterizedTest
-    @DisplayName("전사_RSS_호출_파싱_테스트")
-    @MethodSource("provideFeedUrlAndKeyword")
+    @DisplayName("전사 RSS 호출 파싱 테스트")
     public void readAllGroup(String url, String keyword) throws Exception {
         RSSFeedParser parser = RSSFeedParser.from(url);
         RSSFeed feed = parser.readFeed();
 
-        feed.getMessages().forEach(message->{
+        feed.getMessages().forEach(message -> {
             assertThat(message.getLink().trim()).contains(keyword);
             assertThat(message.getLink().trim()).startsWith("http");
             assertThat(message.getGuid().trim()).startsWith("http");
         });
     }
 
-    private static Stream<Arguments> provideFeedUrlAndKeyword() {
+    private static Stream<Arguments> readAllGroup() {
         return Stream.of(
                 Arguments.of("https://woowabros.github.io/feed.xml", "woowabros"),
                 Arguments.of("https://medium.com/feed/watcha", "watcha"),
@@ -40,15 +40,15 @@ class RSSFeedParserTest {
                 Arguments.of("https://yanolja.github.io/feed.xml", "yanolja"),
                 Arguments.of("https://engineering.linecorp.com/ko/feed/", "line"),
                 Arguments.of("https://helloworld.kurly.com/feed.xml", "thefarmersfront")
-                        );
+        );
     }
 
     @Test
-    @DisplayName("Google_RSS_호출_테스트")
+    @DisplayName("Google RSS 호출 테스트")
     public void invokeGoogleApi() throws Exception {
         // given
-        WebClient.RequestHeadersSpec<?> invoke = WebClient.builder().codecs(configurer->configurer.defaultCodecs()
-                                                                                                  .maxInMemorySize(16 * 1024 * 1024))
+        WebClient.RequestHeadersSpec<?> invoke = WebClient.builder().codecs(configurer -> configurer.defaultCodecs()
+                                                                                                    .maxInMemorySize(16 * 1024 * 1024))
                                                           .build()
                                                           .get()
                                                           .uri("https://www.blogger.com/feeds/456720922432942888/posts/default");

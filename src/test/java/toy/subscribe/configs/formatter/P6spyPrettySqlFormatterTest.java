@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class P6spyPrettySqlFormatterTest {
     @Test
-    @DisplayName("P6Spy_CustomFormatter")
+    @DisplayName("P6Spy CustomFormatter가 예상한 문자열을 반환하는지 확인")
     public void formatMessage() {
         // given
         int connectionId = 4;
