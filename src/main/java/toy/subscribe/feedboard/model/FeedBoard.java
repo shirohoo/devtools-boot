@@ -1,11 +1,11 @@
-package toy.subscribe.board.model;
+package toy.subscribe.feedboard.model;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import toy.subscribe.configs.dtos.FeedBoardResponse;
 import toy.subscribe.configs.model.BaseEntity;
+import toy.subscribe.feedboard.dto.FeedBoardResponseDto;
 
 import javax.persistence.*;
 
@@ -29,13 +29,13 @@ public class FeedBoard extends BaseEntity {
         this.guid = guid;
     }
 
-    public FeedBoardResponse convert() {
-        return FeedBoardResponse.builder()
-                                .company(this.getCompany())
-                                .imgPath(this.getImgPath())
-                                .title(this.getTitle())
-                                .link(this.getGuid())
-                                .regDate(this.getRegDate())
-                                .build();
+    public FeedBoardResponseDto convert() {
+        return FeedBoardResponseDto.builder()
+                                   .company(this.getCompany())
+                                   .imgPath(this.getImgPath())
+                                   .title(this.getTitle())
+                                   .link(this.getGuid())
+                                   .regDate(this.getRegDate())
+                                   .build();
     }
 }

@@ -1,4 +1,4 @@
-package toy.subscribe.board.model;
+package toy.subscribe.feedboard.model;
 
 import lombok.AccessLevel;
 import lombok.Getter;

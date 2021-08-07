@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import toy.subscribe.configs.dtos.BookmarkDto;
+import toy.subscribe.bookmark.dto.BookmarkDto;
 import toy.subscribe.configs.model.BaseEntity;
 
 import javax.persistence.*;

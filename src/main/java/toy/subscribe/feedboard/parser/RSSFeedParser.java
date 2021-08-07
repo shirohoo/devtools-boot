@@ -1,7 +1,8 @@
-package toy.subscribe.board.parser;
+package toy.subscribe.feedboard.parser;
 
-import toy.subscribe.board.model.RSSFeed;
-import toy.subscribe.board.model.RSSFeedMessage;
+import lombok.extern.slf4j.Slf4j;
+import toy.subscribe.feedboard.model.RSSFeed;
+import toy.subscribe.feedboard.model.RSSFeedMessage;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -13,6 +14,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+@Slf4j
 public class RSSFeedParser {
     private static final String TITLE = "title";
     private static final String LANGUAGE = "language";
@@ -26,11 +28,15 @@ public class RSSFeedParser {
     private final URL url;
 
     public RSSFeedParser(String feedUrl) throws MalformedURLException {
+        url = getUrl(feedUrl);
+    }
+
+    private URL getUrl(String feedUrl) throws MalformedURLException {
         try {
-            this.url = new URL(feedUrl);
+            return new URL(feedUrl);
         }
-        catch(MalformedURLException e) {
-            throw new MalformedURLException(e.getMessage());
+        catch (MalformedURLException e) {
+            throw new MalformedURLException("url is malformed. either no legal protocol could be found in a specification string or the string could not be parsed");
         }
     }
 
@@ -49,20 +55,20 @@ public class RSSFeedParser {
 
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 
-            try(InputStream inputStream = openInputStream()) {
+            try (InputStream inputStream = openInputStream()) {
 
                 XMLEventReader eventReader = inputFactory.createXMLEventReader(inputStream);
 
-                while(eventReader.hasNext()) {
+                while (eventReader.hasNext()) {
                     XMLEvent event = eventReader.nextEvent();
 
-                    if(event.isStartElement()) {
+                    if (event.isStartElement()) {
                         String localPart = event.asStartElement().getName().getLocalPart();
 
-                        switch(localPart) {
+                        switch (localPart) {
 
                             case ITEM:
-                                if(isFeedHeader) {
+                                if (isFeedHeader) {
                                     isFeedHeader = false;
                                     feed = new RSSFeed(title, link, language, copyright, pubdate);
                                 }
@@ -99,8 +105,8 @@ public class RSSFeedParser {
                                 break;
                         }
                     }
-                    else if(event.isEndElement()) {
-                        if(event.asEndElement().getName().getLocalPart() == ITEM) {
+                    else if (event.isEndElement()) {
+                        if (event.asEndElement().getName().getLocalPart() == ITEM) {
                             RSSFeedMessage message = RSSFeedMessage.builder()
                                                                    .author(author)
                                                                    .guid(guid)
@@ -119,7 +125,7 @@ public class RSSFeedParser {
                 eventReader.close();
             }
         }
-        catch(XMLStreamException | IOException o_O) {
+        catch (XMLStreamException | IOException o_O) {
             throw new XMLStreamException(o_O.getMessage());
         }
         return feed;
@@ -129,7 +135,7 @@ public class RSSFeedParser {
         try {
             return url.openStream();
         }
-        catch(IOException e) {
+        catch (IOException e) {
             throw new IOException(e.getMessage());
         }
     }
@@ -138,7 +144,7 @@ public class RSSFeedParser {
         String s = "";
         event = eventReader.nextEvent();
 
-        if(event instanceof Characters) {
+        if (event instanceof Characters) {
             s = event.asCharacters().getData();
         }
 

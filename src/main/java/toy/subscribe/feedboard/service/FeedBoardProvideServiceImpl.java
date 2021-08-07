@@ -1,4 +1,4 @@
-package toy.subscribe.dictionary.service;
+package toy.subscribe.feedboard.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -6,20 +6,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import toy.subscribe.configs.http.log.repository.HttpLogRepository;
 import toy.subscribe.configs.http.wrapper.HttpResponseWrapper;
-import toy.subscribe.dictionary.dto.DictionaryDto;
-import toy.subscribe.dictionary.repository.DictionaryRepository;
+import toy.subscribe.feedboard.dto.FeedBoardResponseDto;
+import toy.subscribe.feedboard.repository.FeedBoardRepository;
 
 @Service
 @RequiredArgsConstructor
-public class DictionaryProvideServiceImpl implements DictionaryProvideService {
-    private final DictionaryRepository feedBoardRepository;
+public class FeedBoardProvideServiceImpl implements FeedBoardProvideService {
+    private final FeedBoardRepository feedBoardRepository;
     private final HttpLogRepository requestLogRepository;
 
     @Override
     @Transactional(readOnly = true)
-    public HttpResponseWrapper<DictionaryDto> provideDictionaryWrapper(Pageable pageable, String enWord, String krWord) {
-        return HttpResponseWrapper.<DictionaryDto>builder()
-                                  .pages(feedBoardRepository.findPage(pageable, enWord, krWord))
+    public HttpResponseWrapper<FeedBoardResponseDto> provideFeedBoardWrapper(Pageable pageable, String company, String title) {
+        return HttpResponseWrapper.<FeedBoardResponseDto>builder()
+                                  .pages(feedBoardRepository.findPage(pageable, company, title))
                                   .visitorsOfDay(requestLogRepository.findCumulativeVisitors())
                                   .visitorsOfReduce(requestLogRepository.findDau())
                                   .build();

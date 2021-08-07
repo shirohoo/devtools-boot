@@ -2,7 +2,7 @@ package toy.subscribe.configs.manual;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import toy.subscribe.board.repository.FeedBoardRepository;
+import toy.subscribe.feedboard.repository.FeedBoardRepository;
 
 import java.util.Objects;
 

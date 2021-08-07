@@ -1,16 +1,16 @@
-package toy.subscribe.board.service;
+package toy.subscribe.feedboard.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import toy.subscribe.board.factory.FeedBoardFactory;
-import toy.subscribe.board.model.FeedBoard;
-import toy.subscribe.board.model.RSSFeed;
-import toy.subscribe.board.model.RSSFeedMessage;
-import toy.subscribe.board.parser.JsonReader;
-import toy.subscribe.board.parser.RSSFeedParser;
-import toy.subscribe.board.repository.FeedBoardRepository;
+import toy.subscribe.feedboard.factory.FeedBoardFactory;
+import toy.subscribe.feedboard.model.FeedBoard;
+import toy.subscribe.feedboard.model.RSSFeed;
+import toy.subscribe.feedboard.model.RSSFeedMessage;
+import toy.subscribe.feedboard.parser.JsonReader;
+import toy.subscribe.feedboard.parser.RSSFeedParser;
+import toy.subscribe.feedboard.repository.FeedBoardRepository;
 
 import javax.xml.stream.XMLStreamException;
 import java.net.MalformedURLException;

@@ -7,9 +7,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import toy.subscribe.bookmark.dto.BookmarkDto;
 import toy.subscribe.bookmark.repository.BookmarkRepository;
 import toy.subscribe.bookmark.service.BookmarkProvideService;
-import toy.subscribe.configs.dtos.BookmarkDto;
 
 @Slf4j
 @RestController
@@ -40,7 +40,7 @@ public class BookmarkApiController {
 
     @PostMapping("/bookmark")
     public void create(BookmarkDto bookmarkDTO) {
-        repository.save(bookmarkDTO.toEntity());
+        repository.save(bookmarkDTO.convert());
     }
 
     @DeleteMapping("/bookmark/{id}")

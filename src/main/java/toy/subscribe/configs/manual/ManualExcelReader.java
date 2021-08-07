@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import toy.subscribe.board.model.FeedBoard;
+import toy.subscribe.feedboard.model.FeedBoard;
 
 import java.io.File;
 import java.io.FileInputStream;

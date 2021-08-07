@@ -1,4 +1,4 @@
-package toy.subscribe.configs.dtos;
+package toy.subscribe.feedboard.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FeedBoardResponse {
+public class FeedBoardResponseDto {
     private Long id;
     private String company;
     private String imgPath;

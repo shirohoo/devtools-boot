@@ -1,4 +1,4 @@
-package toy.subscribe.board.parser;
+package toy.subscribe.feedboard.parser;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-import toy.subscribe.board.model.RSSFeed;
+import toy.subscribe.feedboard.model.RSSFeed;
 
 import java.util.stream.Stream;
 

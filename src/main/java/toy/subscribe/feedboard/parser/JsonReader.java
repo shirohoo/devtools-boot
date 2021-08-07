@@ -1,4 +1,4 @@
-package toy.subscribe.board.parser;
+package toy.subscribe.feedboard.parser;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -7,7 +7,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.core.io.ClassPathResource;
-import toy.subscribe.board.model.Company;
+import toy.subscribe.feedboard.model.Company;
 
 import java.io.File;
 import java.io.FileReader;
@@ -34,7 +34,7 @@ public class JsonReader {
             return null;
         }
         if(jsonObj != null) {
-            return (ArrayList<String>) jsonObj.get("urls");
+            return (ArrayList<String>) jsonObj.<String>get("urls");
         }
         else {
             return null;

@@ -2,7 +2,7 @@ package toy.subscribe.configs.manual;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import toy.subscribe.board.model.FeedBoard;
+import toy.subscribe.feedboard.model.FeedBoard;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
-package toy.subscribe.board.parser;
+package toy.subscribe.feedboard.parser;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import toy.subscribe.board.model.Company;
+import toy.subscribe.feedboard.model.Company;
 
 import java.util.List;
 

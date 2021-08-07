@@ -1,4 +1,4 @@
-package toy.subscribe.configs.enums;
+package toy.subscribe.dictionary.type;
 
 import lombok.Getter;
 

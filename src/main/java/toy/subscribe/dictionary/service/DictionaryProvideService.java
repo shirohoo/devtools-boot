@@ -1,8 +1,8 @@
 package toy.subscribe.dictionary.service;
 
 import org.springframework.data.domain.Pageable;
-import toy.subscribe.configs.dtos.ResponseWrapper;
+import toy.subscribe.configs.http.wrapper.HttpResponseWrapper;
 
 public interface DictionaryProvideService {
-    ResponseWrapper provideDictionaryWrapper(Pageable pageable, String enWord, String krWord);
+    HttpResponseWrapper provideDictionaryWrapper(Pageable pageable, String enWord, String krWord);
 }

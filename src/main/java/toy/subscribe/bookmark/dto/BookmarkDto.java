@@ -1,11 +1,12 @@
-package toy.subscribe.configs.dtos;
+package toy.subscribe.bookmark.dto;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import toy.subscribe.bookmark.model.Bookmark;
 
-@Data
-@Builder
-@AllArgsConstructor
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BookmarkDto {
     private Long id;
@@ -13,7 +14,15 @@ public class BookmarkDto {
     private String title;
     private String link;
 
-    public Bookmark toEntity() {
+    @Builder(access = AccessLevel.PUBLIC)
+    private BookmarkDto(final Long id, final String category, final String title, final String link) {
+        this.id = id;
+        this.category = category;
+        this.title = title;
+        this.link = link;
+    }
+
+    public Bookmark convert() {
         return Bookmark.builder()
                        .id(this.id)
                        .category(this.category)
