@@ -67,7 +67,7 @@
             <v-icon size="24px">
               {{ icon }}
             </v-icon>
-            <strong class="font-italic text-caption">&nbsp;V3.3 # </strong>
+            <strong class="font-italic text-caption" >&nbsp;V3.4 # </strong >
           </v-btn>
           <strong class="subheading font-italic text-caption"> Only I can change my life. No one can do it for me.</strong>
         </v-card-title>
@@ -76,8 +76,8 @@
   </v-app>
 </template>
 
-<script>
-import Vuetify    from "vuetify";
+<script >
+import Vuetify from "vuetify";
 import {mapState} from "vuex";
 
 export default {
