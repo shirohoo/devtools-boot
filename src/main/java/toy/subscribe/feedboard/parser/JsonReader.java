@@ -15,72 +15,64 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.stream.Collectors;
+
+import static java.util.stream.IntStream.range;
 
 @Slf4j
 public class JsonReader {
+    @SuppressWarnings("unchecked")
     public static List<String> readUrls() {
-        JSONObject jsonObj = null;
-        try {
-            FileReader reader = new FileReader(readFileFromPropertiesUseInputStream());
-            JSONParser parser = new JSONParser();
-            jsonObj = (JSONObject) parser.parse(reader);
+        final JSONObject jsonObj = getJsonObject();
+        if (Objects.nonNull(jsonObj)) {
+            return (ArrayList<String>) jsonObj.get("urls");
         }
-        catch(IOException | NullPointerException o_O) {
-            log.error("Read not json !");
-            return null;
-        }
-        catch(ParseException e) {
-            log.error("Json parsing error !");
-            return null;
-        }
-        if(jsonObj != null) {
-            return (ArrayList<String>) jsonObj.<String>get("urls");
-        }
-        else {
-            return null;
-        }
+        return null;
     }
 
     public static List<Company> readCompanies() {
-        List<Company> companies = null;
-        JSONArray jsonCompanies = null;
-        try {
-            FileReader reader = new FileReader(readFileFromPropertiesUseInputStream());
-            JSONParser parser = new JSONParser();
-            companies = new ArrayList<>();
-            JSONObject jsonObj = (JSONObject) parser.parse(reader);
-            jsonCompanies = (JSONArray) jsonObj.get("companies");
+        final JSONArray jsonCompanies = (JSONArray) getJsonObject().get("companies");
+        if (Objects.nonNull(jsonCompanies)) {
+            return range(0, jsonCompanies.size()).mapToObj(getCompanyFrom(jsonCompanies))
+                    .map(createCompanyEntity())
+                    .collect(Collectors.toList());
         }
-        catch(IOException | NullPointerException e) {
+        return null;
+    }
+
+    private static IntFunction<JSONObject> getCompanyFrom(final JSONArray jsonCompanies) {
+        return i -> (JSONObject) jsonCompanies.get(i);
+    }
+
+    private static Function<JSONObject, Company> createCompanyEntity() {
+        return o -> Company.of(
+                (String) o.get("key"),
+                (String) o.get("name"),
+                (String) o.get("imgPath"));
+    }
+
+    private static JSONObject getJsonObject() {
+        try {
+            return (JSONObject) new JSONParser().parse(new FileReader(readFileFromPropertiesUseInputStream()));
+        }
+        catch (IOException | NullPointerException o_O) {
             log.error("Read not json !");
             return null;
         }
-        catch(ParseException e) {
+        catch (ParseException e) {
             log.error("Json parsing error !");
-            return null;
-        }
-        if(jsonCompanies != null) {
-            for(int i = 0; i < jsonCompanies.size(); i++) {
-                JSONObject o = (JSONObject) jsonCompanies.get(i);
-                companies.add(Company.of(
-                        (String) o.get("key"),
-                        (String) o.get("name"),
-                        (String) o.get("imgPath"))
-                );
-            }
-            return companies;
-        }
-        else {
             return null;
         }
     }
 
     private static File readFileFromPropertiesUseInputStream() throws IOException {
-        File file;
-        try(InputStream inputStream = new ClassPathResource("properties/properties-factory.json").getInputStream()) {
-            file = File.createTempFile("properties-factory", ".json");
+        try (InputStream inputStream = new ClassPathResource("properties/properties-factory.json").getInputStream()) {
+            final File file = File.createTempFile("properties-factory", ".json");
             FileUtils.copyInputStreamToFile(inputStream, file);
+            return file;
         }
-        return file;
     }
 }
