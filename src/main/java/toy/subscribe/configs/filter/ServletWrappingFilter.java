@@ -16,13 +16,13 @@ import java.util.Objects;
 public class ServletWrappingFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        String contentType = request.getHeader("Content-Type");
+        final String contentType = request.getHeader("Content-Type");
         if (Objects.nonNull(contentType) && contentType.toLowerCase().contains("multipart/form-data")) {
             filterChain.doFilter(request, response);
         }
         else {
-            ContentCachingRequestWrapper wrappingRequest = new ContentCachingRequestWrapper(request);
-            ContentCachingResponseWrapper wrappingResponse = new ContentCachingResponseWrapper(response);
+            final ContentCachingRequestWrapper wrappingRequest = new ContentCachingRequestWrapper(request);
+            final ContentCachingResponseWrapper wrappingResponse = new ContentCachingResponseWrapper(response);
             filterChain.doFilter(wrappingRequest, wrappingResponse);
             wrappingResponse.copyBodyToResponse();
         }

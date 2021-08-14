@@ -27,13 +27,13 @@ public class ManualExcelReader {
     private static final int FIRST_EXCEL_SHEET = 0;
 
     public List<FeedBoard> read(ManualFilePath company) {
-        Workbook workbook = getWorkbook(new File(company.getXLSX()));
+        final Workbook workbook = getWorkbook(new File(company.getXLSX()));
 
         if (Objects.isNull(workbook)) {
             return null;
         }
 
-        List<FeedBoard> feedBoards = new ArrayList<>();
+        final List<FeedBoard> feedBoards = new ArrayList<>();
         for (Row rows : workbook.getSheetAt(FIRST_EXCEL_SHEET)) {
             feedBoards.add(FeedBoard.builder()
                                     .title(rows.getCell(0).getStringCellValue())
@@ -46,9 +46,8 @@ public class ManualExcelReader {
     }
 
     private Workbook getWorkbook(File file) {
-        Workbook workbook;
         try {
-            workbook = new XSSFWorkbook(new FileInputStream(file));
+            return new XSSFWorkbook(new FileInputStream(file));
         }
         catch (FileNotFoundException e) {
             log.warn("failed to create XSSWorkbook because file not found. please check ManualFilePath.");
@@ -58,6 +57,5 @@ public class ManualExcelReader {
             log.warn("IOException occureed for XSSFWorkbook.");
             return null;
         }
-        return workbook;
     }
 }

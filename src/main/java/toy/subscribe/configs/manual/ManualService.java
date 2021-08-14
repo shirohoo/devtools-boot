@@ -14,8 +14,7 @@ public class ManualService {
     private final FeedBoardRepository feedBoardRepository;
 
     public void save() {
-        ManualExcelReader manualExcelReader = new ManualExcelReader();
-
+        final ManualExcelReader manualExcelReader = new ManualExcelReader();
         stream(ManualFilePath.values())
                 .map(manualExcelReader::read)
                 .filter(Objects::nonNull)

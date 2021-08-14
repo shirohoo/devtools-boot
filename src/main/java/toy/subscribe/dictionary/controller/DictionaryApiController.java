@@ -23,11 +23,11 @@ public class DictionaryApiController {
     public ResponseEntity<?> receiveDictionariesRequest(Pageable pageable,
                                                         @RequestParam(value = "enWord", required = false) String enWord,
                                                         @RequestParam(value = "krWord", required = false) String krWord) {
-        validatePageSize(pageable);
+        verifyPageable(pageable);
         return new ResponseEntity<>(dictionaryProvideService.provideDictionaryWrapper(pageable, enWord, krWord), HttpStatus.OK);
     }
 
-    private void validatePageSize(final Pageable pageable) {
+    private void verifyPageable(final Pageable pageable) {
         if (pageable.getPageSize() > 200) {
             log.error("Request page size is too large !");
             throw new PageableLargeSizeException();

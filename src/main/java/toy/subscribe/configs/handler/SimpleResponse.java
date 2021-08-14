@@ -6,16 +6,16 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class SimplifiedResponse {
+public class SimpleResponse {
     private String resCode;
     private String resMessage;
 
-    private SimplifiedResponse(String resCode, String resMessage) {
+    private SimpleResponse(String resCode, String resMessage) {
         this.resCode = resCode;
         this.resMessage = resMessage;
     }
 
-    public static SimplifiedResponse of(String resCode, String resMessage) {
-        return new SimplifiedResponse(resCode, resMessage);
+    public static SimpleResponse of(String resCode, String resMessage) {
+        return new SimpleResponse(resCode, resMessage);
     }
 }

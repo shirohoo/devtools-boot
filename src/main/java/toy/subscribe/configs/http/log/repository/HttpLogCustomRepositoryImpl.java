@@ -3,24 +3,21 @@ package toy.subscribe.configs.http.log.repository;
 import com.querydsl.core.types.dsl.DateTimePath;
 import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
+import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-import toy.subscribe.configs.http.log.model.HttpLog;
 
 import java.time.LocalDateTime;
 
 import static com.querydsl.core.types.dsl.Expressions.stringTemplate;
 import static toy.subscribe.configs.http.log.model.QHttpLog.httpLog;
 
-public class HttpLogCustomRepositoryImpl extends QuerydslRepositorySupport implements HttpLogCustomRepository {
-    public HttpLogCustomRepositoryImpl() {
-        super(HttpLog.class);
-    }
+@RequiredArgsConstructor
+public class HttpLogCustomRepositoryImpl implements HttpLogCustomRepository {
+    private final JPAQueryFactory queryFactory;
 
     @Override
     @Transactional(readOnly = true)
     public Long findDau() {
-        JPAQueryFactory queryFactory = new JPAQueryFactory(getEntityManager());
         return queryFactory
                 .select(httpLog.clientIp.countDistinct())
                 .from(httpLog)
@@ -32,7 +29,6 @@ public class HttpLogCustomRepositoryImpl extends QuerydslRepositorySupport imple
     @Override
     @Transactional(readOnly = true)
     public Long findCumulativeVisitors() {
-        JPAQueryFactory queryFactory = new JPAQueryFactory(getEntityManager());
         return queryFactory
                 .select(httpLog.clientIp.countDistinct())
                 .from(httpLog)

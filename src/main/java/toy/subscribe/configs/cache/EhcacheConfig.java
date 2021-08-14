@@ -25,10 +25,13 @@ public class EhcacheConfig {
     public CacheManager ehCacheManager() {
         final CachingProvider provider = Caching.getCachingProvider();
         final CacheManager cacheManager = provider.getCacheManager();
-        cacheManager.createCache(RSS_CACHE, Eh107Configuration.fromEhcacheCacheConfiguration(CacheConfigurationBuilder.newCacheConfigurationBuilder(
-                                                                                                                              RSSFeedMessage.class, FeedBoard.class,
-                                                                                                                              ResourcePoolsBuilder.newResourcePoolsBuilder().offheap(10, MemoryUnit.MB))
-                                                                                                                      .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(600)))));
+        cacheManager.createCache(RSS_CACHE, Eh107Configuration.fromEhcacheCacheConfiguration(
+                CacheConfigurationBuilder.newCacheConfigurationBuilder(
+                                RSSFeedMessage.class,
+                                FeedBoard.class,
+                                ResourcePoolsBuilder.newResourcePoolsBuilder().offheap(10, MemoryUnit.MB))
+                        .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(600)))
+        ));
         return cacheManager;
 
     }
