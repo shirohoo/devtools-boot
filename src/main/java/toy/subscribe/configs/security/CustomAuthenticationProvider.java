@@ -17,16 +17,14 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
-        String username = authentication.getName();
-        String password = (String) authentication.getCredentials();
-        UserDetails manager = userDetailsService.loadUserByUsername(username);
-
-        validate(password, manager);
-
+        final String username = authentication.getName();
+        final String password = (String) authentication.getCredentials();
+        final UserDetails manager = userDetailsService.loadUserByUsername(username);
+        verifyUser(password, manager);
         return new UsernamePasswordAuthenticationToken(manager.getUsername(), null, manager.getAuthorities());
     }
 
-    private void validate(final String password, final UserDetails manager) {
+    private void verifyUser(final String password, final UserDetails manager) {
         if (!passwordEncoder.matches(password, manager.getPassword())) {
             throw new BadCredentialsException("Password not matched !");
         }

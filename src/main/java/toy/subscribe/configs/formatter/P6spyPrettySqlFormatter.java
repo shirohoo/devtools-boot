@@ -4,74 +4,97 @@ import com.p6spy.engine.logging.Category;
 import com.p6spy.engine.spy.appender.MessageFormattingStrategy;
 import org.hibernate.engine.jdbc.internal.FormatStyle;
 
+import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Stack;
+import java.util.function.Predicate;
 
 import static java.util.Arrays.stream;
 
 public class P6spyPrettySqlFormatter implements MessageFormattingStrategy {
-    private static final String[] EXCLUDE_KEYWORD = {"feed_board", "request_log"};
     private static final String NEW_LINE = System.lineSeparator();
+    private static final String P6SPY_FORMATTER = "P6spyPrettySqlFormatter";
+    private static final String PACKAGE = "toy.subscribe";
+    private static final String CREATE = "create";
+    private static final String ALTER = "alter";
+    private static final String COMMENT = "comment";
 
     @Override
     public String formatMessage(final int connectionId, final String now, final long elapsed, final String category, final String prepared, final String sql, final String url) {
-        for (final String s : EXCLUDE_KEYWORD) {
-            if (sql.contains(s)) {
-                return "Filtered queries";
-            }
-        }
-
-        Stack<String> callStack = getStackTrace();
-
-        final StringBuilder callStackBuilder = new StringBuilder();
-        int order = 1;
-        while (callStack.size() != 0) {
-            callStackBuilder.append(NEW_LINE).append("\t\t" + (order++) + ". " + callStack.pop());
-        }
-        return sqlFormat(sql, category, getMessage(connectionId, elapsed, callStackBuilder));
+        return sqlFormatToUpper(sql, category, getMessage(connectionId, elapsed, getStackBuilder()));
     }
 
-    private Stack<String> getStackTrace() {
-        final Stack<String> callStack = new Stack<>();
-        stream(new Throwable().getStackTrace())
-                .map(StackTraceElement::toString)
-                .filter(trace -> trace.startsWith("toy.subscribe") && !trace.contains("P6spyPrettySqlFormatter"))
-                .forEach(callStack::push);
-        return callStack;
-    }
-
-    private String sqlFormat(String sql, String category, String message) {
+    private String sqlFormatToUpper(final String sql, final String category, final String message) {
         if (Objects.isNull(sql.trim()) || sql.trim().isEmpty()) {
             return "";
         }
-
-        return new StringBuilder().append(NEW_LINE)
-                                  .append(getUpperSql(sql, category))
-                                  .append(message)
-                                  .toString();
+        return new StringBuilder()
+                .append(NEW_LINE)
+                .append(sqlFormatToUpper(sql, category))
+                .append(message)
+                .toString();
     }
 
-    private String getUpperSql(String sql, final String category) {
-        if (Category.STATEMENT.getName().equals(category)) {
-            final String s = sql.trim().toLowerCase(Locale.ROOT);
-            if (s.startsWith("create") || s.startsWith("alter") || s.startsWith("comment")) {
-                return sql = FormatStyle.DDL
-                        .getFormatter()
-                        .format(sql);
-            }
-            return FormatStyle.BASIC
+    private String sqlFormatToUpper(final String sql, final String category) {
+        if (isStatementDDL(sql, category)) {
+            return FormatStyle.DDL
                     .getFormatter()
-                    .format(sql);
+                    .format(sql)
+                    .toUpperCase(Locale.ROOT)
+                    .replace("+0900", "");
         }
-        return sql.toUpperCase(Locale.ROOT);
+        return FormatStyle.BASIC
+                .getFormatter()
+                .format(sql)
+                .toUpperCase(Locale.ROOT)
+                .replace("+0900", "");
+    }
+
+    private boolean isStatementDDL(final String sql, final String category) {
+        return isStatement(category) && isDDL(sql.trim().toLowerCase(Locale.ROOT));
+    }
+
+    private boolean isStatement(final String category) {
+        return Category.STATEMENT.getName().equals(category);
+    }
+
+    private boolean isDDL(final String lowerSql) {
+        return lowerSql.startsWith(CREATE) || lowerSql.startsWith(ALTER) || lowerSql.startsWith(COMMENT);
     }
 
     private String getMessage(final int connectionId, final long elapsed, final StringBuilder callStackBuilder) {
-        return new StringBuilder().append(NEW_LINE).append(NEW_LINE).append("\tConnection ID: ").append(connectionId)
-                                  .append(NEW_LINE).append("\tExecution Time: ").append(elapsed).append(" ms").append(NEW_LINE)
-                                  .append(NEW_LINE).append("\tCall Stack (number 1 is entry point): ").append(callStackBuilder).append(NEW_LINE)
-                                  .append(NEW_LINE).append("----------------------------------------------------------------------------------------------------")
-                                  .toString();
+        return new StringBuilder()
+                .append(NEW_LINE)
+                .append(NEW_LINE)
+                .append("\t").append(String.format("Connection ID: %s", connectionId))
+                .append(NEW_LINE)
+                .append("\t").append(String.format("Execution Time: %s ms", elapsed))
+                .append(NEW_LINE)
+                .append(NEW_LINE)
+                .append("\t").append(String.format("Call Stack (number 1 is entry point): %s", callStackBuilder))
+                .append(NEW_LINE)
+                .append(NEW_LINE)
+                .append("----------------------------------------------------------------------------------------------------")
+                .toString();
+    }
+
+    private StringBuilder getStackBuilder() {
+        final Stack<String> callStack = new Stack<>();
+        stream(new Throwable().getStackTrace())
+                .map(StackTraceElement::toString)
+                .filter(isExcludeWords())
+                .forEach(callStack::push);
+
+        int order = 1;
+        final StringBuilder callStackBuilder = new StringBuilder();
+        while (!callStack.empty()) {
+            callStackBuilder.append(MessageFormat.format("{0}\t\t{1}. {2}", NEW_LINE, order++, callStack.pop()));
+        }
+        return callStackBuilder;
+    }
+
+    private Predicate<String> isExcludeWords() {
+        return charSequence -> charSequence.startsWith(PACKAGE) && !charSequence.contains(P6SPY_FORMATTER);
     }
 }

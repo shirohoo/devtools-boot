@@ -23,11 +23,11 @@ public class BookmarkApiController {
     public ResponseEntity<?> receiveBookmarksRequest(Pageable pageable,
                                                      @RequestParam(value = "category", required = false) String category,
                                                      @RequestParam(value = "title", required = false) String title) {
-        validatePageSize(pageable);
+        verifyPageable(pageable);
         return new ResponseEntity<>(service.provideBookmarkWrapper(pageable, category, title), HttpStatus.OK);
     }
 
-    private void validatePageSize(final Pageable pageable) {
+    private void verifyPageable(final Pageable pageable) {
         if (pageable.getPageSize() > 200) {
             log.error("Request page size is too large !");
             throw new PageableLargeSizeException();

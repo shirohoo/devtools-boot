@@ -11,5 +11,4 @@ import org.springframework.context.annotation.PropertySource;
 public class ApiProperties {
     @Value("${api.key.kakao}")
     private String kakaoKey;
-
 }

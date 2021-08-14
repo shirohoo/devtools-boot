@@ -1,9 +1,7 @@
 package toy.subscribe.feedboard.factory;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
-import toy.subscribe.configs.cache.EhcacheConfig;
 import toy.subscribe.feedboard.model.Company;
 import toy.subscribe.feedboard.model.FeedBoard;
 import toy.subscribe.feedboard.model.RSSFeedMessage;
@@ -18,7 +16,6 @@ import java.util.Objects;
 public class FeedBoardFactory {
     private final FeedBoardRepository feedBoardRepository;
 
-    @Cacheable(cacheNames = EhcacheConfig.RSS_CACHE, key = "#message", condition = "#message != null", unless = "#result == null")
     public FeedBoard ifNonDuplicateConvert(RSSFeedMessage message) {
         if (!isNonDuplicate(message)) {
             return null;
