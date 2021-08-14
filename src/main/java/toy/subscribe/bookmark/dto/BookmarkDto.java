@@ -1,12 +1,10 @@
 package toy.subscribe.bookmark.dto;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import toy.subscribe.bookmark.model.Bookmark;
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BookmarkDto {
     private Long id;
