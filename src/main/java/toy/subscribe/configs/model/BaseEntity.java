@@ -13,6 +13,7 @@ import java.util.Objects;
 
 @Getter
 @MappedSuperclass
+@Access(value = AccessType.FIELD)
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity implements Serializable {
     @Id
@@ -29,6 +30,6 @@ public abstract class BaseEntity implements Serializable {
     protected LocalDateTime modDate;
 
     public boolean isNew() {
-        return Objects.isNull(this);
+        return Objects.isNull(this.getId());
     }
 }
