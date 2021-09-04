@@ -19,7 +19,7 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        return ResponseEntity.badRequest().body(SimpleResponse.of(String.valueOf(BAD_REQUEST.value()), getResultMessage(ex)));
+        return ResponseEntity.badRequest().body(SimpleHttpResponse.of(String.valueOf(BAD_REQUEST.value()), getResultMessage(ex)));
     }
 
     protected String getResultMessage(final MethodArgumentNotValidException ex) {
@@ -46,8 +46,8 @@ public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<SimpleResponse> pageableLargeSizeHandle(PageableLargeSizeException e) {
-        return ResponseEntity.badRequest().body(SimpleResponse.of(String.valueOf(BAD_REQUEST.value()), "Request page size is too large !"));
+    public ResponseEntity<SimpleHttpResponse> pageableLargeSizeHandle(PageableLargeSizeException e) {
+        return ResponseEntity.badRequest().body(SimpleHttpResponse.of(String.valueOf(BAD_REQUEST.value()), "Request page size is too large !"));
     }
 }
 
