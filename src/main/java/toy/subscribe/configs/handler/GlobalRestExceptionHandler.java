@@ -18,14 +18,17 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 @RestControllerAdvice
 public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        return ResponseEntity.badRequest().body(SimpleResponse.of(String.valueOf(BAD_REQUEST.value()), getResultMessage(ex)));
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(final MethodArgumentNotValidException ex, final HttpHeaders headers, final HttpStatus status, final WebRequest request) {
+        return ResponseEntity
+                .status(BAD_REQUEST)
+                .body(SimpleHttpResponse.of(BAD_REQUEST, getResultMessage(ex))
+                );
     }
 
     protected String getResultMessage(final MethodArgumentNotValidException ex) {
         final Iterator<ObjectError> iterator = ex.getBindingResult().getAllErrors().iterator();
         final StringBuilder resultMessageBuilder = new StringBuilder();
-        while (iterator.hasNext() == true) {
+        while (iterator.hasNext()) {
             final ObjectError objectError = iterator.next();
             resultMessageBuilder
                     .append("[")
@@ -33,7 +36,7 @@ public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
                     .append("] ")
                     .append(objectError.getDefaultMessage());
 
-            if (iterator.hasNext() == true) {
+            if (iterator.hasNext()) {
                 resultMessageBuilder.append(", ");
             }
         }
@@ -46,8 +49,11 @@ public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<SimpleResponse> pageableLargeSizeHandle(PageableLargeSizeException e) {
-        return ResponseEntity.badRequest().body(SimpleResponse.of(String.valueOf(BAD_REQUEST.value()), "Request page size is too large !"));
+    public ResponseEntity<SimpleHttpResponse> pageableLargeSizeHandle(final PageableLargeSizeException e) {
+        return ResponseEntity
+                .status(BAD_REQUEST)
+                .body(SimpleHttpResponse.of(BAD_REQUEST, e.getMessage())
+                );
     }
 }
 
