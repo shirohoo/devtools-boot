@@ -62,7 +62,6 @@ dependencies {
     )
 
     testImplementation(
-            'org.springframework.boot:spring-boot-starter-test',
             'org.springframework.restdocs:spring-restdocs-mockmvc'
     )
 
@@ -97,12 +96,15 @@ querydsl {
     jpa = true
     querydslSourcesDir = querydslDir
 }
+
 sourceSets {
     main.java.srcDir querydslDir
 }
+
 configurations {
     querydsl.extendsFrom compileClasspath
 }
+
 compileQuerydsl {
     options.annotationProcessorPath = configurations.querydsl
 }
