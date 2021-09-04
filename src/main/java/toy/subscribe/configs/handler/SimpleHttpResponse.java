@@ -3,6 +3,7 @@ package toy.subscribe.configs.handler;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.http.HttpStatus;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -17,5 +18,9 @@ public class SimpleHttpResponse {
 
     public static SimpleHttpResponse of(final String resCode, final String resMsg) {
         return new SimpleHttpResponse(resCode, resMsg);
+    }
+
+    public static SimpleHttpResponse of(final HttpStatus status, final String resMsg) {
+        return new SimpleHttpResponse(String.valueOf(status.value()), resMsg);
     }
 }
