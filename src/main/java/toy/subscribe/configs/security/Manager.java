@@ -4,9 +4,13 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import toy.subscribe.configs.model.BaseEntity;
 
 import javax.persistence.Entity;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Getter
@@ -25,5 +29,9 @@ public class Manager extends BaseEntity {
 
     public static Manager of(String username, String password, String authority) {
         return new Manager(username, password, authority);
+    }
+
+    public List<GrantedAuthority> getGrantedAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority(this.authority));
     }
 }
