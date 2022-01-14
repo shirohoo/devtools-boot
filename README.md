@@ -1,4 +1,4 @@
-# Link : http://15.165.178.142/
+# Link : https://devtools.life/
 
 # DEVELOPMENT DICTIONARY
 
