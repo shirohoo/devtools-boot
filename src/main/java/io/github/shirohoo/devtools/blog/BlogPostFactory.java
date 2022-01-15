@@ -1,28 +1,21 @@
 package io.github.shirohoo.devtools.blog;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 class BlogPostFactory {
-    private final BlogPostRepository feedBoardRepository;
+    private final CompanyRepository companyRepository;
+    private final BlogPostRepository blogPostRepository;
 
     BlogPost ifNonDuplicateConvert(RSSFeedMessage message) {
-        if (!isNonDuplicate(message)) {
-            return null;
-        }
-
-        List<Company> companies = JsonReader.readCompanies();
-
-        if (companies == null) {
+        if (isAlreadyExists(message)) {
             return null;
         }
 
         String url = message.getLink();
-
-        for (Company company : companies) {
+        for (Company company : companyRepository.findAll()) {
             if (url.contains(company.getKey())) {
                 message.setCompany(company.getName());
                 message.setImgPath(company.getImgPath());
@@ -38,7 +31,7 @@ class BlogPostFactory {
             .build();
     }
 
-    private boolean isNonDuplicate(RSSFeedMessage message) {
-        return !feedBoardRepository.existsByGuid(message.getGuid());
+    private boolean isAlreadyExists(RSSFeedMessage message) {
+        return blogPostRepository.existsByGuid(message.getGuid());
     }
 }

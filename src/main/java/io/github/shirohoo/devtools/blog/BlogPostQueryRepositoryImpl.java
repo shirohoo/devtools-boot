@@ -1,11 +1,9 @@
 package io.github.shirohoo.devtools.blog;
 
-import static java.util.stream.Collectors.toList;
-import static io.github.shirohoo.devtools.blog.QBlogPost.*;
+import static io.github.shirohoo.devtools.blog.QBlogPost.blogPost;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,21 +17,17 @@ class BlogPostQueryRepositoryImpl implements BlogPostQueryRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<BlogPostDto> findPage(Pageable pageable, String company, String title) {
+    public Page<BlogPost> providePages(Pageable pageable, String company, String title) {
         return PageableExecutionUtils.getPage(
-            convert(queryFactory
+            queryFactory
                 .selectFrom(blogPost)
                 .where(allContains(company, title))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(blogPost.id.desc())
-                .fetch()),
+                .fetch(),
             pageable,
             getCountQuery(company, title)::fetchCount);
-    }
-
-    private List<BlogPostDto> convert(List<BlogPost> blogPosts) {
-        return blogPosts.stream().map(BlogPost::toDto).collect(toList());
     }
 
     private BooleanExpression allContains(String company, String title) {

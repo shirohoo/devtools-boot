@@ -1,19 +1,17 @@
 package io.github.shirohoo.devtools.blog;
 
+import io.github.shirohoo.devtools.config.model.BaseEntity;
+import javax.persistence.Entity;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Entity
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-class Company {
+class Company extends BaseEntity {
+    private String url;
     private String key;
     private String name;
     private String imgPath;
-
-    static Company of(String key, String name, String imgPath) {
-        return new Company(key, name, imgPath);
-    }
 }

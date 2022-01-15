@@ -32,9 +32,5 @@ class RSSFeed {
     static RSSFeed of(String title, String link, String language, String copyright, String pubDate) {
         return new RSSFeed(title, link, language, copyright, pubDate);
     }
-
-    static RSSFeed of(String title, String link, String language, String copyright, String pubDate, List<RSSFeedMessage> messages) {
-        return new RSSFeed(title, link, language, copyright, pubDate, messages);
-    }
 }
 

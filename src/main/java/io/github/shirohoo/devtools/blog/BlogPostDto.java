@@ -32,9 +32,4 @@ class BlogPostDto {
         this.link = link;
         this.regDate = regDate;
     }
-
-    @Builder
-    static BlogPostDto of(final Long id, final String company, final String imgPath, final String title, final String link, final LocalDateTime regDate) {
-        return new BlogPostDto(id, company, imgPath, title, link, regDate);
-    }
 }

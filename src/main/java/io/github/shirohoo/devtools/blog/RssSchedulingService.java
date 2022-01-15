@@ -1,5 +1,6 @@
 package io.github.shirohoo.devtools.blog;
 
+import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toList;
 import java.net.MalformedURLException;
 import java.util.List;
@@ -16,34 +17,31 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class RssSchedulingService {
     private final BlogPostFactory blogPostFactory;
-    private final BlogPostRepository feedBoardRepository;
+    private final CompanyRepository companyRepository;
+    private final BlogPostRepository blogPostRepository;
 
     @Transactional
     public void collect() {
-        List<String> urls = JsonReader.readUrls();
-        if (Objects.nonNull(urls)) {
-            feedBoardRepository.saveAll(urls.stream()
-                    .map(this::getRssFeeds)
-                    .filter(Objects::nonNull)
-                    .flatMap(this::getMessageStreams)
-                    .map(blogPostFactory::ifNonDuplicateConvert)
-                    .filter(Objects::nonNull)
-                    .collect(toList()))
-                .forEach(this::loggingNewFeeds);
-            return;
-        }
-        log.error("Urls is null. please check JsonReader !");
+        List<String> urls = companyRepository.findAllUrl();
+        blogPostRepository.saveAll(urls.stream()
+                .map(this::getRssFeeds)
+                .filter(Objects::nonNull)
+                .flatMap(this::getMessageStreams)
+                .map(blogPostFactory::ifNonDuplicateConvert)
+                .filter(Objects::nonNull)
+                .collect(toList()))
+            .forEach(this::loggingNewFeeds);
     }
 
     private RSSFeed getRssFeeds(String url) {
-        return readRssFeed(createRssFeedParser(url));
+        return readRssFeed(requireNonNull(createRssFeedParser(url)));
     }
 
     private RSSFeed readRssFeed(RSSFeedParser parser) {
         try {
             return parser.readFeed();
         } catch (XMLStreamException e) {
-            log.error("XML parsing error.");
+            log.error("XML parsing error. url={}", parser.getUrl());
         }
         return null;
     }
@@ -62,6 +60,6 @@ public class RssSchedulingService {
     }
 
     private void loggingNewFeeds(BlogPost blogPost) {
-        log.info("[New feed] {}", blogPost.toString());
+        log.info("New post={}", blogPost.toString());
     }
 }

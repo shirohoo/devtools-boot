@@ -11,12 +11,12 @@ import org.springframework.data.domain.Page;
 public class HttpResponseWrapper<T> {
     private Page<T> pages;
     private Long visitorsOfDay;
-    private Long visitorsOfReduce;
+    private Long visitorsOfTotal;
 
     @Builder(access = AccessLevel.PUBLIC)
-    private HttpResponseWrapper(final Page<T> pages, final Long visitorsOfDay, final Long visitorsOfReduce) {
+    private HttpResponseWrapper(final Page<T> pages, final Long visitorsOfDay, final Long visitorsOfTotal) {
         this.pages = pages;
         this.visitorsOfDay = visitorsOfDay;
-        this.visitorsOfReduce = visitorsOfReduce;
+        this.visitorsOfTotal = visitorsOfTotal;
     }
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Objects;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -56,17 +57,12 @@ class RSSFeedParser {
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 
             try (InputStream inputStream = openInputStream()) {
-
                 XMLEventReader eventReader = inputFactory.createXMLEventReader(inputStream);
-
                 while (eventReader.hasNext()) {
                     XMLEvent event = eventReader.nextEvent();
-
                     if (event.isStartElement()) {
                         String localPart = event.asStartElement().getName().getLocalPart();
-
                         switch (localPart) {
-
                             case ITEM:
                                 if (isFeedHeader) {
                                     isFeedHeader = false;
@@ -74,38 +70,31 @@ class RSSFeedParser {
                                 }
                                 event = eventReader.nextEvent();
                                 break;
-
                             case TITLE:
-
                                 title = getCharacterData(event, eventReader);
                                 break;
                             case LINK:
-
                                 link = getCharacterData(event, eventReader);
                                 break;
-
                             case GUID:
                                 guid = getCharacterData(event, eventReader);
                                 break;
-
                             case LANGUAGE:
                                 language = getCharacterData(event, eventReader);
                                 break;
-
                             case AUTHOR:
                                 author = getCharacterData(event, eventReader);
                                 break;
-
                             case PUBDATE:
                                 pubdate = getCharacterData(event, eventReader);
                                 break;
-
                             case COPYRIGHT:
                                 copyright = getCharacterData(event, eventReader);
                                 break;
                         }
                     } else if (event.isEndElement()) {
-                        if (event.asEndElement().getName().getLocalPart() == ITEM) {
+                        String localPart = event.asEndElement().getName().getLocalPart();
+                        if (Objects.equals(localPart, ITEM)) {
                             RSSFeedMessage message = RSSFeedMessage.builder()
                                 .author(author)
                                 .guid(guid)
@@ -114,10 +103,10 @@ class RSSFeedParser {
                                 .pubDate(pubdate)
                                 .build();
 
-                            feed.getMessages().add(message);
-
-                            event = eventReader.nextEvent();
-                            continue;
+                            if (feed != null) {
+                                feed.getMessages().add(message);
+                                event = eventReader.nextEvent();
+                            }
                         }
                     }
                 }
@@ -138,14 +127,18 @@ class RSSFeedParser {
     }
 
     private String getCharacterData(XMLEvent event, XMLEventReader eventReader) throws XMLStreamException {
-        String s = "";
+        String data = "";
         event = eventReader.nextEvent();
 
         if (event instanceof Characters) {
-            s = event.asCharacters().getData();
+            data = event.asCharacters().getData();
         }
 
-        return s;
+        return data;
+    }
+
+    String getUrl() {
+        return url.toString();
     }
 }
 
