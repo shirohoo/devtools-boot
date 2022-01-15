@@ -1,14 +1,14 @@
 package io.github.shirohoo.devtools.bookmark;
 
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Value;
 
-@Getter
+@Value
 class BookmarkDto {
-    private Long id;
-    private String category;
-    private String title;
-    private String link;
+    Long id;
+    String category;
+    String title;
+    String link;
 
     @Builder
     private BookmarkDto(Long id, String category, String title, String link) {

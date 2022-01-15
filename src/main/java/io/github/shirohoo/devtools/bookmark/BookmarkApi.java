@@ -1,10 +1,13 @@
 package io.github.shirohoo.devtools.bookmark;
 
+import io.github.shirohoo.devtools.common.ContentProvider;
+import io.github.shirohoo.devtools.common.DevtoolsResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,26 +20,34 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/bookmarks")
-class BookmarkApiController {
-    private final BookmarkProvideService service;
-    private final BookmarkRepository repository;
+class BookmarkApi {
+    private final BookmarkRepository bookmarkRepository;
+    private final ContentProvider<Bookmark> bookmarkProvider;
 
     @GetMapping
-    ResponseEntity<?> findPage(
+    ResponseEntity<DevtoolsResponse<BookmarkDto>> findPage(
         Pageable pageable,
         @RequestParam(value = "category", required = false) String category,
         @RequestParam(value = "title", required = false) String title
     ) {
-        return new ResponseEntity<>(service.provideBookmarkWrapper(pageable, category, title), HttpStatus.OK);
+        return new ResponseEntity<>(
+            DevtoolsResponse.<BookmarkDto>builder()
+                .pages(bookmarkProvider.provide(pageable, category, title).map(Bookmark::toDto))
+                .visitorsOfDay(bookmarkProvider.visitorsOfDay())
+                .visitorsOfTotal(bookmarkProvider.visitorsOfTotal())
+                .build(),
+            HttpStatus.OK);
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     void newBookMark(BookmarkDto bookmarkDto) {
-        repository.save(bookmarkDto.toEntity());
+        bookmarkRepository.save(bookmarkDto.toEntity());
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     void deleteBookMark(@PathVariable Long id) {
-        repository.deleteById(id);
+        bookmarkRepository.deleteById(id);
     }
 }
