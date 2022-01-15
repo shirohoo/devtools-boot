@@ -2,7 +2,6 @@ package io.github.shirohoo.devtools.blog;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -14,7 +13,6 @@ public class RssFeedScheduler {
 
     private final RssCollector rssCollector;
 
-    @Async("scheduledExecutor")
     @Scheduled(fixedRate = COLLECT_DELAY_MS)
     public void collect() {
         rssCollector.collect();

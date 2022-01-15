@@ -1,15 +1,15 @@
+jasypt:
+  encryptor:
+    password: ${DEVTOOLS_PASSWORD:NONE}
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+
 spring:
   profiles:
     active: dev
 
   main:
     allow-bean-definition-overriding: true
-
-  jasypt:
-    encryptor:
-      password: ${DEVTOOLS_PASSWORD:NONE}
-      algorithm: PBEWithMD5AndDES
-      iv-generator-classname: org.jasypt.iv.NoIvGenerator
 
   data:
     web:

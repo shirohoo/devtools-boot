@@ -1,9 +1,8 @@
 spring:
   datasource:
-    hikari:
-      jdbc-url: ENC(GBle1MbKfJ/EqbOaryTSjXEUuunAbQMfiMObCznq/RTkxAWkf2F/1GtnOyNo3CVUg0iWWOEl8XwWl+eNeOXWGlsu0hf2FmgqR7Zw1dsJ4FkIDdi1jZyQyQ==)
-      username: ENC(5xnlaVzVyey/Ec/4n4yYog==)
-      password: ENC(FghdAtCjugJtF4F3AzYk/GxbLH2W5WhP)
+    url: ENC(GBle1MbKfJ/EqbOaryTSjXEUuunAbQMfiMObCznq/RTkxAWkf2F/1GtnOyNo3CVUg0iWWOEl8XwWl+eNeOXWGlsu0hf2FmgqR7Zw1dsJ4FkIDdi1jZyQyQ==)
+    username: ENC(5xnlaVzVyey/Ec/4n4yYog==)
+    password: ENC(FghdAtCjugJtF4F3AzYk/GxbLH2W5WhP)
 
   jpa:
     hibernate:
