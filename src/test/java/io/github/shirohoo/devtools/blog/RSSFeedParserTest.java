@@ -27,9 +27,8 @@ class RSSFeedParserTest {
 
     private static Stream<Arguments> readAllGroup() {
         return Stream.of(
+            Arguments.of("https://techblog.woowahan.com/feed/", "woowahan"),
             Arguments.of("https://woowabros.github.io/feed.xml", "woowabros"),
-            //                Arguments.of("https://medium.com/feed/watcha", "watcha"),
-            //                Arguments.of("https://medium.com/feed/daangn", "daangn"),
             Arguments.of("https://tech.kakao.com/feed/", "kakao"),
             Arguments.of("https://yanolja.github.io/feed.xml", "yanolja"),
             Arguments.of("https://engineering.linecorp.com/ko/feed/", "line"),

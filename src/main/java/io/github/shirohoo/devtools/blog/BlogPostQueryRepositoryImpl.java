@@ -4,7 +4,6 @@ import static io.github.shirohoo.devtools.blog.QBlogPost.blogPost;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,18 +30,20 @@ class BlogPostQueryRepositoryImpl implements BlogPostQueryRepository {
     }
 
     private BooleanExpression allContains(String company, String title) {
-        return companyContains(company).and(titleContains(title));
+        return companyContains(company)
+            .and(titleContains(title));
     }
 
     private BooleanExpression companyContains(String company) {
-        return Objects.nonNull(company) ? blogPost.company.contains(company) : null;
+        return company != null ? blogPost.company.contains(company) : null;
     }
 
     private BooleanExpression titleContains(String title) {
-        return Objects.nonNull(title) ? blogPost.title.contains(title) : null;
+        return title != null ? blogPost.title.contains(title) : null;
     }
 
     private JPAQuery<BlogPost> getCountQuery(String company, String title) {
-        return queryFactory.selectFrom(blogPost).where(allContains(company, title));
+        return queryFactory.selectFrom(blogPost)
+            .where(allContains(company, title));
     }
 }

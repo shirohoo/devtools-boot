@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class RssSchedulingService {
+public class RssCollector {
     private final BlogPostFactory blogPostFactory;
     private final CompanyRepository companyRepository;
     private final BlogPostRepository blogPostRepository;
@@ -30,7 +30,7 @@ public class RssSchedulingService {
                 .map(blogPostFactory::ifNonDuplicateConvert)
                 .filter(Objects::nonNull)
                 .collect(toList()))
-            .forEach(this::loggingNewFeeds);
+            .forEach(this::loggingNewPosts);
     }
 
     private RSSFeed getRssFeeds(String url) {
@@ -59,7 +59,7 @@ public class RssSchedulingService {
         return rssFeed.getMessages().stream();
     }
 
-    private void loggingNewFeeds(BlogPost blogPost) {
+    private void loggingNewPosts(BlogPost blogPost) {
         log.info("New post={}", blogPost.toString());
     }
 }

@@ -1,4 +1,4 @@
-package io.github.shirohoo.devtools.config.http.wrapper;
+package io.github.shirohoo.devtools.common;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -8,13 +8,13 @@ import org.springframework.data.domain.Page;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class HttpResponseWrapper<T> {
+public class DevtoolsResponse<T> {
     private Page<T> pages;
     private Long visitorsOfDay;
     private Long visitorsOfTotal;
 
-    @Builder(access = AccessLevel.PUBLIC)
-    private HttpResponseWrapper(final Page<T> pages, final Long visitorsOfDay, final Long visitorsOfTotal) {
+    @Builder
+    private DevtoolsResponse(Page<T> pages, Long visitorsOfDay, Long visitorsOfTotal) {
         this.pages = pages;
         this.visitorsOfDay = visitorsOfDay;
         this.visitorsOfTotal = visitorsOfTotal;
