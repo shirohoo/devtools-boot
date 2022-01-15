@@ -1,9 +1,7 @@
 plugins {
     id 'java'
-//    id 'com.github.node-gradle.node' version '3.1.0'
     id 'org.springframework.boot' version '2.4.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'org.asciidoctor.convert' version '1.5.8'
     id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
 }
 
@@ -12,7 +10,12 @@ jar {
 }
 
 version = '3.5'
-sourceCompatibility = JavaVersion.VERSION_11
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+}
 
 gradle.projectsEvaluated {
     tasks.withType(JavaCompile) {
@@ -32,7 +35,6 @@ repositories {
 
 ext {
     querydslDir = "$buildDir/generated/querydsl"
-    set('snippetsDir', file('build/generated-snippets'))
 }
 
 dependencies {
@@ -44,29 +46,19 @@ dependencies {
     implementation(
             'org.springframework.boot:spring-boot-starter-data-jpa',
             'org.springframework.boot:spring-boot-starter-validation',
-            'org.springframework.boot:spring-boot-starter-cache',
             'org.springframework.boot:spring-boot-starter-web',
             'org.springframework.boot:spring-boot-starter-webflux',
             'org.springframework.boot:spring-boot-starter-security',
-            'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.6.2',
-            'javax.cache:cache-api:1.1.1',
-            'org.ehcache:ehcache:3.9.4',
-            'org.apache.poi:poi:5.0.0',
-            'org.apache.poi:poi-ooxml:5.0.0',
+            'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0',
+            'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4',
             'com.querydsl:querydsl-jpa',
             'com.googlecode.json-simple:json-simple:1.1.1',
-            'commons-io:commons-io:2.8.0',
             'org.apache.commons:commons-lang3:3.12.0',
             'org.apache.opennlp:opennlp-tools:1.9.3',
-            'org.modelmapper:modelmapper:2.4.4',
     )
 
-    testImplementation(
-            'org.springframework.restdocs:spring-restdocs-mockmvc'
-    )
-
-    testImplementation("org.springframework.boot:spring-boot-starter-test") {
-        exclude group: "junit", module: "junit"
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'junit', module: 'junit'
     }
 
     compileOnly(
@@ -74,22 +66,19 @@ dependencies {
     )
 
     runtimeOnly(
+            'com.h2database:h2',
             'mysql:mysql-connector-java'
-    )
-
-    testRuntimeOnly(
-            'com.h2database:h2'
     )
 }
 
 test {
-    outputs.dir snippetsDir
     useJUnitPlatform()
+    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+    systemProperty 'jasypt.encryptor.password', System.getenv('DEVTOOLS_PASSWORD')
 }
 
-asciidoctor {
-    inputs.dir snippetsDir
-    dependsOn test
+bootRun {
+    systemProperty 'jasypt.encryptor.password', System.getenv('DEVTOOLS_PASSWORD')
 }
 
 querydsl {

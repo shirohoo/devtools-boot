@@ -1,24 +1,36 @@
 spring:
   profiles:
     active: dev
+
   main:
     allow-bean-definition-overriding: true
+
+  jasypt:
+    encryptor:
+      password: ${DEVTOOLS_PASSWORD:NONE}
+      algorithm: PBEWithMD5AndDES
+      iv-generator-classname: org.jasypt.iv.NoIvGenerator
+
   data:
     web:
       pageable:
         max-page-size: 200
     rest:
       max-page-size: 200
+
   jpa:
     open-in-view: false
-    hibernate:
-      ddl-auto: validate
     properties:
       hibernate:
         default_batch_fetch_size: 1000
+
 logging:
   level:
     web: debug
     org.hibernate.SQL: info
     com.zaxxer.hikari: trace
     com.zaxxer.hikari.HikariConfig: debug
+
+api:
+  key:
+    kakao: ENC(T3FSCqB3J3uUtcSVRoNwxGZC0DbsdnC/kfbvSOKhGff5L1cFlHhBsSc4qd+8Ny9gqwL4HrBCFnU=)
