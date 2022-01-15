@@ -34,12 +34,12 @@ public class BookmarkApiController {
         }
     }
 
-    @PostMapping("/bookmark")
+    @PostMapping("/bookmarks")
     public void create(BookmarkDto bookmarkDto) {
         repository.save(bookmarkDto.convert());
     }
 
-    @DeleteMapping("/bookmark/{id}")
+    @DeleteMapping("/bookmarks/{id}")
     public void delete(@PathVariable Long id) {
         repository.deleteById(id);
     }

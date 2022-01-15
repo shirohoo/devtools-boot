@@ -19,7 +19,7 @@ import toy.subscribe.feedboard.service.FeedBoardProvideService;
 public class BoardApiController {
     private final FeedBoardProvideService feedBoardProvideService;
 
-    @GetMapping("/boards")
+    @GetMapping("/blogs")
     public ResponseEntity<?> receiveFeedBoardsRequest(Pageable pageable,
                                                       @RequestParam(value = "company", required = false) String company,
                                                       @RequestParam(value = "title", required = false) String title) {
