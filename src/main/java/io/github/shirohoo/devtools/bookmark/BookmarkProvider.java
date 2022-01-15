@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class BookmarkProvider implements ContentProvider<Bookmark> {
+class BookmarkProvider implements ContentProvider<Bookmark> {
     private final HttpLogRepository httpLogRepository;
     private final BookmarkRepository bookmarkRepository;
 
