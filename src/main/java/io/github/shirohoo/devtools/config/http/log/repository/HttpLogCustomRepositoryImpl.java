@@ -17,7 +17,7 @@ public class HttpLogCustomRepositoryImpl implements HttpLogCustomRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public Long findDau() {
+    public Long findVisitorsOfDay() {
         return queryFactory
                 .select(httpLog.clientIp.countDistinct())
                 .from(httpLog)
@@ -28,7 +28,7 @@ public class HttpLogCustomRepositoryImpl implements HttpLogCustomRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public Long findCumulativeVisitors() {
+    public Long findVisitorsOfTotal() {
         return queryFactory
                 .select(httpLog.clientIp.countDistinct())
                 .from(httpLog)
