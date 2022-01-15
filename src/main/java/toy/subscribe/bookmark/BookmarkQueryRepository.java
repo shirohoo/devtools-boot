@@ -1,9 +1,8 @@
-package toy.subscribe.bookmark.repository;
+package toy.subscribe.bookmark;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import toy.subscribe.bookmark.dto.BookmarkDto;
 
-public interface BookmarkQueryRepository {
+interface BookmarkQueryRepository {
     Page<BookmarkDto> findPage(final Pageable pageable, final String category, final String title);
 }
