@@ -1,4 +1,4 @@
-package toy.subscribe.dictionary.controller;
+package toy.subscribe.blog.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,21 +10,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import toy.subscribe.config.exception.PageableLargeSizeException;
-import toy.subscribe.dictionary.service.DictionaryProvideService;
+import toy.subscribe.blog.service.FeedBoardProvideService;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-public class DictionaryApiController {
-    private final DictionaryProvideService dictionaryProvideService;
+public class BoardApiController {
+    private final FeedBoardProvideService feedBoardProvideService;
 
-    @GetMapping("/dictionaries")
-    public ResponseEntity<?> receiveDictionariesRequest(Pageable pageable,
-                                                        @RequestParam(value = "enWord", required = false) String enWord,
-                                                        @RequestParam(value = "krWord", required = false) String krWord) {
+    @GetMapping("/blogs")
+    public ResponseEntity<?> receiveFeedBoardsRequest(Pageable pageable,
+                                                      @RequestParam(value = "company", required = false) String company,
+                                                      @RequestParam(value = "title", required = false) String title) {
         verifyPageable(pageable);
-        return new ResponseEntity<>(dictionaryProvideService.provideDictionaryWrapper(pageable, enWord, krWord), HttpStatus.OK);
+        return new ResponseEntity<>(feedBoardProvideService.provideFeedBoardWrapper(pageable, company, title), HttpStatus.OK);
     }
 
     private void verifyPageable(final Pageable pageable) {

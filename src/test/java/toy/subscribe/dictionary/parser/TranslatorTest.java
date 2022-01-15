@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import toy.subscribe.configs.external.ApiProperties;
+import toy.subscribe.config.external.ApiProperties;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;

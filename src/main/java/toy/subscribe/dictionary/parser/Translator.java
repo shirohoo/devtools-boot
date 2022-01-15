@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec;
 import reactor.core.publisher.Mono;
-import toy.subscribe.configs.external.ApiProperties;
+import toy.subscribe.config.external.ApiProperties;
 
 import java.io.Serializable;
 import java.util.List;

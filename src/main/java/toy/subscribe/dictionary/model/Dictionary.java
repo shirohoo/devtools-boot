@@ -3,7 +3,7 @@ package toy.subscribe.dictionary.model;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import toy.subscribe.configs.model.BaseEntity;
+import toy.subscribe.config.model.BaseEntity;
 import toy.subscribe.dictionary.dto.DictionaryDto;
 
 import javax.persistence.Entity;

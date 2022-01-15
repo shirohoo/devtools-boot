@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import toy.subscribe.configs.model.BaseEntity;
+import toy.subscribe.config.model.BaseEntity;
 
 @Entity
 @Getter
