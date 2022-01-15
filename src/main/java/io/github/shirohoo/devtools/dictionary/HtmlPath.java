@@ -1,4 +1,4 @@
-package io.github.shirohoo.devtools.dictionary.type;
+package io.github.shirohoo.devtools.dictionary;
 
 import lombok.Getter;
 

@@ -1,6 +1,7 @@
 package io.github.shirohoo.devtools.dictionary.parser;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.shirohoo.devtools.dictionary.Translator;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

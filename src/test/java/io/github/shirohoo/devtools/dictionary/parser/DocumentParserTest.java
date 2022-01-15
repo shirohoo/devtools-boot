@@ -1,11 +1,12 @@
 package io.github.shirohoo.devtools.dictionary.parser;
 
+import io.github.shirohoo.devtools.dictionary.DocumentParser;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import io.github.shirohoo.devtools.dictionary.type.HtmlPath;
+import io.github.shirohoo.devtools.dictionary.HtmlPath;
 
 import java.util.Set;
 import java.util.stream.Stream;

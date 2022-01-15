@@ -18,7 +18,7 @@ class BlogPostApi {
     private final ContentProvider<BlogPost> blogPostProvider;
 
     @GetMapping("/blogs")
-    ResponseEntity<DevtoolsResponse<BlogPostDto>> findAll(
+    ResponseEntity<DevtoolsResponse<BlogPostDto>> findPages(
         Pageable pageable,
         @RequestParam(value = "company", required = false) String company,
         @RequestParam(value = "title", required = false) String title

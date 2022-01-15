@@ -25,7 +25,7 @@ class BookmarkApi {
     private final ContentProvider<Bookmark> bookmarkProvider;
 
     @GetMapping
-    ResponseEntity<DevtoolsResponse<BookmarkDto>> findPage(
+    ResponseEntity<DevtoolsResponse<BookmarkDto>> findPages(
         Pageable pageable,
         @RequestParam(value = "category", required = false) String category,
         @RequestParam(value = "title", required = false) String title

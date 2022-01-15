@@ -27,6 +27,7 @@ class BlogPost extends BaseEntity {
 
     BlogPostDto toDto() {
         return BlogPostDto.builder()
+            .id(id)
             .company(company)
             .imgPath(imgPath)
             .title(title)

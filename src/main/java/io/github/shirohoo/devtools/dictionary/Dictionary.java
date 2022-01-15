@@ -1,17 +1,15 @@
-package io.github.shirohoo.devtools.dictionary.model;
+package io.github.shirohoo.devtools.dictionary;
 
+import io.github.shirohoo.devtools.config.model.BaseEntity;
+import javax.persistence.Entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import io.github.shirohoo.devtools.config.model.BaseEntity;
-import io.github.shirohoo.devtools.dictionary.dto.DictionaryDto;
-
-import javax.persistence.Entity;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Dictionary extends BaseEntity {
+class Dictionary extends BaseEntity {
     private String enWord;
     private String krWord;
 
@@ -24,11 +22,11 @@ public class Dictionary extends BaseEntity {
         return new Dictionary(enWord, krWord);
     }
 
-    public DictionaryDto convert() {
+    DictionaryDto toDto() {
         return DictionaryDto.builder()
-                            .id(super.getId())
-                            .enWord(this.enWord)
-                            .krWord(this.krWord)
-                            .build();
+            .id(id)
+            .enWord(enWord)
+            .krWord(krWord)
+            .build();
     }
 }

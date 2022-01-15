@@ -1,11 +1,11 @@
 package io.github.shirohoo.devtools.bookmark;
 
+import io.github.shirohoo.devtools.config.model.BaseEntity;
 import javax.persistence.Entity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import io.github.shirohoo.devtools.config.model.BaseEntity;
 
 @Entity
 @Getter
@@ -25,7 +25,7 @@ class Bookmark extends BaseEntity {
 
     BookmarkDto toDto() {
         return BookmarkDto.builder()
-            .id(getId())
+            .id(id)
             .category(category)
             .title(title)
             .link(link)

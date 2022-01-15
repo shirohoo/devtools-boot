@@ -1,7 +1,12 @@
-package io.github.shirohoo.devtools.dictionary.parser;
+package io.github.shirohoo.devtools.dictionary;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.shirohoo.devtools.config.external.ApiProperties;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,12 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec;
 import reactor.core.publisher.Mono;
-import io.github.shirohoo.devtools.config.external.ApiProperties;
-
-import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @Slf4j
 @Component
@@ -43,16 +42,16 @@ public class Translator {
         final String srcLang = "en";
         final String targetLang = "kr";
         return WebClient.builder()
-                        .baseUrl(baseURl)
-                        .build()
-                        .get()
-                        .uri(uriBuilder -> uriBuilder.path(uri)
-                                                     .queryParam("src_lang", srcLang)
-                                                     .queryParam("target_lang", targetLang)
-                                                     .queryParam("query", enWord)
-                                                     .build())
+            .baseUrl(baseURl)
+            .build()
+            .get()
+            .uri(uriBuilder -> uriBuilder.path(uri)
+                .queryParam("src_lang", srcLang)
+                .queryParam("target_lang", targetLang)
+                .queryParam("query", enWord)
+                .build())
 
-                        .header("Authorization", apiProperties.getKakaoKey());
+            .header("Authorization", apiProperties.getKakaoKey());
     }
 
     /**
@@ -64,12 +63,10 @@ public class Translator {
         try {
             final Mono<String> stringMono = header.retrieve().bodyToMono(String.class);
             return objectMapper.readValue(stringMono.block(), ReadObject.class);
-        }
-        catch (JsonProcessingException e) {
+        } catch (JsonProcessingException e) {
             log.error(e.getMessage());
             return null;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error("KaKao API error!");
             return null;
         }
@@ -83,7 +80,7 @@ public class Translator {
     private String getResult(final ReadObject readObject) {
         if (Objects.nonNull(readObject)) {
             return String.valueOf(readObject.getTranslated_text()
-                                            .get(0)).replaceAll("[\\[\\]]", "");
+                .get(0)).replaceAll("[\\[\\]]", "");
         }
         return null;
     }

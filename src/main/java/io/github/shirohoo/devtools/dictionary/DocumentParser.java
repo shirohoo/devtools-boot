@@ -1,17 +1,19 @@
-package io.github.shirohoo.devtools.dictionary.parser;
+package io.github.shirohoo.devtools.dictionary;
 
-import lombok.extern.slf4j.Slf4j;
-import opennlp.tools.tokenize.TokenizerME;
-import opennlp.tools.tokenize.TokenizerModel;
-
-import java.io.*;
+import static java.util.Arrays.stream;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
-import static java.util.Arrays.stream;
+import lombok.extern.slf4j.Slf4j;
+import opennlp.tools.tokenize.TokenizerME;
+import opennlp.tools.tokenize.TokenizerModel;
 
 @Slf4j
 public class DocumentParser {
@@ -31,26 +33,26 @@ public class DocumentParser {
      * 머신러닝으로 정제되지 않는 단어들을 정제하기 위한 수동 필터
      */
     private final String[] conlangFilter = {"taglib", "springframework", "namespace", "jackson", "springboot", "spring", "login", "winsw",
-                                            "username", "logback", "autoscaler", "hibernate", "kubernetes", "docker", "homebrew", "datadog",
-                                            "livereload", "jersey", "kotlin", "framework", "oauth", "testinstance", "junit4", "junit5", "bugfix",
-                                            "webflux", "redis", "kafka", "elasticsearch", "log4j", "slf4j", "logstash", "kibana", "hsqldb",
-                                            "stackdriver", "timestamps", "timestamp", "nassert", "namespaces", "localhost", "initializer",
-                                            "catalina", "hardcoding", "software", "jolokia", "param", "oracle", "apache", "github", "querydsl",
-                                            "initializers", "exejar", "dockerfiles", "logstartupinfo", "rabbitmq", "testcontainers", "filesystem",
-                                            "https", "mustache", "thymeleaf", "sigterm", "javax", "appname", "webapp", "fullstack", "websocket",
-                                            "backend", "frontend", "mappers", "formatters", "reloadtrigger", "autowire", "kairos", "clinic",
-                                            "formatter", "mapper", "matcher", "atomikos", "buildpacks", "coroutines", "myapp", "logout", "wikipedia",
-                                            "setter", "getter", "lombok", "plugin", "gradle", "maven", "iframe", "matching", "cookies", "cookie",
-                                            "session", "sessions", "proxies", "proxy", "cache", "mongodb", "infinispan", "tomcat", "netty",
-                                            "mymodule", "pooled", "loggers", "logger", "devtools", "fasterxml", "humio", "facebook", "google",
-                                            "mongo", "vanilla", "javascript", "jsonp", "jsonb", "cassandra", "dynatrace", "hikari", "header",
-                                            "messaginghub", "myconfig", "servlets", "artemis", "nonheap", "whitelabel", "mytag", "servlet", "hashi",
-                                            "webjars", "petclinic", "mockito", "openjdk", "sidecar", "hamcrest", "dockerfile", "prodmq", "millisecond",
-                                            "unmapper", "couchbase", "firebase", "groovy", "stackoverflow", "hazelcast", "liquibase", "micrometer",
-                                            "layertools", "benmanes", "flywaydb", "antlib", "cloudfoundryapplication", "appengine", "wildfly",
-                                            "rabbit", "prefixing", "populator", "keycloak", "sessionid", "reauthenticate", "mybank", "myopenid",
-                                            "encodings", "decodings", "subdomains", "vicitim", "currval", "boolean", "arguments", "charset",
-                                            "subdirectory", "proddb", "datasource", "bootapp", "application", "authn", "jayway", "eclipselink"};
+        "username", "logback", "autoscaler", "hibernate", "kubernetes", "docker", "homebrew", "datadog",
+        "livereload", "jersey", "kotlin", "framework", "oauth", "testinstance", "junit4", "junit5", "bugfix",
+        "webflux", "redis", "kafka", "elasticsearch", "log4j", "slf4j", "logstash", "kibana", "hsqldb",
+        "stackdriver", "timestamps", "timestamp", "nassert", "namespaces", "localhost", "initializer",
+        "catalina", "hardcoding", "software", "jolokia", "param", "oracle", "apache", "github", "querydsl",
+        "initializers", "exejar", "dockerfiles", "logstartupinfo", "rabbitmq", "testcontainers", "filesystem",
+        "https", "mustache", "thymeleaf", "sigterm", "javax", "appname", "webapp", "fullstack", "websocket",
+        "backend", "frontend", "mappers", "formatters", "reloadtrigger", "autowire", "kairos", "clinic",
+        "formatter", "mapper", "matcher", "atomikos", "buildpacks", "coroutines", "myapp", "logout", "wikipedia",
+        "setter", "getter", "lombok", "plugin", "gradle", "maven", "iframe", "matching", "cookies", "cookie",
+        "session", "sessions", "proxies", "proxy", "cache", "mongodb", "infinispan", "tomcat", "netty",
+        "mymodule", "pooled", "loggers", "logger", "devtools", "fasterxml", "humio", "facebook", "google",
+        "mongo", "vanilla", "javascript", "jsonp", "jsonb", "cassandra", "dynatrace", "hikari", "header",
+        "messaginghub", "myconfig", "servlets", "artemis", "nonheap", "whitelabel", "mytag", "servlet", "hashi",
+        "webjars", "petclinic", "mockito", "openjdk", "sidecar", "hamcrest", "dockerfile", "prodmq", "millisecond",
+        "unmapper", "couchbase", "firebase", "groovy", "stackoverflow", "hazelcast", "liquibase", "micrometer",
+        "layertools", "benmanes", "flywaydb", "antlib", "cloudfoundryapplication", "appengine", "wildfly",
+        "rabbit", "prefixing", "populator", "keycloak", "sessionid", "reauthenticate", "mybank", "myopenid",
+        "encodings", "decodings", "subdomains", "vicitim", "currval", "boolean", "arguments", "charset",
+        "subdirectory", "proddb", "datasource", "bootapp", "application", "authn", "jayway", "eclipselink"};
 
     /**
      * HTML PATH를 입력받아 해당 HTML에 접근하여 모든 문자열을 읽어 String 객체로 반환한다.
@@ -60,10 +62,9 @@ public class DocumentParser {
     public String read(String path) {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path)))) {
             return br.lines()
-                     .map(read -> read + NEW_LINE)
-                     .collect(Collectors.joining());
-        }
-        catch (IOException e) {
+                .map(read -> read + NEW_LINE)
+                .collect(Collectors.joining());
+        } catch (IOException e) {
             log.error(e.getMessage());
             return null;
         }
@@ -94,8 +95,7 @@ public class DocumentParser {
                 }
             }
             return set;
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             log.error(e.getMessage());
             return null;
         }
@@ -119,8 +119,8 @@ public class DocumentParser {
             sb.append(string);
         }
         return sb.toString().trim().toLowerCase()
-                 .replaceAll("[^a-zA-Z\\s\\.]", " ")
-                 .replaceAll(" +", " ");
+            .replaceAll("[^a-zA-Z\\s\\.]", " ")
+            .replaceAll(" +", " ");
     }
 
     /**
@@ -141,21 +141,21 @@ public class DocumentParser {
 
     private String removeHtmlTags(final String html, final Matcher matcher) {
         String unrefinedWord = " " + html.substring(matcher.start(), matcher.end())
-                                         .replaceAll("<b>", "").replaceAll("</b>", "")
-                                         .replaceAll("<a [^<>]*>", "").replaceAll("</a>", "")
-                                         .replaceAll("<p>", "").replaceAll("</p>", "")
-                                         .replaceAll("<sup [^<>]*>", "").replaceAll("</sup>", "")
-                                         .replaceAll("<span [^<>]*>", "").replaceAll("</span>", "")
-                                         .replaceAll("<i [^<>]*>>", "").replaceAll("</i>", "")
-                                         .replaceAll("<table [^<>]*>>", "").replaceAll("</table>", "")
-                                         .replaceAll("<block [^<>]*>>", "").replaceAll("</block>", "")
-                                         .replaceAll("<ul [^<>]*>>", "").replaceAll("</ul>", "")
-                                         .replaceAll("<li [^<>]*>>", "").replaceAll("</li>", "")
-                                         .replaceAll("<div [^<>]*>>", "").replaceAll("</div>", "")
-                                         .replaceAll("<h [^<>]*>>", "").replaceAll("</h>", "")
-                                         .replaceAll("www\\.", "").replaceAll("http", "")
-                                         .replaceAll("\\.com", "").replace(".", " ")
-                                         .replaceAll("\\[[^\\[\\]]*\\]", "");
+            .replaceAll("<b>", "").replaceAll("</b>", "")
+            .replaceAll("<a [^<>]*>", "").replaceAll("</a>", "")
+            .replaceAll("<p>", "").replaceAll("</p>", "")
+            .replaceAll("<sup [^<>]*>", "").replaceAll("</sup>", "")
+            .replaceAll("<span [^<>]*>", "").replaceAll("</span>", "")
+            .replaceAll("<i [^<>]*>>", "").replaceAll("</i>", "")
+            .replaceAll("<table [^<>]*>>", "").replaceAll("</table>", "")
+            .replaceAll("<block [^<>]*>>", "").replaceAll("</block>", "")
+            .replaceAll("<ul [^<>]*>>", "").replaceAll("</ul>", "")
+            .replaceAll("<li [^<>]*>>", "").replaceAll("</li>", "")
+            .replaceAll("<div [^<>]*>>", "").replaceAll("</div>", "")
+            .replaceAll("<h [^<>]*>>", "").replaceAll("</h>", "")
+            .replaceAll("www\\.", "").replaceAll("http", "")
+            .replaceAll("\\.com", "").replace(".", " ")
+            .replaceAll("\\[[^\\[\\]]*\\]", "");
         return unrefinedWord;
     }
 
@@ -171,10 +171,10 @@ public class DocumentParser {
      */
     private String splitCamelCase(String word) {
         return word.replaceAll(String.format("%s|%s|%s",
-                                             "(?<=[A-Z])(?=[A-Z][a-z])",
-                                             "(?<=[^A-Z])(?=[A-Z])",
-                                             "(?<=[A-Za-z])(?=[^A-Za-z])"),
-                               " ");
+                "(?<=[A-Z])(?=[A-Z][a-z])",
+                "(?<=[^A-Z])(?=[A-Z])",
+                "(?<=[A-Za-z])(?=[^A-Za-z])"),
+            " ");
     }
 
     /**

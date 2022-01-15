@@ -1,11 +1,12 @@
 package io.github.shirohoo.devtools.dictionary.service;
 
+import io.github.shirohoo.devtools.dictionary.DictionaryService;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
-import io.github.shirohoo.devtools.dictionary.type.HtmlPath;
+import io.github.shirohoo.devtools.dictionary.HtmlPath;
 
 @SpringBootTest
 @Disabled("카카오사전 API 일일호출제한 약2,000회")

@@ -1,15 +1,13 @@
-package io.github.shirohoo.devtools.dictionary.service;
+package io.github.shirohoo.devtools.dictionary;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import io.github.shirohoo.devtools.dictionary.model.Dictionary;
-import io.github.shirohoo.devtools.dictionary.parser.DocumentParser;
-import io.github.shirohoo.devtools.dictionary.parser.Translator;
-import io.github.shirohoo.devtools.dictionary.repository.DictionaryRepository;
-
-import java.util.*;
 
 @Slf4j
 @Service
@@ -34,7 +32,7 @@ public class DictionaryService {
         List<Dictionary> dictionaries = new ArrayList<>();
         for (String enWord : set) {
             String krWord = translator.translate(enWord)
-                                      .orElseThrow(() -> new NoSuchElementException("단어를 찾지 못했습니다."));
+                .orElseThrow();
 
             Dictionary dictionary = Dictionary.of(enWord, krWord);
 
