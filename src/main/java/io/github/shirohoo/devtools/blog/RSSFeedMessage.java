@@ -20,7 +20,7 @@ class RSSFeedMessage {
     private String pubDate;
 
     @Builder(access = AccessLevel.PUBLIC)
-    private RSSFeedMessage(final String title, final String company, final String imgPath, final String link, final String author, final String guid, final String pubDate) {
+    private RSSFeedMessage(String title, String company, String imgPath, String link, String author, String guid, String pubDate) {
         this.title = title;
         this.company = company;
         this.imgPath = imgPath;
@@ -31,14 +31,14 @@ class RSSFeedMessage {
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
         if (Objects.isNull(o) || getClass() != o.getClass()) {
             return false;
         }
-        final RSSFeedMessage that = (RSSFeedMessage) o;
+        RSSFeedMessage that = (RSSFeedMessage) o;
         return Objects.equals(getGuid(), that.getGuid());
     }
 

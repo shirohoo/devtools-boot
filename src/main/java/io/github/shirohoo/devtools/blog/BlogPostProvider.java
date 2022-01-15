@@ -12,21 +12,21 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 class BlogPostProvider implements ContentProvider<BlogPost> {
-    private final BlogPostRepository feedBoardRepository;
-    private final HttpLogRepository requestLogRepository;
+    private final HttpLogRepository httpLogRepository;
+    private final BlogPostRepository blogPostRepository;
 
     @Override
     public Page<BlogPost> provide(Pageable pageable, String company, String title) {
-        return feedBoardRepository.providePages(pageable, company, title);
+        return blogPostRepository.findPages(pageable, company, title);
     }
 
     @Override
     public Long visitorsOfDay() {
-        return requestLogRepository.findDau();
+        return httpLogRepository.findVisitorsOfDay();
     }
 
     @Override
     public Long visitorsOfTotal() {
-        return requestLogRepository.findCumulativeVisitors();
+        return httpLogRepository.findVisitorsOfTotal();
     }
 }

@@ -16,7 +16,7 @@ class BlogPostQueryRepositoryImpl implements BlogPostQueryRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<BlogPost> providePages(Pageable pageable, String company, String title) {
+    public Page<BlogPost> findPages(Pageable pageable, String company, String title) {
         return PageableExecutionUtils.getPage(
             queryFactory
                 .selectFrom(blogPost)

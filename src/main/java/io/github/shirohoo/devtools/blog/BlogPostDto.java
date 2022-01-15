@@ -2,26 +2,18 @@ package io.github.shirohoo.devtools.blog;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
-import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Value;
 
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Value
 class BlogPostDto {
-    private Long id;
-
-    private String company;
-
-    private String imgPath;
-
-    private String title;
-
-    private String link;
-
+    Long id;
+    String company;
+    String imgPath;
+    String title;
+    String link;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDateTime regDate;
+    LocalDateTime regDate;
 
     @Builder
     private BlogPostDto(Long id, String company, String imgPath, String title, String link, LocalDateTime regDate) {

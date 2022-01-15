@@ -43,7 +43,7 @@ class BlogPost extends BaseEntity {
         if (Objects.isNull(o) || getClass() != o.getClass()) {
             return false;
         }
-        final BlogPost blogPost = (BlogPost) o;
+        BlogPost blogPost = (BlogPost) o;
         return getId().equals(blogPost.getId());
     }
 
