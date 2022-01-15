@@ -3,6 +3,12 @@ spring:
     active: dev
   main:
     allow-bean-definition-overriding: true
+  data:
+    web:
+      pageable:
+        max-page-size: 200
+    rest:
+      max-page-size: 200
   jpa:
     open-in-view: false
     hibernate:
@@ -12,27 +18,7 @@ spring:
         default_batch_fetch_size: 1000
 logging:
   level:
+    web: debug
     org.hibernate.SQL: info
----
-spring:
-  config:
-    activate:
-      on-profile: dev
-decorator:
-  datasource:
-    p6spy:
-      enable-logging: true
----
-spring:
-  config:
-    activate:
-      on-profile: prod
-logging:
-  level:
-    com.zaxxer.hikari.HikariConfig: DEBUG
-    com.zaxxer.hikari: TRACE
-decorator:
-  datasource:
-    p6spy:
-      enable-logging: false
-
+    com.zaxxer.hikari: trace
+    com.zaxxer.hikari.HikariConfig: debug
