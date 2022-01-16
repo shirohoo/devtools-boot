@@ -9,8 +9,6 @@ jar {
     archivesBaseName = 'devtools'
 }
 
-version = '3.5'
-
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(11)
