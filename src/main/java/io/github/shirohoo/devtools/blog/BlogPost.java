@@ -1,6 +1,6 @@
 package io.github.shirohoo.devtools.blog;
 
-import io.github.shirohoo.devtools.config.model.BaseEntity;
+import io.github.shirohoo.devtools.config.BaseEntity;
 import java.util.Objects;
 import javax.persistence.Entity;
 import lombok.AccessLevel;
@@ -41,7 +41,7 @@ class BlogPost extends BaseEntity {
         if (this == o) {
             return true;
         }
-        if (Objects.isNull(o) || getClass() != o.getClass()) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
         BlogPost blogPost = (BlogPost) o;

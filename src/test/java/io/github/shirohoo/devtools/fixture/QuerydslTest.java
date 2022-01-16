@@ -2,7 +2,7 @@ package io.github.shirohoo.devtools.fixture;
 
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import io.github.shirohoo.devtools.config.jpa.JpaConfig;
+import io.github.shirohoo.devtools.config.JpaConfig;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,7 +1,7 @@
 package io.github.shirohoo.devtools.blog;
 
 import io.github.shirohoo.devtools.common.ContentProvider;
-import io.github.shirohoo.devtools.config.http.log.repository.HttpLogRepository;
+import io.github.shirohoo.devtools.config.HttpLogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

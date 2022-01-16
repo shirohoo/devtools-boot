@@ -2,10 +2,8 @@ package io.github.shirohoo.devtools.dictionary;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.shirohoo.devtools.config.external.ApiProperties;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +18,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class Translator {
     private final ObjectMapper objectMapper;
-    private final ApiProperties apiProperties;
+    private final KakaoProperties kakaoProperties;
 
     /**
      * 영단어를 입력받아 카카오 번역 API에 넘긴다. 반환되는 단어는 한글이다.
@@ -28,7 +26,9 @@ public class Translator {
      * @return Optional-String
      */
     public Optional<String> translate(String enWord) {
-        return Optional.of(getResult(getReadObject(exchangeKakaoTranslateApi(enWord))));
+        RequestHeadersSpec<?> headersSpec = exchangeKakaoTranslateApi(enWord);
+        ReadObject readObject = getReadObject(headersSpec);
+        return Optional.ofNullable(getResult(readObject));
     }
 
     /**
@@ -36,7 +36,7 @@ public class Translator {
      *
      * @return RequestHeadersSpec
      */
-    private RequestHeadersSpec<?> exchangeKakaoTranslateApi(final String enWord) {
+    private RequestHeadersSpec<?> exchangeKakaoTranslateApi(String enWord) {
         final String baseURl = "https://dapi.kakao.com/";
         final String uri = "v2/translation/translate";
         final String srcLang = "en";
@@ -51,7 +51,7 @@ public class Translator {
                 .queryParam("query", enWord)
                 .build())
 
-            .header("Authorization", apiProperties.getKakaoKey());
+            .header("Authorization", kakaoProperties.getKakaoKey());
     }
 
     /**
@@ -59,9 +59,9 @@ public class Translator {
      *
      * @return ReadObject
      */
-    private ReadObject getReadObject(final RequestHeadersSpec<?> header) {
+    private ReadObject getReadObject(RequestHeadersSpec<?> header) {
         try {
-            final Mono<String> stringMono = header.retrieve().bodyToMono(String.class);
+            Mono<String> stringMono = header.retrieve().bodyToMono(String.class);
             return objectMapper.readValue(stringMono.block(), ReadObject.class);
         } catch (JsonProcessingException e) {
             log.error(e.getMessage());
@@ -77,8 +77,8 @@ public class Translator {
      *
      * @return String or NULL
      */
-    private String getResult(final ReadObject readObject) {
-        if (Objects.nonNull(readObject)) {
+    private String getResult(ReadObject readObject) {
+        if (readObject != null) {
             return String.valueOf(readObject.getTranslated_text()
                 .get(0)).replaceAll("[\\[\\]]", "");
         }
@@ -91,6 +91,6 @@ public class Translator {
     @Data
     private static class ReadObject implements Serializable {
         private static final long serialVersionUID = 1874463342481741705L;
-        private List translated_text; // 카카오 네임 컨벤션 동기화
+        private List<String> translated_text; // 카카오 네임 컨벤션 동기화
     }
 }

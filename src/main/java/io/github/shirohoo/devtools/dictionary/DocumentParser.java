@@ -22,13 +22,6 @@ public class DocumentParser {
     private static final String NEW_LINE = System.lineSeparator();
     private static final String APACHE_OPENNLP_EN_MODEL = "/models/en-token.bin";
     private static final int WORD_LIMIT_LENGTH = 4;
-
-    private DocumentParser() {}
-
-    public static DocumentParser getInstance() {
-        return INSTANCE;
-    }
-
     /**
      * 머신러닝으로 정제되지 않는 단어들을 정제하기 위한 수동 필터
      */
@@ -53,6 +46,12 @@ public class DocumentParser {
         "rabbit", "prefixing", "populator", "keycloak", "sessionid", "reauthenticate", "mybank", "myopenid",
         "encodings", "decodings", "subdomains", "vicitim", "currval", "boolean", "arguments", "charset",
         "subdirectory", "proddb", "datasource", "bootapp", "application", "authn", "jayway", "eclipselink"};
+
+    private DocumentParser() {}
+
+    public static DocumentParser getInstance() {
+        return INSTANCE;
+    }
 
     /**
      * HTML PATH를 입력받아 해당 HTML에 접근하여 모든 문자열을 읽어 String 객체로 반환한다.

@@ -1,6 +1,6 @@
 package io.github.shirohoo.devtools.bookmark;
 
-import io.github.shirohoo.devtools.config.model.BaseEntity;
+import io.github.shirohoo.devtools.config.BaseEntity;
 import javax.persistence.Entity;
 import lombok.AccessLevel;
 import lombok.Builder;

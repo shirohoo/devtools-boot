@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-public class DictionaryApi {
+class DictionaryApi {
     private final ContentProvider<Dictionary> dictionaryProvider;
 
     @GetMapping("/dictionaries")
-    public ResponseEntity<DevtoolsResponse<DictionaryDto>> findPages(
+    ResponseEntity<DevtoolsResponse<DictionaryDto>> findPages(
         Pageable pageable,
         @RequestParam(value = "enWord", required = false) String enWord,
         @RequestParam(value = "krWord", required = false) String krWord

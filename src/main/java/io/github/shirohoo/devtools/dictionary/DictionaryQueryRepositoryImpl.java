@@ -1,6 +1,6 @@
 package io.github.shirohoo.devtools.dictionary;
 
-import static io.github.shirohoo.devtools.dictionary.model.QDictionary.dictionary;
+import static io.github.shirohoo.devtools.dictionary.QDictionary.dictionary;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
