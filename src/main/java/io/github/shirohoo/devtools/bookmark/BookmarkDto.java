@@ -1,14 +1,17 @@
 package io.github.shirohoo.devtools.bookmark;
 
+import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Value;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Value
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 class BookmarkDto {
-    Long id;
-    String category;
-    String title;
-    String link;
+    private Long id;
+    private String category;
+    private String title;
+    private String link;
 
     @Builder
     private BookmarkDto(Long id, String category, String title, String link) {
