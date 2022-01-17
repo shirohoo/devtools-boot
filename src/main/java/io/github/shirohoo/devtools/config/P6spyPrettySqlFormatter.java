@@ -12,7 +12,7 @@ import org.hibernate.engine.jdbc.internal.FormatStyle;
 public class P6spyPrettySqlFormatter implements MessageFormattingStrategy {
     private static final String NEW_LINE = System.lineSeparator();
     private static final String P6SPY_FORMATTER = "P6spyPrettySqlFormatter";
-    private static final String PACKAGE = "toy.subscribe";
+    private static final String PACKAGE = "io.github.shirohoo.devtools";
     private static final String CREATE = "create";
     private static final String ALTER = "alter";
     private static final String COMMENT = "comment";
