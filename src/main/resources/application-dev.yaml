@@ -4,7 +4,7 @@ spring:
       enabled: true
 
   datasource:
-      url: jdbc:h2:mem:testdb
+    url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE
       username: sa
       password:
 
