@@ -40,8 +40,8 @@ public class DevtoolsSecurityProdConfig extends WebSecurityConfigurerAdapter {
             .csrf(AbstractHttpConfigurer::disable)
             .httpBasic(AbstractHttpConfigurer::disable)
             .authorizeRequests(request -> request
-                .mvcMatchers(HttpMethod.POST, "/api/v1/bookmarks").hasRole("MANAGER")
-                .mvcMatchers("/api/v1/bookmarks/{id}").hasRole("MANAGER") // delete mapping not working
+                .antMatchers(HttpMethod.POST, "/api/v1/bookmarks").hasRole("MANAGER")
+                .antMatchers(HttpMethod.DELETE, "/api/v1/bookmarks/{id}").hasRole("MANAGER") // delete mapping not working
                 .anyRequest().permitAll()
             )
             .formLogin(configurer -> configurer
