@@ -17,7 +17,7 @@ class Category extends BaseEntity {
         this.category = category;
     }
 
-    static Category of(Long id, String category) {
-        return new Category(id, category);
+    static Category of(String category) {
+        return new Category(null, category);
     }
 }
