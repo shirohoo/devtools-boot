@@ -1,4 +1,4 @@
-# Link : https://devtools.life/
+# Link : https://devtools.life
 
 # Devtools
 
