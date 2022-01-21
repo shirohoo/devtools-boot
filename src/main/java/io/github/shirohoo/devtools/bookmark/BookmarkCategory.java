@@ -9,15 +9,15 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-class Category extends BaseEntity {
+class BookmarkCategory extends BaseEntity {
     private String category;
 
-    private Category(Long id, String category) {
+    private BookmarkCategory(Long id, String category) {
         super.id = id;
         this.category = category;
     }
 
-    static Category of(String category) {
-        return new Category(null, category);
+    static BookmarkCategory of(String category) {
+        return new BookmarkCategory(null, category);
     }
 }

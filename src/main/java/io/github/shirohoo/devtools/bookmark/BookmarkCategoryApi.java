@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/bookmarks/categories")
-class CategoryApi {
-    private final CategoryRepository categoryRepository;
+class BookmarkCategoryApi {
+    private final BookmarkCategoryRepository bookmarkCategoryRepository;
 
     @GetMapping
     List<String> findCategories() {
-        return categoryRepository.findAll()
+        return bookmarkCategoryRepository.findAll()
             .stream()
-            .map(Category::getCategory)
+            .map(BookmarkCategory::getCategory)
             .collect(Collectors.toUnmodifiableList());
     }
 }

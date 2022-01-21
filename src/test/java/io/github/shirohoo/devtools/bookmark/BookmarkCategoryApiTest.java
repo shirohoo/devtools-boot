@@ -8,24 +8,24 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @SpringBootTest
-class CategoryApiTest {
+class BookmarkCategoryApiTest {
     @Autowired
-    CategoryRepository categoryRepository;
+    BookmarkCategoryRepository bookmarkCategoryRepository;
 
     WebTestClient webTestClient;
 
     @BeforeEach
     void setUp() {
         webTestClient = WebTestClient
-            .bindToController(new CategoryApi(categoryRepository))
+            .bindToController(new BookmarkCategoryApi(bookmarkCategoryRepository))
             .configureClient()
             .baseUrl("/api/v1/bookmarks/categories")
             .build();
 
-        categoryRepository.saveAll(List.of(
-            Category.of("JAVA"),
-            Category.of("PS"),
-            Category.of("SPRING")
+        bookmarkCategoryRepository.saveAll(List.of(
+            BookmarkCategory.of("JAVA"),
+            BookmarkCategory.of("PS"),
+            BookmarkCategory.of("SPRING")
         ));
     }
 
