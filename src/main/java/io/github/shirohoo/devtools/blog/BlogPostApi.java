@@ -1,6 +1,6 @@
 package io.github.shirohoo.devtools.blog;
 
-import io.github.shirohoo.devtools.common.ContentProvider;
+import io.github.shirohoo.devtools.ContentProvider;
 import io.github.shirohoo.devtools.common.DevtoolsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/blogs")
 class BlogPostApi {
     private final ContentProvider<BlogPost> blogPostProvider;
 
-    @GetMapping("/blogs")
+    @GetMapping
     ResponseEntity<DevtoolsResponse<BlogPostDto>> findPages(
         Pageable pageable,
         @RequestParam(value = "company", required = false) String company,

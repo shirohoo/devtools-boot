@@ -1,6 +1,6 @@
 package io.github.shirohoo.devtools.dictionary;
 
-import io.github.shirohoo.devtools.common.ContentProvider;
+import io.github.shirohoo.devtools.ContentProvider;
 import io.github.shirohoo.devtools.config.HttpLogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

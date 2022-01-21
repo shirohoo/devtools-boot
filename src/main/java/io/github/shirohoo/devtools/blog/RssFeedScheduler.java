@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 @EnableScheduling
 @RequiredArgsConstructor
 public class RssFeedScheduler {
-    private static final int COLLECT_DELAY_MS = 1000 * 60 * 60;
+    private static final int COLLECT_DELAY_MS = 1000 * 60 * 5;
 
     private final RssCollector rssCollector;
 
