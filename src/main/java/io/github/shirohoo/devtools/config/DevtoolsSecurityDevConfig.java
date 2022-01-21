@@ -12,7 +12,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 @Profile("dev")
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class WebSecurityDevConfig extends WebSecurityConfigurerAdapter {
+public class DevtoolsSecurityDevConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
