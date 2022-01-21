@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/blogs")
 class BlogPostApi {
     private final ContentProvider<BlogPost> blogPostProvider;
 
-    @GetMapping("/blogs")
+    @GetMapping
     ResponseEntity<DevtoolsResponse<BlogPostDto>> findPages(
         Pageable pageable,
         @RequestParam(value = "company", required = false) String company,
