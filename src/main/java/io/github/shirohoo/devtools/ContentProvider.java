@@ -1,4 +1,4 @@
-package io.github.shirohoo.devtools.common;
+package io.github.shirohoo.devtools;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

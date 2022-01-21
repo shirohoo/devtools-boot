@@ -1,6 +1,6 @@
 package io.github.shirohoo.devtools.blog;
 
-import io.github.shirohoo.devtools.common.ContentProvider;
+import io.github.shirohoo.devtools.ContentProvider;
 import io.github.shirohoo.devtools.common.DevtoolsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
