@@ -41,7 +41,7 @@ public class DevtoolsSecurityProdConfig extends WebSecurityConfigurerAdapter {
             .httpBasic(AbstractHttpConfigurer::disable)
             .authorizeRequests(request -> request
                 .mvcMatchers(HttpMethod.POST, "/api/v1/bookmarks").hasRole("MANAGER")
-                .mvcMatchers(HttpMethod.DELETE, "/api/v1/bookmarks").hasRole("MANAGER")
+                .mvcMatchers("/api/v1/bookmarks/{id}").hasRole("MANAGER") // delete mapping not working
                 .anyRequest().permitAll()
             )
             .formLogin(configurer -> configurer
