@@ -12,23 +12,27 @@ public class HtmlParserTest {
     @MethodSource
     @ParameterizedTest
     @DisplayName("Document 파싱")
-    public void parsingDocumentationFromHTMLFile(String htmlUrl) {
+    public void parsingDocumentationFromHtml(String htmlUrl) {
+        // ...given
         HtmlParser parser = HtmlParser.getInstance();
         String html = parser.read(htmlUrl);
+
+        // ...when
         Set<String> words = parser.parse(html);
 
+        // ...then
         System.out.println("words = " + words.size());
         System.out.println(String.join(" ", words));
         assertThat(parser.parse(html)).isNotNull();
     }
 
-    private static Stream<Arguments> parsingDocumentationFromHTMLFile() {
+    private static Stream<Arguments> parsingDocumentationFromHtml() {
         return Stream.of(
-            Arguments.of("https://junit.org/junit5/docs/current/user-guide/"),
-            Arguments.of("https://docs.jboss.org/hibernate/orm/5.6/userguide/html_single/Hibernate_User_Guide.html"),
-            Arguments.of("https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#reference"),
-            Arguments.of("https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/"),
-            Arguments.of("https://docs.spring.io/spring-security/site/docs/5.2.1.RELEASE/reference/htmlsingle/")
+            Arguments.of(DocsUrls.JUNIT5.getDocsUrl()),
+            Arguments.of(DocsUrls.HIBERNATE.getDocsUrl()),
+            Arguments.of(DocsUrls.SPRING_DATA_JPA.getDocsUrl()),
+            Arguments.of(DocsUrls.SPRING_BOOT.getDocsUrl()),
+            Arguments.of(DocsUrls.SPRING_SECURITY.getDocsUrl())
         );
     }
 }

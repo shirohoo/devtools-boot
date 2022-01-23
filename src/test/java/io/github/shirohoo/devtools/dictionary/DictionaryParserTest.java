@@ -19,7 +19,7 @@ class DictionaryParserTest {
     @Rollback(value = false)
     @DisplayName(value = "단어장생성기 실행. 테스트가 아닌 메뉴얼 단어장 생성기이다.")
     void create() {
-        String html = HtmlPath.SPRING_DATA_JPA.getPath();
+        String html = DocsUrls.SPRING_DATA_JPA.getDocsUrl();
         dictionaryParser.parse(html);
     }
 }
