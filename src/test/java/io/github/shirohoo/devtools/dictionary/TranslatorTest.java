@@ -1,36 +1,31 @@
 package io.github.shirohoo.devtools.dictionary;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Disabled;
+import static org.assertj.core.api.Assertions.assertThat;
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-@Disabled(value = "카카오 API 호출 횟수 제한으로 테스트 비활성화")
-@SpringBootTest(classes = {KakaoProperties.class, Translator.class, ObjectMapper.class})
+@SpringBootTest
 class TranslatorTest {
-    private final Translator translator;
-
-    public TranslatorTest(final Translator translator) {
-        this.translator = translator;
-    }
+    @Autowired
+    Translator translator;
 
     @Test
     @DisplayName("영단어를 한글 단어로 번역한다")
     void translate() {
-        // given
+        // ...given
         String enWord = "overview";
 
-        // when
-        Optional<String> translate = translator.translate(enWord);
-        String krWord = translate.orElseThrow(() -> new NoSuchElementException("단어를 찾지 못했습니다."));
+        // ...when
+        String krWord = translator.translate(enWord)
+            .orElseThrow(() -> new NoSuchElementException("Not found word."));
 
-        // then
-        assertThat(krWord).isNotNull().isNotEmpty().isNotBlank();
+        // ...then
+        assertThat(krWord).isNotNull();
+        assertThat(krWord).isNotEmpty();
+        assertThat(krWord).isNotBlank();
+        assertThat(krWord).containsPattern("[가-힣]");
     }
 }
