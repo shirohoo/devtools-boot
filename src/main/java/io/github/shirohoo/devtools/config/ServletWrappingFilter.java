@@ -16,7 +16,7 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 public class ServletWrappingFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        final String contentType = request.getHeader(HttpHeaders.CONTENT_TYPE);
+        String contentType = request.getHeader(HttpHeaders.CONTENT_TYPE);
         if (contentType != null && contentType.toLowerCase().contains(MediaType.MULTIPART_FORM_DATA_VALUE)) {
             filterChain.doFilter(request, response);
         } else {

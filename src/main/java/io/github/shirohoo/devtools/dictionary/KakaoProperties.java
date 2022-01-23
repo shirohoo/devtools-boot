@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Getter
 @Configuration
-public class KakaoProperties {
+class KakaoProperties {
     @Value("${api.key.kakao}")
     private String kakaoKey;
 }

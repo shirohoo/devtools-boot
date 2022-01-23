@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class KakaoPropertiesTest {
     private final KakaoProperties kakaoProperties;
 
-    public KakaoPropertiesTest(final KakaoProperties kakaoProperties) {
+    public KakaoPropertiesTest(KakaoProperties kakaoProperties) {
         this.kakaoProperties = kakaoProperties;
     }
 

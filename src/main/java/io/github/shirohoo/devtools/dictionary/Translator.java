@@ -10,13 +10,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec;
-import reactor.core.publisher.Mono;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class Translator {
+class Translator {
     private final ObjectMapper objectMapper;
     private final KakaoProperties kakaoProperties;
 
@@ -25,64 +23,49 @@ public class Translator {
      *
      * @return Optional-String
      */
-    public Optional<String> translate(String enWord) {
-        RequestHeadersSpec<?> headersSpec = exchangeKakaoTranslateApi(enWord);
-        ReadObject readObject = getReadObject(headersSpec);
-        return Optional.ofNullable(getResult(readObject));
+    Optional<String> translate(String enWord) {
+        String translated = exchangeKakaoTranslateApi(enWord);
+        ReadObject readObject = getReadObject(translated);
+        return getResult(readObject);
     }
 
     /**
-     * 카카오 번역 API에 영단어를 넘긴다.
+     * 카카오 번역 API에 동기식으로 영단어를 넘기고 번역된 한글 단어를 반환받는다.
      *
      * @return RequestHeadersSpec
      */
-    private RequestHeadersSpec<?> exchangeKakaoTranslateApi(String enWord) {
-        final String baseURl = "https://dapi.kakao.com/";
-        final String uri = "v2/translation/translate";
-        final String srcLang = "en";
-        final String targetLang = "kr";
+    private String exchangeKakaoTranslateApi(String enWord) {
         return WebClient.builder()
-            .baseUrl(baseURl)
+            .baseUrl("https://dapi.kakao.com/")
             .build()
             .get()
-            .uri(uriBuilder -> uriBuilder.path(uri)
-                .queryParam("src_lang", srcLang)
-                .queryParam("target_lang", targetLang)
+            .uri(uriBuilder -> uriBuilder.path("v2/translation/translate")
+                .queryParam("src_lang", "en")
+                .queryParam("target_lang", "kr")
                 .queryParam("query", enWord)
                 .build())
-
-            .header("Authorization", kakaoProperties.getKakaoKey());
+            .header("Authorization", kakaoProperties.getKakaoKey())
+            .retrieve()
+            .bodyToMono(String.class)
+            .block();
     }
 
-    /**
-     * 카카오 번역기 json 응답을 java 객체로 바인딩한다.
-     *
-     * @return ReadObject
-     */
-    private ReadObject getReadObject(RequestHeadersSpec<?> header) {
+    private ReadObject getReadObject(String translated) {
+        ReadObject readObject = null;
         try {
-            Mono<String> stringMono = header.retrieve().bodyToMono(String.class);
-            return objectMapper.readValue(stringMono.block(), ReadObject.class);
+            readObject = objectMapper.readValue(translated, ReadObject.class);
         } catch (JsonProcessingException e) {
             log.error(e.getMessage());
-            return null;
-        } catch (Exception e) {
-            log.error("KaKao API error!");
-            return null;
         }
+        return readObject;
     }
 
-    /**
-     * 반환된 단어에 문제가 없다면 반환하고, 문제가 있는 경우 null을 반환한다.
-     *
-     * @return String or NULL
-     */
-    private String getResult(ReadObject readObject) {
+    private Optional<String> getResult(ReadObject readObject) {
         if (readObject != null) {
-            return String.valueOf(readObject.getTranslated_text()
-                .get(0)).replaceAll("[\\[\\]]", "");
+            String krWord = readObject.getTranslated_text().get(0).get(0); // 카카오는 [[개요]] 와 같이 2차원 배열로 응답해줌
+            return Optional.of(krWord);
         }
-        return null;
+        return Optional.empty();
     }
 
     /**
@@ -91,6 +74,6 @@ public class Translator {
     @Data
     private static class ReadObject implements Serializable {
         private static final long serialVersionUID = 1874463342481741705L;
-        private List<String> translated_text; // 카카오 네임 컨벤션 동기화
+        private List<List<String>> translated_text; // 카카오 응답스펙 동기화
     }
 }
