@@ -1,12 +1,8 @@
 package io.github.shirohoo.devtools.dictionary;
 
 import static java.util.Arrays.stream;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,18 +10,19 @@ import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
+import org.springframework.web.client.RestTemplate;
 
 @Slf4j
-public class DocumentParser {
-    private static final DocumentParser INSTANCE = new DocumentParser();
+class HtmlParser {
+    private static final HtmlParser INSTANCE = new HtmlParser();
+
     private static final Pattern P_TAG_PATTERN = Pattern.compile("<p>.*</p>");
-    private static final String NEW_LINE = System.lineSeparator();
-    private static final String APACHE_OPENNLP_EN_MODEL = "/models/en-token.bin";
-    private static final int WORD_LIMIT_LENGTH = 4;
+
     /**
-     * OpenNLP로 정제되지 않는 단어들을 정제하기 위한 수동 필터
+     * OpenNLP로 정제되지 않는 단어들을 정제하기 위한 수동 인공어 필터
      */
-    private final String[] conlangFilter = {"taglib", "springframework", "namespace", "jackson", "springboot", "spring", "login", "winsw",
+    private final Set<String> conlangFilter = Set.of(
+        "taglib", "springframework", "namespace", "jackson", "springboot", "spring", "login", "winsw",
         "username", "logback", "autoscaler", "hibernate", "kubernetes", "docker", "homebrew", "datadog",
         "livereload", "jersey", "kotlin", "framework", "oauth", "testinstance", "junit4", "junit5", "bugfix",
         "webflux", "redis", "kafka", "elasticsearch", "log4j", "slf4j", "logstash", "kibana", "hsqldb",
@@ -45,11 +42,18 @@ public class DocumentParser {
         "layertools", "benmanes", "flywaydb", "antlib", "cloudfoundryapplication", "appengine", "wildfly",
         "rabbit", "prefixing", "populator", "keycloak", "sessionid", "reauthenticate", "mybank", "myopenid",
         "encodings", "decodings", "subdomains", "vicitim", "currval", "boolean", "arguments", "charset",
-        "subdirectory", "proddb", "datasource", "bootapp", "application", "authn", "jayway", "eclipselink"};
+        "subdirectory", "proddb", "datasource", "bootapp", "application", "authn", "jayway", "eclipselink"
+    );
 
-    private DocumentParser() {}
+    private static final String APACHE_OPENNLP_EN_MODEL = "/models/en-token.bin";
 
-    public static DocumentParser getInstance() {
+    private static final String SPACE_CHAR = " ";
+
+    private static final int WORD_LIMIT_LENGTH = 4;
+
+    private HtmlParser() {}
+
+    static HtmlParser getInstance() {
         return INSTANCE;
     }
 
@@ -58,15 +62,9 @@ public class DocumentParser {
      *
      * @return String
      */
-    public String read(String path) {
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path)))) {
-            return br.lines()
-                .map(read -> read + NEW_LINE)
-                .collect(Collectors.joining());
-        } catch (IOException e) {
-            log.error(e.getMessage());
-            return null;
-        }
+    String read(String url) {
+        return new RestTemplate()
+            .getForObject(url, String.class);
     }
 
     /**
@@ -74,8 +72,10 @@ public class DocumentParser {
      *
      * @return HashSet
      */
-    public Set<String> parsing(String html) {
-        return parsingNaturalLanguage(removeHtmlTags(html));
+    Set<String> parse(String html) {
+        String refinedHtml = removeHtmlTags(html);
+        Set<String> filteredNaturalLanguage = parsingNaturalLanguage(refinedHtml);
+        return filteringConstructedLanguage(filteredNaturalLanguage);
     }
 
     /**
@@ -83,20 +83,17 @@ public class DocumentParser {
      */
     private Set<String> parsingNaturalLanguage(String charSequence) {
         try (InputStream inputStream = getClass().getResourceAsStream(APACHE_OPENNLP_EN_MODEL)) {
+            assert inputStream != null;
             TokenizerModel model = new TokenizerModel(inputStream);
             TokenizerME tokenizer = new TokenizerME(model);
             String[] tokens = tokenizer.tokenize(charSequence);
 
-            Set<String> set = new HashSet<>();
-            for (String s1 : tokens) {
-                if (s1.length() > WORD_LIMIT_LENGTH) {
-                    set.add(s1);
-                }
-            }
-            return set;
+            return stream(tokens)
+                .filter(word -> word.length() > WORD_LIMIT_LENGTH)
+                .collect(Collectors.toSet());
         } catch (IOException e) {
             log.error(e.getMessage());
-            return null;
+            return Set.of();
         }
     }
 
@@ -117,9 +114,11 @@ public class DocumentParser {
             }
             sb.append(string);
         }
-        return sb.toString().trim().toLowerCase()
-            .replaceAll("[^a-zA-Z\\s\\.]", " ")
-            .replaceAll(" +", " ");
+        return sb.toString()
+            .trim()
+            .toLowerCase()
+            .replaceAll("[^a-zA-Z\\s\\.]", SPACE_CHAR)
+            .replaceAll(" +", SPACE_CHAR);
     }
 
     /**
@@ -128,18 +127,22 @@ public class DocumentParser {
      * @return boolean
      */
     private boolean isContainsWhiteSpace(String refinedWord) {
-        return refinedWord.contains(" ");
+        return refinedWord.contains(SPACE_CHAR);
     }
 
     /**
      * 각 단어를 공백(" ")으로 구분하여 결합한다.
      */
     private void concat(StringBuilder sb, String refinedWord) {
-        stream(refinedWord.split(" ")).forEach(s2 -> sb.append(s2).append(" "));
+        sb.append(
+            stream(refinedWord.split(SPACE_CHAR))
+                .map(string -> string + SPACE_CHAR)
+                .collect(Collectors.joining())
+        );
     }
 
     private String removeHtmlTags(String html, Matcher matcher) {
-        String unrefinedWord = " " + html.substring(matcher.start(), matcher.end())
+        return SPACE_CHAR + html.substring(matcher.start(), matcher.end())
             .replaceAll("<b>", "").replaceAll("</b>", "")
             .replaceAll("<a [^<>]*>", "").replaceAll("</a>", "")
             .replaceAll("<p>", "").replaceAll("</p>", "")
@@ -153,9 +156,8 @@ public class DocumentParser {
             .replaceAll("<div [^<>]*>>", "").replaceAll("</div>", "")
             .replaceAll("<h [^<>]*>>", "").replaceAll("</h>", "")
             .replaceAll("www\\.", "").replaceAll("http", "")
-            .replaceAll("\\.com", "").replace(".", " ")
+            .replaceAll("\\.com", "").replace(".", SPACE_CHAR)
             .replaceAll("\\[[^\\[\\]]*\\]", "");
-        return unrefinedWord;
     }
 
     /**
@@ -173,31 +175,18 @@ public class DocumentParser {
                 "(?<=[A-Z])(?=[A-Z][a-z])",
                 "(?<=[^A-Z])(?=[A-Z])",
                 "(?<=[A-Za-z])(?=[^A-Za-z])"),
-            " ");
+            SPACE_CHAR);
     }
 
     /**
-     * 머신러닝으로 필터링 되지 않은 단어를 수동 필터로 필터링한다.
+     * OpenNLP로 필터링 되지 않은 단어를 인공어 필터로 수동 필터링한다.
      *
      * @return HashSet
      */
-    public Set<String> filtering(Set<String> set) {
-        return filteringForConlang(set);
-    }
-
-    private Set<String> filteringForConlang(Set<String> set) {
-        Set<String> result = new HashSet<>();
-        for (String enWord : set) {
-            if (enWord.endsWith("ing") | enWord.endsWith("es") | enWord.endsWith("s") | enWord.endsWith("ed")) {
-                log.info("Filtered word : {}!", enWord);
-                continue;
-            }
-            if (stream(conlangFilter).anyMatch(enWord::equals)) {
-                log.info("Filtered word : {}!", enWord);
-                continue;
-            }
-            result.add(enWord);
-        }
-        return result;
+    private Set<String> filteringConstructedLanguage(Set<String> words) {
+        return words.stream()
+            .filter(word -> !word.endsWith("ing") && !word.endsWith("es") && !word.endsWith("s") && !word.endsWith("ed"))
+            .filter(word -> !conlangFilter.contains(word))
+            .collect(Collectors.toSet());
     }
 }
