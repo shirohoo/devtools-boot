@@ -23,7 +23,7 @@ public class DocumentParser {
     private static final String APACHE_OPENNLP_EN_MODEL = "/models/en-token.bin";
     private static final int WORD_LIMIT_LENGTH = 4;
     /**
-     * 머신러닝으로 정제되지 않는 단어들을 정제하기 위한 수동 필터
+     * OpenNLP로 정제되지 않는 단어들을 정제하기 위한 수동 필터
      */
     private final String[] conlangFilter = {"taglib", "springframework", "namespace", "jackson", "springboot", "spring", "login", "winsw",
         "username", "logback", "autoscaler", "hibernate", "kubernetes", "docker", "homebrew", "datadog",
@@ -81,11 +81,11 @@ public class DocumentParser {
     /**
      * 입력된 문자열이 4글자 이상의 자연어라면 HashSet 에 담는다.
      */
-    private Set<String> parsingNaturalLanguage(final String charSequence) {
+    private Set<String> parsingNaturalLanguage(String charSequence) {
         try (InputStream inputStream = getClass().getResourceAsStream(APACHE_OPENNLP_EN_MODEL)) {
-            final TokenizerModel model = new TokenizerModel(inputStream);
-            final TokenizerME tokenizer = new TokenizerME(model);
-            final String[] tokens = tokenizer.tokenize(charSequence);
+            TokenizerModel model = new TokenizerModel(inputStream);
+            TokenizerME tokenizer = new TokenizerME(model);
+            String[] tokens = tokenizer.tokenize(charSequence);
 
             Set<String> set = new HashSet<>();
             for (String s1 : tokens) {
@@ -105,7 +105,7 @@ public class DocumentParser {
      *
      * @return String
      */
-    private String removeHtmlTags(final String html) {
+    private String removeHtmlTags(String html) {
         StringBuilder sb = new StringBuilder();
         Matcher matcher = P_TAG_PATTERN.matcher(html);
         while (matcher.find()) {
@@ -127,18 +127,18 @@ public class DocumentParser {
      *
      * @return boolean
      */
-    private boolean isContainsWhiteSpace(final String refinedWord) {
+    private boolean isContainsWhiteSpace(String refinedWord) {
         return refinedWord.contains(" ");
     }
 
     /**
      * 각 단어를 공백(" ")으로 구분하여 결합한다.
      */
-    private void concat(final StringBuilder sb, final String refinedWord) {
+    private void concat(StringBuilder sb, String refinedWord) {
         stream(refinedWord.split(" ")).forEach(s2 -> sb.append(s2).append(" "));
     }
 
-    private String removeHtmlTags(final String html, final Matcher matcher) {
+    private String removeHtmlTags(String html, Matcher matcher) {
         String unrefinedWord = " " + html.substring(matcher.start(), matcher.end())
             .replaceAll("<b>", "").replaceAll("</b>", "")
             .replaceAll("<a [^<>]*>", "").replaceAll("</a>", "")
@@ -181,11 +181,11 @@ public class DocumentParser {
      *
      * @return HashSet
      */
-    public Set<String> filtering(final Set<String> set) {
+    public Set<String> filtering(Set<String> set) {
         return filteringForConlang(set);
     }
 
-    private Set<String> filteringForConlang(final Set<String> set) {
+    private Set<String> filteringForConlang(Set<String> set) {
         Set<String> result = new HashSet<>();
         for (String enWord : set) {
             if (enWord.endsWith("ing") | enWord.endsWith("es") | enWord.endsWith("s") | enWord.endsWith("ed")) {
