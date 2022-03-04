@@ -1,7 +1,7 @@
 spring:
   datasource:
-    url: ENC(GBle1MbKfJ/EqbOaryTSjXEUuunAbQMfiMObCznq/RTkxAWkf2F/1GtnOyNo3CVUg0iWWOEl8XwWl+eNeOXWGlsu0hf2FmgqR7Zw1dsJ4FkIDdi1jZyQyQ==)
-    username: ENC(5xnlaVzVyey/Ec/4n4yYog==)
+    url: ENC(HpkvEA5gwl+GG6Ap/ZLmjR8cnjwuuE2GVxFiEDytCU6ydzVKruYECBbl+owHCZDqTE4DErMTPLsajl53MGlS6uOIZwn+KpKxlXEsC9nAh+uOezUWaFLJGg==)
+    username: ENC(NSiBBX6KeUvNxHBnw9TD9jRZVfctkHYL)
     password: ENC(FghdAtCjugJtF4F3AzYk/GxbLH2W5WhP)
 
   jpa:
